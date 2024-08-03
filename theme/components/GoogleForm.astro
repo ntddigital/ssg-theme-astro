@@ -1,0 +1,20 @@
+---
+const { section } = Astro.props;
+---
+
+<section>
+  <!-- contact form -->
+  <div class="bg-white flex justify-center">
+    <div class="mx-auto px-6 lg:px-8">
+      <iframe
+        src={`${section?.src}`}
+        height={`${section?.height}`}
+        class="w-screen"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0">Loading…</iframe
+      >
+    </div>
+  </div>
+  <!-- end of contact form -->
+</section>

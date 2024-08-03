@@ -1,0 +1,152 @@
+---
+import Header from "../components/Header.astro";
+import Feature from "../components/Feature.astro";
+import TextBlock from "../components/TextBlock.astro";
+import Video from "../components/Video.astro";
+import Footer from "../components/Footer.astro";
+import Gallery from "../components/Gallery.astro";
+import GotoTopButton from "../components/ui/GotoTopButton.astro";
+import Modal from "../components/Modal.astro";
+import Map from "../components/Map.astro";
+import GoogleForm from "../components/GoogleForm.astro";
+import "../style/global.css";
+
+const { content } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <script define:vars={{ content }}>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", content.tag);
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{content?.title}</title>
+    {
+      content?.seo?.metaDescription ? (
+        <meta name="description" content={content.seo.metaDescription} />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.keywords ? (
+        <meta name="keywords" content={content.seo.keywords} />
+      ) : (
+        ""
+      )
+    }
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Best Food Today" />
+
+    <!-- Open Graph Meta Tags -->
+    {
+      content?.title ? (
+        <meta property="og:title" content={content?.title} />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.metaDescription ? (
+        <meta property="og:description" content={content.seo.metaDescription} />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.img ? (
+        <meta property="og:image" content={content.seo.img} />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.thisPageUrl ? (
+        <meta property="og:url" content={content?.seo?.thisPageUrl} />
+      ) : (
+        ""
+      )
+    }
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    {
+      content?.title ? (
+        <meta name="twitter:title" content={content?.title} />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.metaDescription ? (
+        <meta
+          name="twitter:description"
+          content={content.seo.metaDescription}
+        />
+      ) : (
+        ""
+      )
+    }
+    {
+      content?.seo?.img ? (
+        <meta name="twitter:image" content={content.seo.img} />
+      ) : (
+        ""
+      )
+    }
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${content.tag}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+
+    {content.header && <Header content={content} />}
+
+    {
+      content?.sections?.map((section: { type: string }) => {
+        if (section?.type === "feature" || section?.type === "hero") {
+          return <Feature content={content} section={section} />;
+        } else if (section?.type === "video") {
+          return <Video content={content} section={section} />;
+        } else if (section?.type === "gallery") {
+          return <Gallery section={section} />;
+        } else if (section?.type === "modal") {
+          return <Modal content={content} section={section} />;
+        } else if (section?.type === "map") {
+          return <Map content={content} section={section} />;
+        } else if (section?.type === "form") {
+          return <GoogleForm content={content} section={section} />;
+        } else if (section?.type === "textBlock") {
+          return <TextBlock content={content} section={section} />;
+        }
+      })
+    }
+    {content.footer && <Footer content={content} />}
+
+    <GotoTopButton content={content} />
+    <slot />
+
+    <script src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async
+    ></script>
+  </body>
+</html>

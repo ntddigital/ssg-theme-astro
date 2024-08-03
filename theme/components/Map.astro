@@ -1,0 +1,67 @@
+---
+import PrimaryButton from "./ui/PrimaryButton.astro";
+import SecondaryButton from "./ui/SecondaryButton.astro";
+import { cn } from "../utils/cn";
+
+const { content, section, isChildComponent } = Astro.props;
+---
+
+<div id={`${section?.id || ""}`} class="scroll-mt-100 sm:scroll-mt-250"></div>
+<section
+  class={cn(
+    "relative ",
+    isChildComponent || section?.noMarginTop
+      ? "mt-0"
+      : "mt-16 sm:mt-24 md:mt-32 abc"
+  )}
+>
+  <div class="absolute top-4 right-4">
+    <div class="flex flex-col gap-4">
+      <PrimaryButton
+        content={content}
+        text={section?.getDirectionBtnInsteadText
+          ? section?.getDirectionBtnInsteadText
+          : `Get Direction`}
+        href={`${section?.url}`}
+      />
+      {
+        section?.addTelBtn ? (
+          <SecondaryButton
+            content={content}
+            text={
+              section?.telInsteadText
+                ? section?.telInsteadText
+                : `tel: ${content?.tel}`
+            }
+            href={`tel:${content?.tel}`}
+          />
+        ) : (
+          ""
+        )
+      }
+      {
+        section?.addTelBtn && section?.tel2 ? (
+          <SecondaryButton
+            content={content}
+            text={
+              section?.tel2InsteadText
+                ? section?.tel2InsteadText
+                : `tel: ${content?.tel2}`
+            }
+            href={`tel:${content?.tel2}`}
+          />
+        ) : (
+          ""
+        )
+      }
+    </div>
+  </div>
+  <iframe
+    src={`${section?.iframeUrl}`}
+    class="w-full"
+    aria-hidden="true"
+    allowfullscreen=""
+    loading="lazy"
+    height="500"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</section>

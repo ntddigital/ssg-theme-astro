@@ -1,0 +1,70 @@
+---
+import { cn } from "../utils/cn";
+const { section } = Astro.props;
+---
+
+<section
+  class={cn(
+    "relative scroll-mt-100 sm:scroll-mt-150",
+    section?.noMarginTop
+      ? ""
+      : section?.bgImg
+        ? "mt-16 sm:mt-24 md:mt-32"
+        : "pt-16 sm:pt-24 md:pt-32",
+    section?.bgImg ? "py-16 sm:py-20 lg:py-24" : ""
+  )}
+  style="scroll-margin-top: 150px;"
+  id={`${section?.id || ""}`}
+>
+  <div class="mx-auto max-w-4xl text-center px-6">
+    {
+      section?.bgImg ? (
+        <img
+          src={`${section?.bgImg}`}
+          alt={section?.bgImgAlt}
+          class={cn(
+            "absolute inset-0 -z-10 h-full w-full object-cover",
+            `${section?.sectionType === "video" ? "sm:hidden" : ""}`
+          )}
+        />
+      ) : (
+        ""
+      )
+    }
+    {
+      section?.bgColor ? (
+        <span
+          class="absolute -z-10 w-full inset-0 top-0 left-0"
+          style={`background-color:${section?.bgColor}; opacity: ${section?.bgOpacity}`}
+        />
+      ) : (
+        ""
+      )
+    }
+    <h2
+      class="mb-4 text-3xl font-bold tracking-tight sm:text-4xl"
+      style={`color:${section?.titleColor}`}
+    >
+      {
+        section?.title?.map((line: string, index: number) => (
+          <Fragment key={index}>
+            <span class="block">{line}</span>
+          </Fragment>
+        ))
+      }
+    </h2>
+
+    {
+      section?.description?.map((line: string, index: number) => (
+        <Fragment key={index}>
+          <p
+            class="text-lg leading-8 mb-8"
+            style={`color:${section?.descriptionColor}`}
+          >
+            {line}
+          </p>
+        </Fragment>
+      ))
+    }
+  </div>
+</section>

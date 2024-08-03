@@ -1,0 +1,25 @@
+---
+const { content } = Astro.props;
+---
+
+<!-- go top button -->
+<div
+  class="cursor-pointer rounded-full"
+  style={`background-color:${content?.primaryColor}`}
+>
+  <a
+    href="#"
+    class="rounded-full p-2 fixed bottom-5 right-5 sm:bottom-10 sm:right-7"
+    style={`background-color:${content?.primaryColor} display: block; `}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-10 h-10"
+      viewBox="0 0 24 24"
+      ><path
+        fill={`${content?.primaryColor}`}
+        d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2m4.293 12.707L12 10.414l-4.293 4.293l-1.414-1.414L12 7.586l5.707 5.707z"
+      ></path></svg
+    >
+  </a>
+</div>

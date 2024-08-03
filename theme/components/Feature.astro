@@ -1,0 +1,533 @@
+---
+import PrimaryButton from "./ui/PrimaryButton.astro";
+import SecondaryButton from "./ui/SecondaryButton.astro";
+import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
+import Map from "./Map.astro";
+import { cn } from "../utils/cn";
+
+const { content, section } = Astro.props;
+---
+
+<section
+  class={cn(
+    "scroll-mt-100 sm:scroll-mt-150",
+    section?.type === "feature"
+      ? section?.noMarginTop
+        ? "pt-0"
+        : "pt-16 sm:pt-24 md:pt-32"
+      : ""
+  )}
+  style={section?.type === "feature"
+    ? `${section?.bgColor ? `background-color: ${section?.bgColor};` : ""}  ${section?.bgOpacity ? `opacity: ${section?.bgOpacity};` : ""}`
+    : ""}
+  id={`${section?.id || ""}`}
+>
+  <div
+    class={cn(
+      "relative lg:overflow-hidden",
+      section?.bottomRounded ? `rounded-${section?.bottomRounded}` : ""
+    )}
+    style={`
+      ${section?.sectionType === "imgBg" && section?.height ? `height: ${section?.height}vh;` : ""}
+    `}
+  >
+    {
+      section?.sectionType === "video" ? (
+        <div
+          class="hidden sm:block h-full overflow-hidden"
+          style="padding:56.25% 0 0 0;position:relative;"
+        >
+          <iframe
+            id="bg-video"
+            src={
+              section?.bgVideoType === "vimeo"
+                ? `https://player.vimeo.com/video/${section?.bgVideoId}?autoplay=1&loop=1&background=1`
+                : section?.bgVideoType === "gjw"
+                  ? `https://www.ganjingworld.com/zh-CN/embed/${section?.bgVideoId}?autoplay=1&loop=1&controls=0&mute=1`
+                  : section?.bgVideoType === "youtube"
+                    ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
+                    : ""
+            }
+            title={content?.title}
+            class="absolute inset-0 -z-10 h-full w-full object-cover"
+            allow="accelerometer; autoplay;"
+            allowfullscreen
+          />
+          <div class="absolute inset-0 w-full h-full flex justify-center items-center">
+            <div class="text-center max-w-2xl sm:max-w-3xl">
+              <h1
+                class={cn(
+                  "text-3xl font-bold tracking-tight sm:text-6xl",
+                  section?.isTextAlignCenter ? "text-center" : ""
+                )}
+                style={`color: ${section?.titleColor}`}
+              >
+                {section?.title.map((line: string, index: number) => (
+                  <Fragment key={index}>
+                    <span class="block mt-4">{line}</span>
+                  </Fragment>
+                ))}
+              </h1>
+              {section?.description.map((info: string, index: number) => (
+                <Fragment key={index}>
+                  <p
+                    class={cn(
+                      "mt-6 text-lg leading-8 max-w-3xl",
+                      section?.isTextAlignCenter ? "text-center" : ""
+                    )}
+                    style={`color: ${section?.descriptionColor}`}
+                  >
+                    {info}
+                  </p>
+                </Fragment>
+              ))}
+
+              <div
+                class={cn(
+                  "mt-10 flex items-center justify-center gap-x-6 flex-col sm:flex-row gap-4",
+                  section?.isTextAlignCenter ? "text-center" : ""
+                )}
+              >
+                {section?.addOrderOnlineBtn ? (
+                  <OrderOnlineBtn
+                    content={content}
+                    text={section?.orderOnlineBtnInsteadText || "Order Online"}
+                    dataGlfCuid={content?.dataGlfCuidOrderOnline}
+                    dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                  />
+                ) : (
+                  ""
+                )}
+                {section?.addTableReservationBtn && (
+                  <OrderOnlineBtn
+                    content={content}
+                    text={
+                      section?.tableReservationBtnInsteadText ||
+                      "Table Reservation"
+                    }
+                    dataGlfCuid={content?.dataGlfCuidTableReservation}
+                    dataGlfRuid={content?.dataGlfGuidTableReservation}
+                  />
+                )}
+                {section?.showOtherBtn && section?.btn1Text ? (
+                  <PrimaryButton
+                    content={content}
+                    text={section?.btn1Text}
+                    href={section?.btn1Href}
+                  />
+                ) : (
+                  ""
+                )}
+                {section?.showOtherBtn && section?.btn2Text ? (
+                  <SecondaryButton
+                    content={content}
+                    text={section?.btn2Text}
+                    href={section?.btn2Href}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
+          <script src="https://player.vimeo.com/api/player.js" />
+        </div>
+      ) : (
+        ""
+      )
+    }
+    {
+      section?.bgImg ? (
+        <img
+          src={`/${section?.bgImg}`}
+          alt={section?.bgImgAlt}
+          class={cn(
+            "absolute inset-0 -z-10 h-full w-full object-cover",
+            `${section?.sectionType === "video" ? "sm:hidden" : ""}`
+          )}
+        />
+      ) : (
+        ""
+      )
+    }
+    {
+      section?.bgColor ? (
+        <>
+          <span
+            class="absolute -z-10 w-full inset-0 top-0 left-0"
+            style={`background-color:${section?.bgColor}; opacity: ${section?.bgOpacity}`}
+          />
+        </>
+      ) : (
+        ""
+      )
+    }
+    {
+      section?.bottomInfo ? (
+        <span>
+          <span
+            class="absolute -z-10 w-full h-16 inset-x-0 bottom-0 left-0 text-white font-semibold flex justify-center items-center"
+            style="background-color:#000000; opacity: 0.95"
+          >
+            {section?.bottomInfo}
+          </span>
+        </span>
+      ) : (
+        ""
+      )
+    }
+    <div
+      class={cn(
+        "m-auto max-w-2xl md:max-w-7xl flex flex-col justify-center items-center",
+        `${section?.sectionType === "video" ? "sm:hidden" : ""}`
+      )}
+    >
+      {
+        section?.sectionType === "imgBg" ||
+        (section?.sectionType === "video" && !section?.imgPosition) ? (
+          <div class="absolute inset-0 w-full h-full flex justify-center items-center">
+            <div class="text-center max-w-2xl sm:max-w-3xl">
+              <div>
+                <h1
+                  class={cn(
+                    "text-3xl font-bold tracking-tight sm:text-6xl leading-12",
+                    section?.isTextAlignCenter ? "text-center" : ""
+                  )}
+                  style={`color: ${section?.titleColor || "#000"}`}
+                >
+                  {section?.title.map((line: string, index: number) => (
+                    <Fragment key={index}>
+                      <span class="block mt-4">{line}</span>
+                    </Fragment>
+                  ))}
+                </h1>
+
+                {section?.description.map((info: string, index: number) => (
+                  <Fragment key={index}>
+                    <p
+                      class={cn(
+                        "mt-8 text-base sm:text-2xl",
+                        section?.isTextAlignCenter ? "text-center" : ""
+                      )}
+                      style={`color: ${section?.descriptionColor}`}
+                    >
+                      {info}
+                    </p>
+                  </Fragment>
+                ))}
+                <div class="mt-10 flex items-center justify-center gap-x-6 flex-col sm:flex-row gap-4">
+                  {section?.addOrderOnlineBtn ? (
+                    <OrderOnlineBtn
+                      content={content}
+                      text={
+                        section?.orderOnlineBtnInsteadText || "Order Online"
+                      }
+                      dataGlfCuid={content?.dataGlfCuidOrderOnline}
+                      dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {section?.addTableReservationBtn && (
+                    <OrderOnlineBtn
+                      content={content}
+                      text={
+                        section?.tableReservationBtnInsteadText ||
+                        "Table Reservation"
+                      }
+                      dataGlfCuid={content?.dataGlfCuidTableReservation}
+                      dataGlfRuid={content?.dataGlfGuidTableReservation}
+                    />
+                  )}
+                  {section?.showOtherBtn && section?.btn1Text ? (
+                    <PrimaryButton
+                      content={content}
+                      text={section?.btn1Text}
+                      href={section?.btn1Href}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {section?.showOtherBtn && section?.btn2Text ? (
+                    <SecondaryButton
+                      content={content}
+                      text={section?.btn2Text}
+                      href={section?.btn2Href}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )
+      }
+      {
+        section?.sectionType === "imgWithText" ||
+        (section?.sectionType === "video" && section?.imgPosition) ? (
+          <div
+            class={cn(
+              "relative isolate mx-auto max-w-7xl px-6 w-full lg:grid lg:grid-cols-2 lg:content-center lg:gap-x-10 lg:px-8",
+              section?.sectionType === "video" ? "block sm:hidden" : "",
+              section?.bannerMarginTopMobile
+                ? `mt-${section.bannerMarginTopMobile} sm:pt-0`
+                : ""
+            )}
+            style={`${section?.type !== "hero" ? "" : "padding-top:56px"} `}
+          >
+            {section?.bannerImg ? (
+              <div class="lg:flex-grow">
+                <img
+                  src={`/${section?.bannerImg}`}
+                  class={cn(
+                    "object-cover max-w-full drop-shadow-xl rounded-lg",
+                    section?.imgRounded ? `rounded-${section?.imgRounded}` : "",
+                    section?.extraStyleToTheImage
+                      ? section?.extraStyleToTheImage
+                      : ""
+                  )}
+                  alt={section?.imgAlt}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+            {section?.map ? (
+              <Map content={content} section={section} isChildComponent />
+            ) : (
+              ""
+            )}
+            <div
+              class={cn(
+                "lg:flex lg:flex-col justify-center items-center",
+                section?.imgPosition === "imgRight" ? "order-first" : "",
+                section?.isTextAlignCenter ? "text-center" : ""
+              )}
+            >
+              {section?.type === "hero" ? (
+                <div>
+                  <h1
+                    class={cn(
+                      "mt-10 max-w-lg text-4xl font-bold sm:text-6xl",
+                      section?.isTextAlignCenter ? "text-center" : ""
+                    )}
+                    style={`color:${section?.titleColor};`}
+                  >
+                    {section?.title.map((line: string, index: number) => (
+                      <Fragment key={index}>
+                        <span class="block mt-4">{line}</span>
+                      </Fragment>
+                    ))}
+                  </h1>
+
+                  {section?.description.map((info: string, index: number) => (
+                    <Fragment key={index}>
+                      <p
+                        class={cn(
+                          "mt-6 text-lg leading-8",
+                          section?.isTextAlignCenter ? "text-center" : ""
+                        )}
+                        style={`color:${section?.descriptionColor};`}
+                      >
+                        {info}
+                      </p>
+                    </Fragment>
+                  ))}
+
+                  <div class="flex gap-4 my-8 flex-col sm:flex-row">
+                    {section?.addOrderOnlineBtn ? (
+                      <OrderOnlineBtn
+                        content={content}
+                        text={
+                          section?.orderOnlineBtnInsteadText || "Order Online"
+                        }
+                        dataGlfCuid={content?.dataGlfCuidOrderOnline}
+                        dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {section?.addTableReservationBtn && (
+                      <OrderOnlineBtn
+                        content={content}
+                        text={
+                          section?.tableReservationBtnInsteadText ||
+                          "Table Reservation"
+                        }
+                        dataGlfCuid={content?.dataGlfCuidTableReservation}
+                        dataGlfRuid={content?.dataGlfGuidTableReservation}
+                      />
+                    )}
+                    {section?.showOtherBtn && section?.btn1Text ? (
+                      <PrimaryButton
+                        content={content}
+                        text={section?.btn1Text}
+                        href={section?.btn1Href}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {section?.showOtherBtn && section?.btn2Text ? (
+                      <SecondaryButton
+                        content={content}
+                        text={section?.btn2Text}
+                        href={section?.btn2Href}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {section?.type === "feature" ? (
+                <div>
+                  <h2
+                    class={cn(
+                      "mt-10 lg:mt-0 max-w-lg text-3xl font-bold tracking-tight sm:text-4xl",
+                      section?.isTextAlignCenter ? "text-center" : ""
+                    )}
+                    style={`color:${section?.titleColor};`}
+                  >
+                    {section?.title.map((line: string, index: number) => (
+                      <Fragment key={index}>
+                        <span class="block mt-2">{line}</span>
+                      </Fragment>
+                    ))}
+                  </h2>
+
+                  {section?.description.map((info: string, index: number) => (
+                    <Fragment key={index}>
+                      <p
+                        class={cn(
+                          "mt-6 text-lg leading-8",
+                          section?.isTextAlignCenter ? "text-center" : ""
+                        )}
+                        style={`color:${section?.descriptionColor};`}
+                      >
+                        {info}
+                      </p>
+                    </Fragment>
+                  ))}
+
+                  {section?.title2 ? (
+                    <h3
+                      class="mt-10 max-w-lg text-xl font-bold tracking-tight sm:text-2xl"
+                      style={`color:${section?.title2Color};`}
+                    >
+                      {section?.title2?.includes("<br/>")
+                        ? section?.title2
+                            .split("<br/>")
+                            .map((line: string, index: number) => (
+                              <Fragment key={index}>
+                                <span style={{ display: "block" }}>{line}</span>
+                              </Fragment>
+                            ))
+                        : section?.title2}
+                    </h3>
+                  ) : (
+                    ""
+                  )}
+                  {section?.description2 ? (
+                    <p
+                      class="mt-6 text-lg "
+                      style={`color:${section?.description2Color};`}
+                    >
+                      {section?.description2?.map(
+                        (info: string, index: number) => (
+                          <Fragment key={index}>
+                            <p
+                              class={cn(
+                                "mt-6 text-lg leading-8",
+                                section?.isTextAlignCenter ? "text-center" : ""
+                              )}
+                              style={`color:${section?.description2Color};`}
+                            >
+                              {info}
+                            </p>
+                          </Fragment>
+                        )
+                      )}
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                  <div class="flex my-8 flex-col sm:flex-row gap-4">
+                    {section?.addOrderOnlineBtn ? (
+                      <OrderOnlineBtn
+                        content={content}
+                        text={
+                          section?.orderOnlineBtnInsteadText || "Order Online"
+                        }
+                        dataGlfCuid={content?.dataGlfCuidOrderOnline}
+                        dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {section?.addTableReservationBtn && (
+                      <OrderOnlineBtn
+                        content={content}
+                        text={
+                          section?.tableReservationBtnInsteadText ||
+                          "Table Reservation"
+                        }
+                        dataGlfCuid={content?.dataGlfCuidTableReservation}
+                        dataGlfRuid={content?.dataGlfGuidTableReservation}
+                      />
+                    )}
+                    {section?.showOtherBtn && section?.btn1Text ? (
+                      <PrimaryButton
+                        content={content}
+                        text={section?.btn1Text}
+                        href={section?.btn1Href}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {section?.showOtherBtn && section?.btn2Text ? (
+                      <SecondaryButton
+                        content={content}
+                        text={section?.btn2Text}
+                        href={section?.btn2Href}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        ) : (
+          ""
+        )
+      }
+    </div>
+  </div>
+</section>
+<script>
+  // Function to mute the video
+  function muteGJWVideo() {
+    const iframe = document.getElementById("gjw-video") as HTMLIFrameElement;
+    if (iframe) {
+      const src = iframe.src;
+      // Add mute parameter if not already present
+      if (!src.includes("mute=1")) {
+        iframe.src = src + "&mute=1";
+      }
+    }
+  }
+
+  // Call the function after the iframe has loaded
+  document.getElementById("gjw-video")!.onload = function () {
+    muteGJWVideo();
+  };
+</script>

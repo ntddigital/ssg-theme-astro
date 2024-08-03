@@ -1,0 +1,129 @@
+---
+import { cn } from "../utils/cn";
+
+const { section } = Astro.props;
+---
+
+<section
+  id={`${section?.id || ""}`}
+  class={cn(
+    "px-6 scroll-mt-100 sm:scroll-mt-150",
+    section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32",
+    section?.bgImg ? "py-8 sm:py-16 lg:py-24" : "",
+    section?.isOnlyDisplayOnMobile ? "block sm:hidden" : ""
+  )}
+  style="scroll-margin-top: 150px;"
+>
+  <div class="mx-auto max-w-2xl pb-8">
+    <h2
+      class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center"
+    >
+      {
+        section?.title?.map((line: string, index: number) => (
+          <Fragment key={index}>
+            <span class="block mt-2">{line}</span>
+          </Fragment>
+        ))
+      }
+    </h2>
+
+    {
+      section?.description?.map((info: string, index: number) => (
+        <Fragment key={index}>
+          <p class="mt-4 text-lg leading-8 text-gray-600 text-center">{info}</p>
+        </Fragment>
+      ))
+    }
+  </div>
+  {
+    section?.bgImg ? (
+      <>
+        <img
+          src={`/${section?.bgImg}`}
+          alt={section?.bgImgAlt}
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+      </>
+    ) : null
+  }
+  <span
+    class="absolute -z-10 w-full inset-0 top-0 left-0"
+    style={`background-color:${section?.bgColor}; opacity: ${section?.bgOpacity}`}
+  ></span>
+  <div
+    class={`m-auto max-w-2xl md:max-w-7xl grid grid-cols-1 sm:grid-cols-${section?.isOnlyDisplayOnMobile ? 1 : section?.videoId?.length} md:gap-8 lg:gap-16 gap-4`}
+  >
+    {
+      section?.videoType === "vimeo"
+        ? section?.videoId?.map((id: string) => (
+            <Fragment key={id}>
+              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <iframe
+                  src={`https://player.vimeo.com/video/${id}?dnt=1&title=0&byline=0&portrait=0`}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  frameborder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
+              <script src="https://player.vimeo.com/api/player.js" />
+            </Fragment>
+          ))
+        : null
+    }
+
+    {
+      section?.videoType === "gjw"
+        ? section?.videoId?.map((id: string) => (
+            <Fragment key={id}>
+              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <iframe
+                  src={`https://www.ganjingworld.com/embed/${id}`}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  frameborder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
+            </Fragment>
+          ))
+        : null
+    }
+
+    {
+      section?.videoType === "youtube"
+        ? section?.videoId?.map((id: string) => (
+            <Fragment key={id}>
+              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${id}`}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  frameborder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowfullscreen
+                />
+              </div>
+            </Fragment>
+          ))
+        : null
+    }
+  </div>
+</section>

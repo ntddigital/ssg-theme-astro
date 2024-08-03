@@ -1,0 +1,17 @@
+---
+import { cn } from "../../utils/cn";
+
+const { content, text, href, backgroundColor } = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    "rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
+    `${content?.primaryColorScheme === "dark" ? "text-white" : "text-black"}`
+  )}
+  style={`background-color:${backgroundColor ? backgroundColor : content?.primaryColor};`}
+  target="_blank"
+>
+  {text}
+</a>

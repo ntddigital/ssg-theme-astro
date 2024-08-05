@@ -19,7 +19,7 @@ const {
   style={`background-color:${backgroundColor ? backgroundColor : content?.primaryColor};`}
   data-glf-cuid={dataGlfCuid}
   data-glf-ruid={dataGlfRuid}
-  {...isReservation ? { "data-glf-reservation": "" } : {}}
+  {...isReservation ? { "data-glf-reservation": "true" } : {}}
 >
   {text}
 </span>

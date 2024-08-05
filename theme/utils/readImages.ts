@@ -46,8 +46,6 @@ export function getImagesFromFolders(folders: string): ImageInfo[] {
     return folder.trim();
   });
   
-  console.log("folderPaths", folderPaths);
-
   let images: ImageInfo[] = [];
 
   folderPaths.forEach(folderPath => {

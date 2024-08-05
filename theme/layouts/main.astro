@@ -12,12 +12,13 @@ import GoogleForm from "../components/GoogleForm.astro";
 import "../style/global.css";
 
 const { content } = Astro.props;
+const tag = content.tag;
 ---
 
 <html lang="en">
   <head>
     <!-- Google Tag Manager -->
-    <script define:vars={{ content }}>
+    <script define:vars={{ tag }}>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -27,7 +28,7 @@ const { content } = Astro.props;
         j.async = true;
         j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
         f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", content.tag);
+      })(window, document, "script", "dataLayer", tag);
     </script>
     <!-- End Google Tag Manager -->
     <meta charset="utf-8" />

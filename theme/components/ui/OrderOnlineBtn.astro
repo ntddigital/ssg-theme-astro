@@ -1,8 +1,14 @@
 ---
 import { cn } from "../../utils/cn";
 
-const { content, text, backgroundColor, dataGlfCuid, dataGlfRuid } =
-  Astro.props;
+const {
+  content,
+  text,
+  backgroundColor,
+  dataGlfCuid,
+  dataGlfRuid,
+  isReservation,
+} = Astro.props;
 ---
 
 <span
@@ -13,6 +19,7 @@ const { content, text, backgroundColor, dataGlfCuid, dataGlfRuid } =
   style={`background-color:${backgroundColor ? backgroundColor : content?.primaryColor};`}
   data-glf-cuid={dataGlfCuid}
   data-glf-ruid={dataGlfRuid}
+  {...isReservation ? { "data-glf-reservation": "" } : {}}
 >
   {text}
 </span>

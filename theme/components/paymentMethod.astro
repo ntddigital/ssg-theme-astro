@@ -2,7 +2,12 @@
 const { content } = Astro.props;
 ---
 
-<div class="pb-10 leading-8">
+<div
+  class="pb-10 leading-8"
+  style={content?.footer?.textColor
+    ? `color:${content?.footer?.textColor}`
+    : `color:#ffffff`}
+>
   <div class="font-semibold pb-4">Accepted Payment Methods</div>
   <div class="flex justify-center items-center gap-4">
     <!-- 0.AMEX -->

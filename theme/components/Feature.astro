@@ -92,8 +92,8 @@ const { content, section } = Astro.props;
                   <OrderOnlineBtn
                     content={content}
                     text={section?.orderOnlineBtnInsteadText || "Order Online"}
-                    dataGlfCuid={content?.dataGlfCuidOrderOnline}
-                    dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                    dataGlfCuid={content?.cuid}
+                    dataGlfRuid={content?.ruid}
                   />
                 ) : (
                   ""
@@ -105,8 +105,9 @@ const { content, section } = Astro.props;
                       section?.tableReservationBtnInsteadText ||
                       "Table Reservation"
                     }
-                    dataGlfCuid={content?.dataGlfCuidTableReservation}
-                    dataGlfRuid={content?.dataGlfGuidTableReservation}
+                    dataGlfCuid={content?.cuid}
+                    dataGlfRuid={content?.ruid}
+                    isReservation
                   />
                 )}
                 {section?.showOtherBtn && section?.btn1Text ? (
@@ -140,7 +141,7 @@ const { content, section } = Astro.props;
       section?.bgImg ? (
         <img
           src={`/${section?.bgImg}`}
-          alt={section?.bgImgAlt}
+          alt={content?.title}
           class={cn(
             "absolute inset-0 -z-10 h-full w-full object-cover",
             `${section?.sectionType === "video" ? "sm:hidden" : ""}`
@@ -167,7 +168,7 @@ const { content, section } = Astro.props;
         <span>
           <span
             class="absolute -z-10 w-full h-16 inset-x-0 bottom-0 left-0 text-white font-semibold flex justify-center items-center"
-            style="background-color:#000000; opacity: 0.95"
+            style="background-color:#000000; opacity: 0.55"
           >
             {section?.bottomInfo}
           </span>
@@ -222,8 +223,8 @@ const { content, section } = Astro.props;
                       text={
                         section?.orderOnlineBtnInsteadText || "Order Online"
                       }
-                      dataGlfCuid={content?.dataGlfCuidOrderOnline}
-                      dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                      dataGlfCuid={content?.cuid}
+                      dataGlfRuid={content?.ruid}
                     />
                   ) : (
                     ""
@@ -235,8 +236,9 @@ const { content, section } = Astro.props;
                         section?.tableReservationBtnInsteadText ||
                         "Table Reservation"
                       }
-                      dataGlfCuid={content?.dataGlfCuidTableReservation}
-                      dataGlfRuid={content?.dataGlfGuidTableReservation}
+                      dataGlfCuid={content?.cuid}
+                      dataGlfRuid={content?.ruid}
+                      isReservation
                     />
                   )}
                   {section?.showOtherBtn && section?.btn1Text ? (
@@ -289,7 +291,7 @@ const { content, section } = Astro.props;
                       ? section?.extraStyleToTheImage
                       : ""
                   )}
-                  alt={section?.imgAlt}
+                  alt={content?.title}
                 />
               </div>
             ) : (
@@ -344,8 +346,8 @@ const { content, section } = Astro.props;
                         text={
                           section?.orderOnlineBtnInsteadText || "Order Online"
                         }
-                        dataGlfCuid={content?.dataGlfCuidOrderOnline}
-                        dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                        dataGlfCuid={content?.cuid}
+                        dataGlfRuid={content?.ruid}
                       />
                     ) : (
                       ""
@@ -357,8 +359,9 @@ const { content, section } = Astro.props;
                           section?.tableReservationBtnInsteadText ||
                           "Table Reservation"
                         }
-                        dataGlfCuid={content?.dataGlfCuidTableReservation}
-                        dataGlfRuid={content?.dataGlfGuidTableReservation}
+                        dataGlfCuid={content?.cuid}
+                        dataGlfRuid={content?.ruid}
+                        isReservation
                       />
                     )}
                     {section?.showOtherBtn && section?.btn1Text ? (
@@ -464,8 +467,8 @@ const { content, section } = Astro.props;
                         text={
                           section?.orderOnlineBtnInsteadText || "Order Online"
                         }
-                        dataGlfCuid={content?.dataGlfCuidOrderOnline}
-                        dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                        dataGlfCuid={content?.cuid}
+                        dataGlfRuid={content?.ruid}
                       />
                     ) : (
                       ""
@@ -477,8 +480,9 @@ const { content, section } = Astro.props;
                           section?.tableReservationBtnInsteadText ||
                           "Table Reservation"
                         }
-                        dataGlfCuid={content?.dataGlfCuidTableReservation}
-                        dataGlfRuid={content?.dataGlfGuidTableReservation}
+                        dataGlfCuid={content?.cuid}
+                        dataGlfRuid={content?.ruid}
+                        isReservation
                       />
                     )}
                     {section?.showOtherBtn && section?.btn1Text ? (

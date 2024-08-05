@@ -1,7 +1,7 @@
 ---
 import { cn } from "../utils/cn";
 
-const { section } = Astro.props;
+const { content, section } = Astro.props;
 ---
 
 <section
@@ -40,7 +40,7 @@ const { section } = Astro.props;
       <>
         <img
           src={`/${section?.bgImg}`}
-          alt={section?.bgImgAlt}
+          alt={content?.title + " Logo"}
           class="absolute inset-0 -z-10 h-full w-full object-cover"
         />
       </>

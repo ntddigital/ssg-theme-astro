@@ -6,7 +6,13 @@ import { cn } from "../utils/cn";
 const { content, section, isChildComponent } = Astro.props;
 ---
 
-<div id={`${section?.id || ""}`} class="scroll-mt-100 sm:scroll-mt-250"></div>
+{
+  isChildComponent ? null : (
+    <div id={section?.id || ""} class="scroll-mt-100 sm:scroll-mt-250" />
+  )
+}
+
+<!-- <div id={`${section?.id || ""}`} class="scroll-mt-100 sm:scroll-mt-250"></div> -->
 <section
   class={cn(
     "relative ",

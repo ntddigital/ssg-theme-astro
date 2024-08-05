@@ -66,13 +66,13 @@ const { content } = Astro.props;
           <img
             class={`hidden sm:block h-24 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={content?.header?.title + " Logo"}
+            alt={content?.title + " Logo"}
             style={`height:${content?.header?.logoSize}px`}
           />
           <img
             class={`block sm:hidden h-10 mx-2`}
             src={`/${content?.logo}`}
-            alt={content?.header?.title + " Logo"}
+            alt={content?.title + " Logo"}
           />
           {
             content?.header?.textAfterLogo ? (
@@ -119,8 +119,8 @@ const { content } = Astro.props;
               text={
                 content?.header?.orderOnlineBtnInsteadText || "Order Online"
               }
-              dataGlfCuid={content?.dataGlfCuidOrderOnline}
-              dataGlfRuid={content?.dataGlfRuidOrderOnline}
+              dataGlfCuid={content?.cuid}
+              dataGlfRuid={content?.ruid}
             />
           ) : (
             ""
@@ -134,8 +134,9 @@ const { content } = Astro.props;
                 content?.header?.orderOnlineBtnInsteadText ||
                 "Table Reservation"
               }
-              dataGlfCuid={content?.dataGlfCuidTableReservation}
-              dataGlfRuid={content?.dataGlfGuidTableReservation}
+              dataGlfCuid={content?.cuid}
+              dataGlfRuid={content?.ruid}
+              isReservation
             />
           )
         }
@@ -241,7 +242,7 @@ const { content } = Astro.props;
             <img
               class="h-12 w-auto"
               src={`/${content?.logo}`}
-              alt={content?.header?.title + "Logo"}
+            alt={content?.title + " Logo"}
             />
           </a> -->
           <div class="flex items-center">
@@ -252,8 +253,8 @@ const { content } = Astro.props;
                   text={
                     content?.header?.orderOnlineBtnInsteadText || "Order Online"
                   }
-                  dataGlfCuid={content?.dataGlfCuidOrderOnline}
-                  dataGlfRuid={content?.dataGlfRuidOrderOnline}
+                  dataGlfCuid={content?.cuid}
+                  dataGlfRuid={content?.ruid}
                 />
               ) : (
                 ""
@@ -267,8 +268,9 @@ const { content } = Astro.props;
                     content?.header?.orderOnlineBtnInsteadText ||
                     "Table Reservation"
                   }
-                  dataGlfCuid={content?.dataGlfCuidTableReservation}
-                  dataGlfRuid={content?.dataGlfGuidTableReservation}
+                  dataGlfCuid={content?.cuid}
+                  dataGlfRuid={content?.ruid}
+                  isReservation
                 />
               )
             }

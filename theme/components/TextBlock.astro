@@ -1,6 +1,6 @@
 ---
 import { cn } from "../utils/cn";
-const { section } = Astro.props;
+const { content, section } = Astro.props;
 ---
 
 <section
@@ -21,7 +21,7 @@ const { section } = Astro.props;
       section?.bgImg ? (
         <img
           src={`${section?.bgImg}`}
-          alt={section?.bgImgAlt}
+          alt={content?.title + " Logo"}
           class={cn(
             "absolute inset-0 -z-10 h-full w-full object-cover",
             `${section?.sectionType === "video" ? "sm:hidden" : ""}`

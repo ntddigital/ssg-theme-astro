@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
     content?.footer?.bgImg ? (
       <img
         src={`/${content?.footer?.bgImg}`}
-        alt={content?.footer?.bgImgAlt}
+        alt={content?.title}
         class={`${content?.footer?.bgType === "video" ? "sm:hidden" : ""} absolute inset-0 -z-10 h-full w-full object-cover`}
       />
     ) : null
@@ -35,7 +35,7 @@ const currentYear = new Date().getFullYear();
           <img
             class={`h-48 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={content?.header?.title + " Logo"}
+            alt={content?.title + "Logo"}
             style={`height:${content?.footer?.logoSize}px`}
           />
         </div>
@@ -46,7 +46,14 @@ const currentYear = new Date().getFullYear();
 
     {
       content?.footer?.openingHours ? (
-        <div class="pb-10 leading-8">
+        <div
+          class="pb-10 leading-8"
+          style={
+            content?.footer?.textColor
+              ? `color:${content?.footer?.textColor}`
+              : `color:#ffffff`
+          }
+        >
           <div class="font-semibold">
             {content?.footer?.openingHoursInsteadText
               ? content?.footer?.openingHoursInsteadText
@@ -73,6 +80,11 @@ const currentYear = new Date().getFullYear();
                   <a
                     href={item?.link}
                     class="text-sm leading-6 text-white hover:text-gray-300"
+                    style={
+                      content?.footer?.textColor
+                        ? `color:${content?.footer?.textColor}`
+                        : `color:#ffffff`
+                    }
                   >
                     {item?.text}
                   </a>

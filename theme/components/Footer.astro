@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
     content?.footer?.bgImg ? (
       <img
         src={`/${content?.footer?.bgImg}`}
-        alt={content?.title}
+        alt={content?.footer?.bgImgAlt}
         class={`${content?.footer?.bgType === "video" ? "sm:hidden" : ""} absolute inset-0 -z-10 h-full w-full object-cover`}
       />
     ) : null
@@ -35,7 +35,7 @@ const currentYear = new Date().getFullYear();
           <img
             class={`h-48 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={content?.title + "Logo"}
+            alt={content?.header?.title + " Logo"}
             style={`height:${content?.footer?.logoSize}px`}
           />
         </div>
@@ -206,7 +206,12 @@ const currentYear = new Date().getFullYear();
     {
       content?.footer?.paymentMethod ? (
         <div class="mt-8">
-          <PaymentMethod content={content} />
+          <PaymentMethod
+            content={content}
+            acceptedPaymentMethodsInsteadText={
+              content?.footer?.acceptedPaymentMethodsInsteadText
+            }
+          />
         </div>
       ) : (
         ""

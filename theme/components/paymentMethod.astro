@@ -1,14 +1,20 @@
 ---
-const { content } = Astro.props;
+const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
 ---
 
-<div
-  class="pb-10 leading-8"
-  style={content?.footer?.textColor
-    ? `color:${content?.footer?.textColor}`
-    : `color:#ffffff`}
->
-  <div class="font-semibold pb-4">Accepted Payment Methods</div>
+<div class="pb-10 leading-8">
+  <div
+    class="font-semibold pb-4"
+    style={content?.footer?.textColor
+      ? `color:${content?.footer?.textColor}`
+      : `color:#ffffff`}
+  >
+    {
+      acceptedPaymentMethodsInsteadText
+        ? acceptedPaymentMethodsInsteadText
+        : "Accepted Payment Methods"
+    }
+  </div>
   <div class="flex justify-center items-center gap-4">
     <!-- 0.AMEX -->
     {

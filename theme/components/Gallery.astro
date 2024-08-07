@@ -3,7 +3,7 @@ import { getImagesFromFolders } from "../utils/readImages";
 import { cn } from "../utils/cn";
 
 const { section } = Astro.props;
-const images = await getImagesFromFolders("/public/" + section?.folderPath);
+const images = getImagesFromFolders("/public/" + section?.folderPath);
 ---
 
 <section

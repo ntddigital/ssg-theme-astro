@@ -18,7 +18,7 @@ const tag = content.tag;
 <html lang="en">
   <head>
     <!-- Google Tag Manager -->
-    <script define:vars={{ tag }}>
+    <script is:inline define:vars={{ tag }}>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
@@ -147,7 +147,10 @@ const tag = content.tag;
     <GotoTopButton content={content} />
     <slot />
 
-    <script src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async
-    ></script>
+    <script
+      is:inline
+      src="https://www.fbgcdn.com/embedder/js/ewm2.js"
+      defer
+      async></script>
   </body>
 </html>

@@ -33,7 +33,14 @@ const tag = content.tag;
     <!-- End Google Tag Manager -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{content?.title}</title>
+
+    {
+      content?.seo?.metaTitle ? (
+        <title>{content?.seo?.metaTitle}</title>
+      ) : (
+        <title>{content?.title}</title>
+      )
+    }
     {
       content?.seo?.metaDescription ? (
         <meta name="description" content={content.seo.metaDescription} />

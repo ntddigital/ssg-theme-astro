@@ -15,9 +15,11 @@ const { content } = Astro.props;
         <div
           id="headBanner"
           class="z-[9999999999] relative isolate flex items-center gap-x-6 overflow-hidden px-6 py-2.5 sm:px-3.5 sm:before:flex-1"
-          style={`background-color: ${content?.banner?.bgColor}; opacity:${content?.banner?.bgOpacity};`}
+          style={`background-color: ${content?.primaryColor};`}
         >
-          <div style={`color:${content?.banner?.textColor}`}>
+          <div
+            style={`color:${content.primaryColorScheme === "dark" ? "#ffffff" : "#000000"}`}
+          >
             {content?.banner?.text?.map(
               (item: { boldText: string; text: string; smText: string }) => {
                 return (
@@ -41,7 +43,9 @@ const { content } = Astro.props;
               <svg
                 class="h-5 w-5 text-gray-900"
                 viewBox="0 0 20 20"
-                fill="currentColor"
+                fill={
+                  content.primaryColorScheme === "dark" ? "#ffffff" : "#000000"
+                }
                 aria-hidden="true"
               >
                 <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />

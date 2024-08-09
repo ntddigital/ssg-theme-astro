@@ -192,7 +192,8 @@ const { content } = Astro.props;
             <a
               class="flex items-center gap-2 cursor-pointer hover:scale-105"
               style={`color:${content?.header?.telTextColor}`}
-              href={`tel:${content?.tel}`}
+              href={`tel:${content?.trackingNum ? content?.trackingNum : content?.tel}`}
+              id="headerTelBtn"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

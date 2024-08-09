@@ -77,7 +77,7 @@ const { content } = Astro.props;
           />
           <img
             class={`block sm:hidden h-10 mx-2`}
-            src={`/${content?.logo}`}
+            src={`/${content?.header?.logoOnMobile ? content?.header?.logoOnMobile : content?.logo}`}
             alt={content?.title + " Logo"}
           />
           {

@@ -275,7 +275,7 @@ const { content, section } = Astro.props;
               "relative isolate mx-auto max-w-7xl px-6 w-full lg:grid lg:grid-cols-2 lg:content-center lg:gap-x-10 lg:px-8",
               section?.sectionType === "video" ? "block sm:hidden" : "",
               section?.bannerMarginTopMobile
-                ? `mt-${section.bannerMarginTopMobile} sm:pt-0`
+                ? `mt-${section.bannerMarginTopMobile} mb-${section.bannerMarginTopMobile} sm:pt-0`
                 : ""
             )}
             style={`${section?.type !== "hero" ? "" : "padding-top:56px"} `}

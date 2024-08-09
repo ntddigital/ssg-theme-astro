@@ -399,7 +399,7 @@ const { content, section } = Astro.props;
                   >
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>
-                        <span class="block mt-2">{line}</span>
+                        <span class="block leading-16">{line}</span>
                       </Fragment>
                     ))}
                   </h2>
@@ -417,7 +417,6 @@ const { content, section } = Astro.props;
                       </p>
                     </Fragment>
                   ))}
-
                   {section?.title2 ? (
                     <h3
                       class="mt-10 max-w-lg text-xl font-bold tracking-tight sm:text-2xl"

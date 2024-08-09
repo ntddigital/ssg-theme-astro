@@ -8,10 +8,10 @@ const { content, section } = Astro.props;
     "relative scroll-mt-100 sm:scroll-mt-150",
     section?.noMarginTop
       ? ""
-      : section?.bgImg
+      : section?.bgImg || section?.bgColor
         ? "mt-16 sm:mt-24 md:mt-32"
         : "pt-16 sm:pt-24 md:pt-32",
-    section?.bgImg ? "py-16 sm:py-20 lg:py-24" : ""
+    section?.bgImg || section?.bgColor ? "py-16 sm:py-20 lg:py-24" : ""
   )}
   style="scroll-margin-top: 150px;"
   id={`${section?.id || ""}`}
@@ -58,7 +58,7 @@ const { content, section } = Astro.props;
       section?.description?.map((line: string, index: number) => (
         <Fragment key={index}>
           <p
-            class="text-lg leading-8 mb-8"
+            class="text-lg leading-8 mt-8"
             style={`color:${section?.descriptionColor}`}
           >
             {line}

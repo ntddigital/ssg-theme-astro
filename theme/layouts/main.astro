@@ -31,6 +31,50 @@ const tag = content.tag;
       })(window, document, "script", "dataLayer", tag);
     </script>
     <!-- End Google Tag Manager -->
+    <!-- modal -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("promoModal");
+        const overlay = document.getElementById("overlay");
+        const closeModal = document.getElementById("closeModal");
+        const promoButton = document.getElementById("promoButton");
+
+        // Check the modal status in localStorage
+        const modalStatus = localStorage.getItem("promoModalShown");
+        const now = new Date().getTime();
+
+        if (!modalStatus || now - parseInt(modalStatus) > 30 * 60 * 1000) {
+          // Show the modal and overlay after a 3-second delay
+          setTimeout(() => {
+            modal?.classList.add("show");
+            overlay?.classList.add("show");
+          }, 3000);
+        }
+
+        function closeModalAndRecord() {
+          modal?.classList.remove("show");
+          overlay?.classList.remove("show");
+          localStorage.setItem(
+            "promoModalShown",
+            new Date().getTime().toString()
+          );
+        }
+
+        closeModal?.addEventListener("click", closeModalAndRecord);
+        overlay?.addEventListener("click", closeModalAndRecord);
+
+        // stop bounce
+        promoButton?.addEventListener("mouseover", () => {
+          promoButton?.classList.remove("bounce");
+        });
+
+        // recover bounce
+        promoButton?.addEventListener("mouseout", () => {
+          promoButton?.classList.add("bounce");
+        });
+      });
+    </script>
+    <!-- end of modal -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
 

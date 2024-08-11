@@ -76,9 +76,10 @@ const { content } = Astro.props;
             style={`height:${content?.header?.logoSize}px`}
           />
           <img
-            class={`block sm:hidden h-10 mx-2`}
-            src={`/${content?.header?.logoOnMobile ? content?.header?.logoOnMobile : content?.logo}`}
+            class={`block sm:hidden mx-2`}
+            src={`/${content?.logo}`}
             alt={content?.title + " Logo"}
+            style={`height:${content?.header?.logoSizeOnMobile ? content?.header?.logoSizeOnMobile : "40"}px`}
           />
           {
             content?.header?.textAfterLogo ? (
@@ -123,7 +124,7 @@ const { content } = Astro.props;
         }
       </div>
       <div
-        class="cursor-pointer flex sm:flex-1 items-center justify-center sm:justify-end gap-x-2 sm:gap-x-6"
+        class="cursor-pointer flex flex-1 items-center justify-end gap-x-2 sm:gap-x-6"
       >
         {
           content?.header?.addOrderOnlineBtn ? (

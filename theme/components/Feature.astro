@@ -32,7 +32,7 @@ const { content, section } = Astro.props;
     `}
   >
     {
-      section?.sectionType === "video" ? (
+      section?.sectionType === "video" && section?.bgVideoId ? (
         <div
           class="hidden sm:block h-full overflow-hidden"
           style="padding:56.25% 0 0 0;position:relative;"
@@ -148,7 +148,6 @@ const { content, section } = Astro.props;
             "absolute inset-0 -z-10 h-full w-full object-cover",
             `${section?.sectionType === "video" ? "sm:hidden" : ""}`
           )}
-          loading="lazy"
         />
       ) : (
         ""

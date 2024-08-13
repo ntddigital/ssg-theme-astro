@@ -62,7 +62,7 @@ export function getImagesFromFolders(folders: string): ImageInfo[] {
 
       images = images.concat(folderImages);
     } catch (err) {
-      console.error(`Failed to read directory ${imagesDir}:`, err);
+      // console.error(`Failed to read directory ${imagesDir}:`, err);
     }
   });
 

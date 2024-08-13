@@ -48,7 +48,9 @@ const { content, section } = Astro.props;
                     ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
                     : ""
             }
-            title={content?.title}
+            title={
+              content?.seo?.metaTitle ? content?.seo?.metaTitle : content?.title
+            }
             class="absolute inset-0 -z-10 h-full w-full object-cover"
             allow="accelerometer; autoplay;"
             allowfullscreen
@@ -146,6 +148,7 @@ const { content, section } = Astro.props;
             "absolute inset-0 -z-10 h-full w-full object-cover",
             `${section?.sectionType === "video" ? "sm:hidden" : ""}`
           )}
+          loading="lazy"
         />
       ) : (
         ""
@@ -292,6 +295,7 @@ const { content, section } = Astro.props;
                       : ""
                   )}
                   alt={content?.title}
+                  loading="lazy"
                 />
               </div>
             ) : (

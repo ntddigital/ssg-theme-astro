@@ -19,97 +19,145 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
     <!-- 0.AMEX -->
     {
       content?.footer?.paymentMethod?.includes("amex") && (
-        <img src={`/paymentMethods/amex.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/amex.svg`}
+          class="w-12"
+          alt="American Express logo"
+        />
       )
     }
     <!-- 1.aliPay -->
     {
       content?.footer?.paymentMethod?.includes("aliPay") && (
-        <img src={`/paymentMethods/aliPay.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/aliPay.svg`}
+          class="w-12"
+          alt="AliPay logo"
+        />
       )
     }
 
     <!-- 2.applePay -->
     {
       content?.footer?.paymentMethod?.includes("applePay") && (
-        <img src={`/paymentMethods/applePay.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/applePay.svg`}
+          class="w-12"
+          alt="applePay logo"
+        />
       )
     }
 
     <!-- 3.cash -->
     {
       content?.footer?.paymentMethod?.includes("cash") && (
-        <img src={`/paymentMethods/cash.png`} class="w-12" />
+        <img
+          src={`/paymentMethods/cash.png`}
+          class="w-12"
+          alt="Cash payment logo"
+        />
       )
     }
 
     <!-- 4.discover -->
     {
       content?.footer?.paymentMethod?.includes("discover") && (
-        <img src={`/paymentMethods/discover.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/discover.svg`}
+          class="w-12"
+          alt="Discover logo"
+        />
       )
     }
 
     <!-- 5.googlePay -->
     {
       content?.footer?.paymentMethod?.includes("googlePay") && (
-        <img src={`/paymentMethods/googlePay.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/googlePay.svg`}
+          class="w-12"
+          alt="Google Pay logo"
+        />
       )
     }
 
     <!-- 6.jcb -->
     {
       content?.footer?.paymentMethod?.includes("jcb") && (
-        <img src={`/paymentMethods/jcb.svg`} class="w-12" />
+        <img src={`/paymentMethods/jcb.svg`} class="w-12" alt="JCB logo" />
       )
     }
 
     <!-- 7.maestro -->
     {
       content?.footer?.paymentMethod?.includes("maestro") && (
-        <img src={`/paymentMethods/maestro.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/maestro.svg`}
+          class="w-12"
+          alt="Maestro logo"
+        />
       )
     }
 
     <!-- 8.mastercard -->
     {
       content?.footer?.paymentMethod?.includes("mastercard") && (
-        <img src={`/paymentMethods/mastercard.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/mastercard.svg`}
+          class="w-12"
+          alt="MasterCard logo"
+        />
       )
     }
 
     <!-- 9.payPal -->
     {
       content?.footer?.paymentMethod?.includes("payPal") && (
-        <img src={`/paymentMethods/payPal.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/payPal.svg`}
+          class="w-12"
+          alt="PayPal logo"
+        />
       )
     }
 
     <!-- 10.stripe -->
     {
       content?.footer?.paymentMethod?.includes("stripe") && (
-        <img src={`/paymentMethods/stripe.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/stripe.svg`}
+          class="w-12"
+          alt="Stripe logo"
+        />
       )
     }
 
     <!-- 11.unionPay -->
     {
       content?.footer?.paymentMethod?.includes("unionPay") && (
-        <img src={`/paymentMethods/unionPay.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/unionPay.svg`}
+          class="w-12"
+          alt="UnionPay logo"
+        />
       )
     }
 
     <!-- 12.visa -->
     {
       content?.footer?.paymentMethod?.includes("visa") && (
-        <img src={`/paymentMethods/visa.svg`} class="w-12" />
+        <img src={`/paymentMethods/visa.svg`} class="w-12" alt="Visa logo" />
       )
     }
 
     <!-- 13.weChatPay -->
     {
       content?.footer?.paymentMethod?.includes("weChatPay") && (
-        <img src={`/paymentMethods/weChatPay.svg`} class="w-12" />
+        <img
+          src={`/paymentMethods/weChatPay.svg`}
+          class="w-12"
+          alt="WeChat Pay logo"
+        />
       )
     }
   </div>

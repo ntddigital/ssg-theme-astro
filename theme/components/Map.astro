@@ -71,5 +71,6 @@ const { content, section, isChildComponent } = Astro.props;
     allowfullscreen=""
     loading="lazy"
     height="500"
-    referrerpolicy="no-referrer-when-downgrade"></iframe>
+    referrerpolicy="no-referrer-when-downgrade"
+    title={`Google Map for ${content?.title}`}></iframe>
 </section>

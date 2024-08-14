@@ -18,6 +18,7 @@ const currentYear = new Date().getFullYear();
         src={`/${content?.footer?.bgImg}`}
         alt={content?.footer?.bgImgAlt}
         class={`${content?.footer?.bgType === "video" ? "sm:hidden" : ""} absolute inset-0 -z-10 h-full w-full object-cover`}
+        loading="lazy"
       />
     ) : null
   }
@@ -37,6 +38,7 @@ const currentYear = new Date().getFullYear();
             src={`/${content?.logo}`}
             alt={content?.header?.title + " Logo"}
             style={`height:${content?.footer?.logoSize}px`}
+            loading="lazy"
           />
         </div>
       ) : (

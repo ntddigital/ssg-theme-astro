@@ -119,6 +119,7 @@ const { content, section } = Astro.props;
               alt={`${section?.imgAlt}`}
               style="width: 100%; border-radius: 10px;"
               class="mt-4"
+              loading="lazy"
             />
           </a>
         ) : (
@@ -127,6 +128,7 @@ const { content, section } = Astro.props;
             alt={`${section?.imgAlt}`}
             style="width: 100%; border-radius: 10px;"
             class="mt-4"
+            loading="lazy"
           />
         )
       ) : (

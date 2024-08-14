@@ -42,6 +42,7 @@ const { content, section } = Astro.props;
           src={`/${section?.bgImg}`}
           alt={content?.title + " Logo"}
           class="absolute inset-0 -z-10 h-full w-full object-cover"
+          loading="lazy"
         />
       </>
     ) : null

@@ -23,6 +23,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/amex.svg`}
           class="w-12"
           alt="American Express logo"
+          loading="lazy"
         />
       )
     }
@@ -33,6 +34,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/aliPay.svg`}
           class="w-12"
           alt="AliPay logo"
+          loading="lazy"
         />
       )
     }
@@ -44,6 +46,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/applePay.svg`}
           class="w-12"
           alt="applePay logo"
+          loading="lazy"
         />
       )
     }
@@ -55,6 +58,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/cash.png`}
           class="w-12"
           alt="Cash payment logo"
+          loading="lazy"
         />
       )
     }
@@ -66,6 +70,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/discover.svg`}
           class="w-12"
           alt="Discover Card logo"
+          loading="lazy"
         />
       )
     }
@@ -77,6 +82,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/googlePay.svg`}
           class="w-12"
           alt="Google Pay logo"
+          loading="lazy"
         />
       )
     }
@@ -84,7 +90,12 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
     <!-- 6.jcb -->
     {
       content?.footer?.paymentMethod?.includes("jcb") && (
-        <img src={`/paymentMethods/jcb.svg`} class="w-12" alt="JCB logo" />
+        <img
+          src={`/paymentMethods/jcb.svg`}
+          class="w-12"
+          alt="JCB logo"
+          loading="lazy"
+        />
       )
     }
 
@@ -95,6 +106,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/maestro.svg`}
           class="w-12"
           alt="Maestro logo"
+          loading="lazy"
         />
       )
     }
@@ -106,6 +118,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/mastercard.svg`}
           class="w-12"
           alt="MasterCard logo"
+          loading="lazy"
         />
       )
     }
@@ -117,6 +130,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/payPal.svg`}
           class="w-12"
           alt="PayPal logo"
+          loading="lazy"
         />
       )
     }
@@ -128,6 +142,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/stripe.svg`}
           class="w-12"
           alt="Stripe logo"
+          loading="lazy"
         />
       )
     }
@@ -139,6 +154,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/unionPay.svg`}
           class="w-12"
           alt="UnionPay logo"
+          loading="lazy"
         />
       )
     }
@@ -146,7 +162,12 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
     <!-- 12.visa -->
     {
       content?.footer?.paymentMethod?.includes("visa") && (
-        <img src={`/paymentMethods/visa.svg`} class="w-12" alt="Visa logo" />
+        <img
+          src={`/paymentMethods/visa.svg`}
+          class="w-12"
+          alt="Visa logo"
+          loading="lazy"
+        />
       )
     }
 
@@ -157,6 +178,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
           src={`/paymentMethods/weChatPay.svg`}
           class="w-12"
           alt="WeChat Pay logo"
+          loading="lazy"
         />
       )
     }

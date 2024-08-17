@@ -297,7 +297,6 @@ const { content, section } = Astro.props;
                       : ""
                   )}
                   alt={content?.title}
-                  loading="lazy"
                 />
               </div>
             ) : (
@@ -310,9 +309,9 @@ const { content, section } = Astro.props;
             )}
             <div
               class={cn(
-                "lg:flex lg:flex-col justify-center items-center",
+                "lg:flex lg:flex-col justify-center ",
                 section?.imgPosition === "imgRight" ? "order-first" : "",
-                section?.isTextAlignCenter ? "text-center" : ""
+                section?.isTextAlignCenter ? "text-center sm:text-left" : ""
               )}
             >
               {section?.type === "hero" ? (
@@ -320,7 +319,9 @@ const { content, section } = Astro.props;
                   <h1
                     class={cn(
                       "mt-10 max-w-lg text-4xl font-bold sm:text-6xl",
-                      section?.isTextAlignCenter ? "text-center" : ""
+                      section?.isTextAlignCenter
+                        ? "text-center sm:text-left"
+                        : ""
                     )}
                     style={`color:${section?.titleColor};`}
                   >
@@ -336,7 +337,9 @@ const { content, section } = Astro.props;
                       <p
                         class={cn(
                           "mt-6 text-lg leading-8",
-                          section?.isTextAlignCenter ? "text-center" : ""
+                          section?.isTextAlignCenter
+                            ? "text-center sm:text-left"
+                            : ""
                         )}
                         style={`color:${section?.descriptionColor};`}
                       >
@@ -399,7 +402,9 @@ const { content, section } = Astro.props;
                   <h2
                     class={cn(
                       "mt-10 lg:mt-0 max-w-lg text-3xl font-bold tracking-tight sm:text-4xl",
-                      section?.isTextAlignCenter ? "text-center" : ""
+                      section?.isTextAlignCenter
+                        ? "text-center sm:text-left"
+                        : "text-left"
                     )}
                     style={`color:${section?.titleColor};`}
                   >
@@ -415,7 +420,9 @@ const { content, section } = Astro.props;
                       <p
                         class={cn(
                           "mt-6 text-lg leading-8",
-                          section?.isTextAlignCenter ? "text-center" : ""
+                          section?.isTextAlignCenter
+                            ? "text-center sm:text-left"
+                            : ""
                         )}
                         style={`color:${section?.descriptionColor};`}
                       >

@@ -5,7 +5,7 @@ const { content, section } = Astro.props;
 
 <section
   class={cn(
-    "relative scroll-mt-100 sm:scroll-mt-150",
+    "relative",
     section?.noMarginTop
       ? ""
       : section?.bgImg || section?.bgColor
@@ -13,7 +13,6 @@ const { content, section } = Astro.props;
         : "pt-16 sm:pt-24 md:pt-32",
     section?.bgImg || section?.bgColor ? "py-16 sm:py-20 lg:py-24" : ""
   )}
-  style="scroll-margin-top: 150px;"
   id={`${section?.id || ""}`}
 >
   <div class="mx-auto max-w-4xl text-center px-6">

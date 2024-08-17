@@ -192,7 +192,9 @@ const tag = content.tag;
         } else if (section?.type === "modal") {
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {
-          return <Map content={content} section={section} />;
+          return (
+            <Map content={content} section={section} isChildComponent={false} />
+          );
         } else if (section?.type === "form") {
           return <GoogleForm content={content} section={section} />;
         } else if (section?.type === "textBlock") {

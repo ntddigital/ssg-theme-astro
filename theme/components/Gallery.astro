@@ -8,10 +8,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
 
 <section
   id={`${section?.id || ""}`}
-  class={cn(
-    "scroll-mt-100 sm:scroll-mt-150",
-    section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32"
-  )}
+  class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
 >
   {
     section?.mode === 1 && (

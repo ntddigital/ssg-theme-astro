@@ -6,20 +6,15 @@ import { cn } from "../utils/cn";
 const { content, section, isChildComponent } = Astro.props;
 ---
 
-{
-  isChildComponent ? null : (
-    <div id={section?.id || ""} class="scroll-mt-100 sm:scroll-mt-250" />
-  )
-}
-
-<!-- <div id={`${section?.id || ""}`} class="scroll-mt-100 sm:scroll-mt-250"></div> -->
 <section
   class={cn(
-    "relative ",
+    "relative",
     isChildComponent || section?.noMarginTop
       ? "mt-0"
-      : "mt-16 sm:mt-24 md:mt-32 abc"
+      : "mt-16 sm:mt-24 md:mt-32",
+    isChildComponent ? "" : "scroll-mt-50 sm:scroll-mt-100"
   )}
+  id={section?.id || ""}
 >
   <div class="absolute top-4 right-4">
     <div class="flex flex-col gap-4">

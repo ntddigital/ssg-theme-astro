@@ -70,11 +70,11 @@ export function getImagesFromFolders(folders: string): ImageInfo[] {
 }
 
 function formatFileName(fileName: string): string {
-  // 移除文件扩展名
+
   const nameWithoutExtension = fileName.replace(/\.[^/.]+$/, "");
 
-  // 将所有 _ 替换为空格
-  const formattedName = nameWithoutExtension.replace(/[_]/g, " ");
+  // replace 001_,002_... with ""
+  const formattedName = nameWithoutExtension.replace(/^\d{3}_/, "")
 
   return formattedName;
 }

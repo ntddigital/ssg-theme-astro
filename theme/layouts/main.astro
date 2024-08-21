@@ -11,13 +11,129 @@ import Map from "../components/Map.astro";
 import GoogleForm from "../components/GoogleForm.astro";
 import "../style/global.css";
 
+type Address = {
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+};
+
+type Review = {
+  ratingValue: string;
+  bestRating: string;
+  authorName: string;
+};
+
+type Geo = {
+  latitude: number;
+  longitude: number;
+};
+
+type OpeningHours = {
+  dayOfWeek: string | string[];
+  opens: string;
+  closes: string;
+};
+
+type RestaurantStructuredDataInput = {
+  name: string;
+  images: string[];
+  address: Address;
+  review: Review;
+  geo: Geo;
+  url: string;
+  telephone: string;
+  servesCuisine: string;
+  priceRange: string;
+  openingHours: OpeningHours[];
+  menu: string;
+};
+
 const { content } = Astro.props;
-const tag = content.tag;
+const tag = content?.tag;
+const isModal = content?.sections?.some(
+  (item: { type: string | string[] }) =>
+    item?.type && item.type.includes("modal")
+);
+
+// structured data
+const generateRestaurantStructuredData = ({
+  name,
+  images,
+  address,
+  review,
+  geo,
+  url,
+  telephone,
+  servesCuisine,
+  priceRange,
+  openingHours,
+  menu,
+}:RestaurantStructuredDataInput) => {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: name,
+    image: images,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: address?.streetAddress,
+      addressLocality: address?.addressLocality,
+      addressRegion: address?.addressRegion,
+      postalCode: address?.postalCode,
+      addressCountry: address?.addressCountry,
+    },
+    review: {
+      "@type": "Review",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: review?.ratingValue,
+        bestRating: review?.bestRating,
+      },
+      author: {
+        "@type": "Person",
+        name: review?.authorName,
+      },
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: geo?.latitude,
+      longitude: geo?.longitude,
+    },
+    url: url,
+    telephone: telephone,
+    servesCuisine: servesCuisine,
+    priceRange: priceRange,
+    openingHoursSpecification: openingHours.map((hours: { dayOfWeek: any; opens: any; closes: any; }) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: hours?.dayOfWeek,
+      opens: hours?.opens,
+      closes: hours?.closes,
+    })),
+    menu: menu,
+  });
+};
+
+const structuredData = generateRestaurantStructuredData({
+  name: content?.seo?.name,
+  images: content?.seo?.images,
+  address: content?.seo?.address,
+  review: content?.seo?.review,
+  geo: content?.seo?.geo,
+  url: content?.seo?.url,
+  telephone: content?.seo?.telephone,
+  servesCuisine: content?.seo?.servesCuisine,
+  priceRange: content?.seo?.priceRange,
+  openingHours: content?.seo?.openingHours?.length ? content?.seo.openingHours : undefined,
+  menu: content?.seo?.menu,
+});
 ---
 
-<html lang="en">
+<html lang={content?.seo?.locale}>
   <head>
     <!-- Google Tag Manager -->
+     {tag?
     <script is:inline define:vars={{ tag }}>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -29,9 +145,10 @@ const tag = content.tag;
         j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
         f.parentNode.insertBefore(j, f);
       })(window, document, "script", "dataLayer", tag);
-    </script>
+    </script>:null}
     <!-- End Google Tag Manager -->
     <!-- modal -->
+     {isModal?
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById("promoModal");
@@ -73,10 +190,10 @@ const tag = content.tag;
           promoButton?.classList.add("bounce");
         });
       });
-    </script>
+    </script>:null}
     <!-- end of modal -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     {
       content?.seo?.metaTitle ? (
@@ -87,21 +204,14 @@ const tag = content.tag;
     }
     {
       content?.seo?.metaDescription ? (
-        <meta name="description" content={content.seo.metaDescription} />
-      ) : (
-        ""
-      )
-    }
-    {
-      content?.seo?.canonicalHref ? (
-        <link rel="canonical" href={content?.seo?.canonicalHref} />
+        <meta name="description" content={content?.seo?.metaDescription} />
       ) : (
         ""
       )
     }
     {
       content?.seo?.keywords ? (
-        <meta name="keywords" content={content.seo.keywords} />
+        <meta name="keywords" content={content?.seo?.keywords} />
       ) : (
         ""
       )
@@ -112,21 +222,21 @@ const tag = content.tag;
     <!-- Open Graph Meta Tags -->
     {
       content?.title ? (
-        <meta property="og:title" content={content?.title} />
+        <meta property="og:title" content={content?.seo?.metaTitle?content?.seo?.metaTitle:content?.title} />
       ) : (
         ""
       )
     }
     {
       content?.seo?.metaDescription ? (
-        <meta property="og:description" content={content.seo.metaDescription} />
+        <meta property="og:description" content={content?.seo?.metaDescription} />
       ) : (
         ""
       )
     }
     {
       content?.seo?.img ? (
-        <meta property="og:image" content={content.seo.img} />
+        <meta property="og:image" content={content?.seo?.img} />
       ) : (
         ""
       )
@@ -139,7 +249,8 @@ const tag = content.tag;
       )
     }
     <meta property="og:type" content="restaurant" />
-    <meta property="og:locale" content={content.seo.locale} />
+    {content?.seo?.locale?
+    <meta property="og:locale" content={content?.seo?.locale}/>:""}
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -154,7 +265,7 @@ const tag = content.tag;
       content?.seo?.metaDescription ? (
         <meta
           name="twitter:description"
-          content={content.seo.metaDescription}
+          content={content?.seo?.metaDescription}
         />
       ) : (
         ""
@@ -162,24 +273,31 @@ const tag = content.tag;
     }
     {
       content?.seo?.img ? (
-        <meta name="twitter:image" content={content.seo.img} />
+        <meta name="twitter:image" content={content?.seo?.img} />
       ) : (
         ""
       )
     }
+    <!-- structured data -->
+    {structuredData && (
+      <script type="application/ld+json" set:html={structuredData}></script>
+    )}
+        <!-- end of structured data -->
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
+     {tag?
     <noscript
       ><iframe
         src={`https://www.googletagmanager.com/ns.html?id=${content.tag}`}
         height="0"
         width="0"
-        style="display:none;visibility:hidden"></iframe></noscript
-    >
+        style="display:none;visibility:hidden"></iframe></noscript>
+        :null}
+
     <!-- End Google Tag Manager (noscript) -->
 
-    {content.header && <Header content={content} />}
+    {content?.header && <Header content={content} />}
 
     {
       content?.sections?.map((section: { type: string }) => {
@@ -192,9 +310,7 @@ const tag = content.tag;
         } else if (section?.type === "modal") {
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {
-          return (
-            <Map content={content} section={section} isChildComponent={false} />
-          );
+          return <Map content={content} section={section} />;
         } else if (section?.type === "form") {
           return <GoogleForm content={content} section={section} />;
         } else if (section?.type === "textBlock") {
@@ -202,15 +318,17 @@ const tag = content.tag;
         }
       })
     }
-    {content.footer && <Footer content={content} />}
+    {content?.footer && <Footer content={content} />}
 
     <GotoTopButton content={content} />
     <slot />
 
+
+    <!-- GLF page with an embedded order iframe popup.
     <script
       is:inline
       src="https://www.fbgcdn.com/embedder/js/ewm2.js"
       defer
-      async></script>
+      async></script> -->
   </body>
 </html>

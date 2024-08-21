@@ -88,6 +88,7 @@ type RestaurantStructuredDataInput = {
 
 const { content } = Astro.props;
 const tag = content?.tag;
+const googleSiteVerification = content?.googleSiteVerification
 const isModal = content?.sections?.some(
   (item: { type: string | string[] }) =>
     item?.type && item.type.includes("modal")
@@ -261,6 +262,10 @@ const structuredData = generateStructuredData({
       })(window, document, "script", "dataLayer", tag);
     </script>:null}
     <!-- End Google Tag Manager -->
+    <!-- google site verification -->
+     {googleSiteVerification?
+    <meta name="google-site-verification" content={googleSiteVerification} />:null}
+    <!-- end of google site verification -->
     <!-- modal -->
      {isModal?
     <script>

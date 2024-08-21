@@ -38,6 +38,14 @@ type OpeningHours = {
   closes: string;
 };
 
+type Offer = {
+  name: string;
+  description: string;
+  priceCurrency: string;
+  price: string;
+  image: string;
+};
+
 type RestaurantStructuredDataInput = {
   name?: string;
   images?: string[];
@@ -73,6 +81,7 @@ type RestaurantStructuredDataInput = {
       suitableForDiet:string;
     }[];
   }[];
+  offers?: Offer[]; 
 };
 
 
@@ -99,7 +108,8 @@ const generateStructuredData = ({
   acceptsReservations,
   starRating,
   openingHours,
-  hasMenuSection
+  hasMenuSection,
+  offers
 }: RestaurantStructuredDataInput) => {
   const structuredData: any = {
     "@context": "https://schema.org",
@@ -194,6 +204,17 @@ if (hasMenuSection && hasMenuSection.length > 0) {
   };
 }
 
+if (offers && offers.length > 0) {
+  structuredData.offers = offers?.map(offer => ({
+    "@type": "Offer",
+    name: offer?.name,
+    description: offer?.description,
+    priceCurrency: offer?.priceCurrency,
+    price: offer?.price,
+    image: offer?.image
+  }));
+}
+
 
 
 
@@ -218,6 +239,7 @@ const structuredData = generateStructuredData({
   currenciesAccepted: content?.seo?.currenciesAccepted,
   paymentAccepted: content?.seo?.paymentAccepted,
   hasMenuSection: content?.seo?.hasMenuSection,
+  offers: content?.seo?.offers 
 });
 
 ---

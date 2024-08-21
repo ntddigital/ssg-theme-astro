@@ -24,6 +24,7 @@ type Review = {
   ratingValue: string;
   bestRating: string;
   authorName: string;
+  reviewType: string;
 };
 
 type Geo = {
@@ -56,15 +57,20 @@ type RestaurantStructuredDataInput = {
     ratingValue: string;
     bestRating: string;
     author: string;
+    authorType:string;
   };
   currenciesAccepted?: string;
   paymentAccepted?: string;
   hasMenuSection?: {
     name: string;
+    description:string;
+    image:string;
     hasMenuItem: {
       name: string;
       description: string;
+      image:string;
       price: string;
+      suitableForDiet:string;
     }[];
   }[];
 };
@@ -79,113 +85,11 @@ const isModal = content?.sections?.some(
 );
 
 // structured data
-// const generateRestaurantStructuredData = ({
-//   name,
-//   images,
-//   address,
-//   review,
-//   reviewType = "Person", // 默认值为 "Person"
-//   geo,
-//   url,
-//   telephone,
-//   servesCuisine,
-//   priceRange,
-//   openingHours,
-//   menu,
-//   acceptsReservations,
-//   hasMenu,
-//   starRating,
-//   currenciesAccepted,
-//   paymentAccepted,
-//   hasMenuSection,
-// }: RestaurantStructuredDataInput) => {
 
-
-//   return JSON.stringify({
-//     "@context": "https://schema.org",
-//     "@type": "Restaurant",
-//     name: name,
-//     image: images,
-//     address: address
-//       ? {
-//           "@type": "PostalAddress",
-//           streetAddress: address.streetAddress,
-//           addressLocality: address.addressLocality,
-//           addressRegion: address.addressRegion,
-//           postalCode: address.postalCode,
-//           addressCountry: address.addressCountry,
-//         }
-//       : undefined,
-//     review: review
-//       ? {
-//           "@type": "Review",
-//           reviewRating: {
-//             "@type": "Rating",
-//             ratingValue: review.ratingValue,
-//             bestRating: review.bestRating,
-//           },
-//           author: {
-//             "@type": reviewType,
-//             name: review.authorName,
-//           },
-//         }
-//       : undefined,
-//     geo: geo
-//       ? {
-//           "@type": "GeoCoordinates",
-//           latitude: geo.latitude,
-//           longitude: geo.longitude,
-//         }
-//       : undefined,
-//     url: url,
-//     telephone: telephone,
-//     servesCuisine: servesCuisine,
-//     priceRange: priceRange,
-//     openingHoursSpecification: openingHours
-//       ? openingHours.map((hours: { dayOfWeek: any; opens: any; closes: any }) => ({
-//           "@type": "OpeningHoursSpecification",
-//           dayOfWeek: hours.dayOfWeek,
-//           opens: hours.opens,
-//           closes: hours.closes,
-//         }))
-//       : undefined,
-//     menu: menu,
-//     acceptsReservations: acceptsReservations,
-//     hasMenu: hasMenu,
-//     starRating: starRating
-//       ? {
-//           "@type": "Rating",
-//           ratingValue: starRating.ratingValue,
-//           bestRating: starRating.bestRating,
-//           author: {
-//             "@type": "Organization",
-//             name: starRating.author,
-//           },
-//         }
-//       : undefined,
-//     currenciesAccepted: currenciesAccepted,
-//     paymentAccepted: paymentAccepted,
-//     hasMenuSection: hasMenuSection
-//       ? hasMenuSection.map((section: any) => ({
-//           "@type": "MenuSection",
-//           name: section.name,
-//           hasMenuItem: section.hasMenuItem.map((item: any) => ({
-//             "@type": "MenuItem",
-//             name: item.name,
-//             description: item.description,
-//             offers: {
-//               "@type": "Offer",
-//               priceCurrency: "USD",
-//               price: item.price,
-//             },
-//           })),
-//         }))
-//       : undefined,
-//   });
-// };
 const generateStructuredData = ({
   name,
   images,
+  paymentAccepted,
   priceRange,
   address,
   review,
@@ -205,6 +109,7 @@ const generateStructuredData = ({
   // Conditionally add properties
   if (name) structuredData.name = name;
   if (images && images.length > 0 && images[0]) structuredData.image = images.filter(image => image);
+  if (paymentAccepted) structuredData.paymentAccepted = paymentAccepted;
   if (priceRange) structuredData.priceRange = priceRange;
   if (address) {
     structuredData.address = {
@@ -225,7 +130,7 @@ const generateStructuredData = ({
         bestRating: review.bestRating
       },
       author: {
-        "@type": "Person",
+        "@type": review.reviewType,
         name: review.authorName
       }
     };
@@ -239,7 +144,7 @@ const generateStructuredData = ({
   }
   if (servesCuisine) structuredData.servesCuisine = servesCuisine;
   if (telephone) structuredData.telephone = telephone;
-  if (acceptsReservations !== undefined) {
+  if (acceptsReservations ) {
     structuredData.acceptsReservations = acceptsReservations;
   }
   if (starRating && starRating.ratingValue && starRating.bestRating && starRating.author) {
@@ -248,7 +153,7 @@ const generateStructuredData = ({
       ratingValue: starRating.ratingValue,
       bestRating: starRating.bestRating,
       author: {
-        "@type": "Organization",
+        "@type": starRating.authorType,
         name: starRating.author
       }
     };
@@ -261,26 +166,36 @@ const generateStructuredData = ({
       closes: hours.closes
     }));
   }
-  if (hasMenuSection && hasMenuSection.length > 0) {
-    structuredData.hasMenuSection = hasMenuSection
+if (hasMenuSection && hasMenuSection.length > 0) {
+  structuredData.hasMenu = {
+    "@type": "Menu",
+    hasMenuSection: hasMenuSection
       .filter(section => section.name && section.hasMenuItem && section.hasMenuItem.length > 0)
       .map(section => ({
         "@type": "MenuSection",
         name: section.name,
+        description: section.description || '', // 可选字段
+        image: section.image || undefined, // 从 Frontmatter 中获取图像链接
         hasMenuItem: section.hasMenuItem
           .filter(item => item.name && item.description && item.price)
           .map(item => ({
             "@type": "MenuItem",
             name: item.name,
             description: item.description,
+            
             offers: {
               "@type": "Offer",
               priceCurrency: "USD",
               price: item.price
-            }
+            },
+            image: item.image || undefined // 从 Frontmatter 中获取图像链接
           }))
-      }));
-  }
+      }))
+  };
+}
+
+
+
 
   return JSON.stringify(structuredData, null, 2);
 };

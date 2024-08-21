@@ -186,11 +186,15 @@ const isModal = content?.sections?.some(
 const generateStructuredData = ({
   name,
   images,
+  priceRange,
   address,
   review,
   geo,
+  servesCuisine,
+  telephone,
   acceptsReservations,
   starRating,
+  openingHours,
   hasMenuSection
 }: RestaurantStructuredDataInput) => {
   const structuredData: any = {
@@ -201,6 +205,7 @@ const generateStructuredData = ({
   // Conditionally add properties
   if (name) structuredData.name = name;
   if (images && images.length > 0 && images[0]) structuredData.image = images.filter(image => image);
+  if (priceRange) structuredData.priceRange = priceRange;
   if (address) {
     structuredData.address = {
       "@type": "PostalAddress",
@@ -232,6 +237,8 @@ const generateStructuredData = ({
       longitude: geo.longitude
     };
   }
+  if (servesCuisine) structuredData.servesCuisine = servesCuisine;
+  if (telephone) structuredData.telephone = telephone;
   if (acceptsReservations !== undefined) {
     structuredData.acceptsReservations = acceptsReservations;
   }
@@ -245,6 +252,14 @@ const generateStructuredData = ({
         name: starRating.author
       }
     };
+  }
+   if (openingHours && openingHours.length > 0) {
+    structuredData.openingHoursSpecification = openingHours.map((hours) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: Array.isArray(hours.dayOfWeek) ? hours.dayOfWeek : [hours.dayOfWeek],
+      opens: hours.opens,
+      closes: hours.closes
+    }));
   }
   if (hasMenuSection && hasMenuSection.length > 0) {
     structuredData.hasMenuSection = hasMenuSection

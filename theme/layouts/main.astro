@@ -11,6 +11,7 @@ import Map from "../components/Map.astro";
 import GoogleForm from "../components/GoogleForm.astro";
 import "../style/global.css";
 
+// Define the input types
 type Address = {
   streetAddress: string;
   addressLocality: string;
@@ -37,18 +38,38 @@ type OpeningHours = {
 };
 
 type RestaurantStructuredDataInput = {
-  name: string;
-  images: string[];
-  address: Address;
-  review: Review;
-  geo: Geo;
-  url: string;
-  telephone: string;
-  servesCuisine: string;
-  priceRange: string;
-  openingHours: OpeningHours[];
-  menu: string;
+  name?: string;
+  images?: string[];
+  address?: Address;
+  review?: Review;
+  reviewType?: string;
+  geo?: Geo;
+  url?: string;
+  telephone?: string;
+  servesCuisine?: string[];
+  priceRange?: string;
+  openingHours?: OpeningHours[];
+  menu?: string;
+  acceptsReservations?: boolean | string;
+  hasMenu?: string;
+  starRating?: {
+    ratingValue: string;
+    bestRating: string;
+    author: string;
+  };
+  currenciesAccepted?: string;
+  paymentAccepted?: string;
+  hasMenuSection?: {
+    name: string;
+    hasMenuItem: {
+      name: string;
+      description: string;
+      price: string;
+    }[];
+  }[];
 };
+
+
 
 const { content } = Astro.props;
 const tag = content?.tag;
@@ -58,64 +79,198 @@ const isModal = content?.sections?.some(
 );
 
 // structured data
-const generateRestaurantStructuredData = ({
+// const generateRestaurantStructuredData = ({
+//   name,
+//   images,
+//   address,
+//   review,
+//   reviewType = "Person", // 默认值为 "Person"
+//   geo,
+//   url,
+//   telephone,
+//   servesCuisine,
+//   priceRange,
+//   openingHours,
+//   menu,
+//   acceptsReservations,
+//   hasMenu,
+//   starRating,
+//   currenciesAccepted,
+//   paymentAccepted,
+//   hasMenuSection,
+// }: RestaurantStructuredDataInput) => {
+
+
+//   return JSON.stringify({
+//     "@context": "https://schema.org",
+//     "@type": "Restaurant",
+//     name: name,
+//     image: images,
+//     address: address
+//       ? {
+//           "@type": "PostalAddress",
+//           streetAddress: address.streetAddress,
+//           addressLocality: address.addressLocality,
+//           addressRegion: address.addressRegion,
+//           postalCode: address.postalCode,
+//           addressCountry: address.addressCountry,
+//         }
+//       : undefined,
+//     review: review
+//       ? {
+//           "@type": "Review",
+//           reviewRating: {
+//             "@type": "Rating",
+//             ratingValue: review.ratingValue,
+//             bestRating: review.bestRating,
+//           },
+//           author: {
+//             "@type": reviewType,
+//             name: review.authorName,
+//           },
+//         }
+//       : undefined,
+//     geo: geo
+//       ? {
+//           "@type": "GeoCoordinates",
+//           latitude: geo.latitude,
+//           longitude: geo.longitude,
+//         }
+//       : undefined,
+//     url: url,
+//     telephone: telephone,
+//     servesCuisine: servesCuisine,
+//     priceRange: priceRange,
+//     openingHoursSpecification: openingHours
+//       ? openingHours.map((hours: { dayOfWeek: any; opens: any; closes: any }) => ({
+//           "@type": "OpeningHoursSpecification",
+//           dayOfWeek: hours.dayOfWeek,
+//           opens: hours.opens,
+//           closes: hours.closes,
+//         }))
+//       : undefined,
+//     menu: menu,
+//     acceptsReservations: acceptsReservations,
+//     hasMenu: hasMenu,
+//     starRating: starRating
+//       ? {
+//           "@type": "Rating",
+//           ratingValue: starRating.ratingValue,
+//           bestRating: starRating.bestRating,
+//           author: {
+//             "@type": "Organization",
+//             name: starRating.author,
+//           },
+//         }
+//       : undefined,
+//     currenciesAccepted: currenciesAccepted,
+//     paymentAccepted: paymentAccepted,
+//     hasMenuSection: hasMenuSection
+//       ? hasMenuSection.map((section: any) => ({
+//           "@type": "MenuSection",
+//           name: section.name,
+//           hasMenuItem: section.hasMenuItem.map((item: any) => ({
+//             "@type": "MenuItem",
+//             name: item.name,
+//             description: item.description,
+//             offers: {
+//               "@type": "Offer",
+//               priceCurrency: "USD",
+//               price: item.price,
+//             },
+//           })),
+//         }))
+//       : undefined,
+//   });
+// };
+const generateStructuredData = ({
   name,
   images,
   address,
   review,
   geo,
-  url,
-  telephone,
-  servesCuisine,
-  priceRange,
-  openingHours,
-  menu,
-}:RestaurantStructuredDataInput) => {
-  return JSON.stringify({
+  acceptsReservations,
+  starRating,
+  hasMenuSection
+}: RestaurantStructuredDataInput) => {
+  const structuredData: any = {
     "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: name,
-    image: images,
-    address: {
+    "@type": "Restaurant"
+  };
+
+  // Conditionally add properties
+  if (name) structuredData.name = name;
+  if (images && images.length > 0 && images[0]) structuredData.image = images.filter(image => image);
+  if (address) {
+    structuredData.address = {
       "@type": "PostalAddress",
-      streetAddress: address?.streetAddress,
-      addressLocality: address?.addressLocality,
-      addressRegion: address?.addressRegion,
-      postalCode: address?.postalCode,
-      addressCountry: address?.addressCountry,
-    },
-    review: {
+      ...(address.streetAddress && { streetAddress: address.streetAddress }),
+      ...(address.addressLocality && { addressLocality: address.addressLocality }),
+      ...(address.addressRegion && { addressRegion: address.addressRegion }),
+      ...(address.postalCode && { postalCode: address.postalCode }),
+      ...(address.addressCountry && { addressCountry: address.addressCountry })
+    };
+  }
+  if (review && review.ratingValue && review.bestRating && review.authorName) {
+    structuredData.review = {
       "@type": "Review",
       reviewRating: {
         "@type": "Rating",
-        ratingValue: review?.ratingValue,
-        bestRating: review?.bestRating,
+        ratingValue: review.ratingValue,
+        bestRating: review.bestRating
       },
       author: {
         "@type": "Person",
-        name: review?.authorName,
-      },
-    },
-    geo: {
+        name: review.authorName
+      }
+    };
+  }
+  if (geo && geo.latitude !== null && geo.longitude !== null) {
+    structuredData.geo = {
       "@type": "GeoCoordinates",
-      latitude: geo?.latitude,
-      longitude: geo?.longitude,
-    },
-    url: url,
-    telephone: telephone,
-    servesCuisine: servesCuisine,
-    priceRange: priceRange,
-    openingHoursSpecification: openingHours.map((hours: { dayOfWeek: any; opens: any; closes: any; }) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: hours?.dayOfWeek,
-      opens: hours?.opens,
-      closes: hours?.closes,
-    })),
-    menu: menu,
-  });
+      latitude: geo.latitude,
+      longitude: geo.longitude
+    };
+  }
+  if (acceptsReservations !== undefined) {
+    structuredData.acceptsReservations = acceptsReservations;
+  }
+  if (starRating && starRating.ratingValue && starRating.bestRating && starRating.author) {
+    structuredData.starRating = {
+      "@type": "Rating",
+      ratingValue: starRating.ratingValue,
+      bestRating: starRating.bestRating,
+      author: {
+        "@type": "Organization",
+        name: starRating.author
+      }
+    };
+  }
+  if (hasMenuSection && hasMenuSection.length > 0) {
+    structuredData.hasMenuSection = hasMenuSection
+      .filter(section => section.name && section.hasMenuItem && section.hasMenuItem.length > 0)
+      .map(section => ({
+        "@type": "MenuSection",
+        name: section.name,
+        hasMenuItem: section.hasMenuItem
+          .filter(item => item.name && item.description && item.price)
+          .map(item => ({
+            "@type": "MenuItem",
+            name: item.name,
+            description: item.description,
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "USD",
+              price: item.price
+            }
+          }))
+      }));
+  }
+
+  return JSON.stringify(structuredData, null, 2);
 };
 
-const structuredData = generateRestaurantStructuredData({
+const structuredData = generateStructuredData({
   name: content?.seo?.name,
   images: content?.seo?.images,
   address: content?.seo?.address,
@@ -127,7 +282,14 @@ const structuredData = generateRestaurantStructuredData({
   priceRange: content?.seo?.priceRange,
   openingHours: content?.seo?.openingHours?.length ? content?.seo.openingHours : undefined,
   menu: content?.seo?.menu,
+  acceptsReservations: content?.seo?.acceptsReservations,
+  hasMenu: content?.seo?.hasMenu,
+  starRating: content?.seo?.starRating,
+  currenciesAccepted: content?.seo?.currenciesAccepted,
+  paymentAccepted: content?.seo?.paymentAccepted,
+  hasMenuSection: content?.seo?.hasMenuSection,
 });
+
 ---
 
 <html lang={content?.seo?.locale}>

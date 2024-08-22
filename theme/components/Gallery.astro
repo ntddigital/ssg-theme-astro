@@ -54,7 +54,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                         {item?.name.split("_").map((part, index) => (
                           <span>
                             {part}
-                            {index < item?.name.split("_").length - 2 && <br />}
+                            {index < item?.name.split("_").length - 2}
                           </span>
                         ))}
                       </span>
@@ -113,7 +113,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                       {item?.name.split("_").map((part, index) => (
                         <span>
                           {part}
-                          {index < item?.name.split("_").length - 2 && <br />}
+                          {index < item?.name.split("_").length - 2}
                         </span>
                       ))}
                     </div>
@@ -171,7 +171,7 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                       {item?.name.split("_").map((part, index) => (
                         <span>
                           {part}
-                          {index < item?.name.split("_").length - 2 && <br />}
+                          {index < item?.name.split("_").length - 2}
                         </span>
                       ))}
                     </div>

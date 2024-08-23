@@ -3,7 +3,7 @@ const plugin = require('tailwindcss/plugin')
 
 export default {
   // safelist: [{ pattern: /./ }],
-  content: ['./theme/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './demo/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./theme/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './demo/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue},','!./node_modules/**'],
   theme: {
     extend: { 
 			animation: {

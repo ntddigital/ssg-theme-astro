@@ -33,12 +33,24 @@ const currentYear = new Date().getFullYear();
     {
       content?.footer?.isLogo ? (
         <div class="flex justify-center mb-8 sm:mb-16">
-          <img
+          {/* <img
             class={`h-48 w-auto mr-3`}
             src={`/${content?.logo}`}
             alt={content?.header?.title + " Logo"}
             style={`height:${content?.footer?.logoSize}px`}
             loading="lazy"
+          /> */}
+          <img
+            class={`hidden sm:block h-24 w-auto mr-3`}
+            src={`/${content?.logo}`}
+            alt={content?.title + " Logo"}
+            style={`height:${content?.footer?.logoSize}px`}
+          />
+          <img
+            class={`block sm:hidden mx-2`}
+            src={`/${content?.logo}`}
+            alt={content?.title + " Logo"}
+            style={`height:${content?.footer?.logoSizeOnMobile ? content?.footer?.logoSizeOnMobile : "40"}px`}
           />
         </div>
       ) : (

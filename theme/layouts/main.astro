@@ -329,6 +329,13 @@ const structuredData = generateStructuredData({
       )
     }
     {
+      content?.seo?.canonicalHref ? (
+        <link rel="canonical" href={content?.seo?.canonicalHref} />
+      ) : (
+        ""
+      )
+    }
+    {
       content?.seo?.keywords ? (
         <meta name="keywords" content={content?.seo?.keywords} />
       ) : (

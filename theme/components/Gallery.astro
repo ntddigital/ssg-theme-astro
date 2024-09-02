@@ -51,10 +51,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     >
                       <span class="text-center">
                         <span class="absolute inset-0" />
-                        {item?.name.split("_").map((part, index) => (
+                        {item?.name.split("__").map((part) => (
                           <span>
-                            {part}
-                            {index < item?.name.split("_").length - 2}
+                            {part.replace(/_/g, " ")}
+                            <br />
                           </span>
                         ))}
                       </span>
@@ -110,10 +110,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                   />
                   {section?.showImgName ? (
                     <div class="mt-6 text-base font-semibold leading-7 tracking-tight text-white text-center">
-                      {item?.name.split("_").map((part, index) => (
+                      {item?.name.split("__").map((part) => (
                         <span>
-                          {part}
-                          {index < item?.name.split("_").length - 2}
+                          {part.replace(/_/g, " ")}
+                          <br />
                         </span>
                       ))}
                     </div>
@@ -168,10 +168,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                       class="mt-6 text-lg leading-8 tracking-tight text-center"
                       style={`color: ${section?.imgNameColor}`}
                     >
-                      {item?.name.split("_").map((part, index) => (
+                      {item?.name.split("__").map((part) => (
                         <span>
-                          {part}
-                          {index < item?.name.split("_").length - 2}
+                          {part.replace(/_/g, " ")}
+                          <br />
                         </span>
                       ))}
                     </div>

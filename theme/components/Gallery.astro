@@ -53,7 +53,11 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                         <span class="absolute inset-0" />
                         {item?.name.split("__").map((part) => (
                           <span>
-                            {part.replace(/_/g, " ")}
+                            {part
+                              .replace(/_/g, " ")
+                              .replace(/w:/g, "w/")
+                              .replace(/w:o/g, "w/o")}
+                            <br />
                             <br />
                           </span>
                         ))}
@@ -112,7 +116,11 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     <div class="mt-6 text-base font-semibold leading-7 tracking-tight text-white text-center">
                       {item?.name.split("__").map((part) => (
                         <span>
-                          {part.replace(/_/g, " ")}
+                          {part
+                            .replace(/_/g, " ")
+                            .replace(/w:/g, "w/")
+                            .replace(/w:o/g, "w/o")}
+                          <br />
                           <br />
                         </span>
                       ))}
@@ -170,7 +178,10 @@ const images = getImagesFromFolders("/public/" + section?.folderPath);
                     >
                       {item?.name.split("__").map((part) => (
                         <span>
-                          {part.replace(/_/g, " ")}
+                          {part
+                            .replace(/_/g, " ")
+                            .replace(/w:/g, "w/")
+                            .replace(/w:o/g, "w/o")}
                           <br />
                         </span>
                       ))}

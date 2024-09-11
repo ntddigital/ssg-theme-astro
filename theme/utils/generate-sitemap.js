@@ -117,7 +117,7 @@ function generateSiteMap() {
             .replace(/^\d{3}[_\s]*/, "")
             .replace(/^[_\s]+/, "")
             .replace(/__/g, " ").replace(/w:/g, "w/")
-                            .replace(/w:o/g, "w/o")}</image:title>
+                            .replace(/w:o/g, "w/o").replace(/&/g, '&amp;')}</image:title>
         </image:image>`
                 )
                 .join("")

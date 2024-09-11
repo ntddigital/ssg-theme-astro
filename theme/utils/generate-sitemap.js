@@ -107,18 +107,30 @@ function generateSiteMap() {
         <loc>${astroConfig.site}${page.url}</loc>
         <lastmod>${page.lastmod}</lastmod>
         ${
-          images.length > 0 && page.url === "/"
+          images.length > 0 
             ? images
                 .map(
                   (image) => `<image:image>
-          <image:loc>${image?.src}</image:loc>
+          <image:loc>${image?.src.replace(/w:/g, "w/")
+                            .replace(/w:o/g, "w/o")}</image:loc>
           <image:title>${image?.name
             .replace(/^\d{3}[_\s]*/, "")
             .replace(/^[_\s]+/, "")
-            .replace(/__/g, " ")}</image:title>
+            .replace(/__/g, " ").replace(/w:/g, "w/")
+                            .replace(/w:o/g, "w/o")}</image:title>
         </image:image>`
                 )
                 .join("")
+            : ""
+        }
+             ${
+          astroConfig?.videoUrl
+            ? `<video:video>
+              <video:content_loc>${astroConfig?.videoUrl}</video:content_loc>
+              <video:thumbnail_loc>${astroConfig?.videoThumbnailUrl}</video:thumbnail_loc>
+              <video:title>${astroConfig?.videoTitle}</video:title>
+              <video:description>${astroConfig?.videoDesc}</video:description>
+            </video:video>`
             : ""
         }
       </url>`

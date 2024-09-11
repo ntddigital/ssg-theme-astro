@@ -96,10 +96,10 @@ function generateSiteMap() {
       "gallery6",
     ];
     const images = getImagesFromFolders(galleryFolders);
-
+    const videoNamespace = astroConfig?.videoUrl ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '';
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-       xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+       xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ${videoNamespace}>
     ${pages
       .map(
         (page) => `
@@ -112,7 +112,7 @@ function generateSiteMap() {
                 .map(
                   (image) => `<image:image>
           <image:loc>${image?.src.replace(/w:/g, "w/")
-                            .replace(/w:o/g, "w/o")}</image:loc>
+                            .replace(/w:o/g, "w/o").replace(/&/g, '%26')}</image:loc>
           <image:title>${image?.name
             .replace(/^\d{3}[_\s]*/, "")
             .replace(/^[_\s]+/, "")

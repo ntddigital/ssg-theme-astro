@@ -1,9 +1,10 @@
 import fs from "fs";
 import path from "path";
-import astroConfig from "../../../astro.config.mjs";
+// import astroConfig from "../../../astro.config.mjs";
+import {sitemapConfig} from "../../../sitemap.config.js"
 
 function generateSiteMap() {
-  if (!astroConfig?.site) return;
+  if (!sitemapConfig?.site) return;
 
   // get the current date and format it as YYYY-MM-DD
   function getCurrentDate() {
@@ -53,7 +54,7 @@ function generateSiteMap() {
         const folderImages = fileNames
           .filter((fileName) => fileName !== ".DS_Store")
           .map((fileName) => ({
-            src: `${astroConfig.site}/${folder}/${fileName}`,
+            src: `${sitemapConfig.site}/${folder}/${fileName}`,
             name: formatFileName(fileName), // generate file name
           }));
         images = images.concat(folderImages);
@@ -96,7 +97,7 @@ function generateSiteMap() {
       "gallery6",
     ];
     const images = getImagesFromFolders(galleryFolders);
-    const videoNamespace = astroConfig?.videoUrl ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '';
+    const videoNamespace = sitemapConfig?.videoUrl ? ' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"' : '';
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ${videoNamespace}>
@@ -104,7 +105,7 @@ function generateSiteMap() {
       .map(
         (page) => `
       <url>
-        <loc>${astroConfig.site}${page.url}</loc>
+        <loc>${sitemapConfig.site}${page.url}</loc>
         <lastmod>${page.lastmod}</lastmod>
         ${
           images.length > 0 
@@ -124,12 +125,12 @@ function generateSiteMap() {
             : ""
         }
              ${
-          astroConfig?.videoUrl
+          sitemapConfig?.videoUrl
             ? `<video:video>
-              <video:content_loc>${astroConfig?.videoUrl}</video:content_loc>
-              <video:thumbnail_loc>${astroConfig?.videoThumbnailUrl}</video:thumbnail_loc>
-              <video:title>${astroConfig?.videoTitle}</video:title>
-              <video:description>${astroConfig?.videoDesc}</video:description>
+              <video:content_loc>${sitemapConfig?.videoUrl}</video:content_loc>
+              <video:thumbnail_loc>${sitemapConfig?.videoThumbnailUrl}</video:thumbnail_loc>
+              <video:title>${sitemapConfig?.videoTitle}</video:title>
+              <video:description>${sitemapConfig?.videoDesc}</video:description>
             </video:video>`
             : ""
         }

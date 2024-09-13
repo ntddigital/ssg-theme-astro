@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import astroConfig from "../../../astro.config.mjs";
+import {sitemapConfig} from "../../../sitemap.config.js"
 
 function generateRobots() {
-  if (!astroConfig?.site) return;
+  if (!sitemapConfig?.site) return;
 
   // To get the current date and format it as YYYY-MM-DD
   function getCurrentDate() {
@@ -56,7 +56,7 @@ function generateRobots() {
 
   // get sitemap URL
   function getSitemapUrl() {
-    return `${astroConfig.site}/sitemap.xml`;
+    return `${sitemapConfig.site}/sitemap.xml`;
   }
 
   function generateRobotsTxt() {

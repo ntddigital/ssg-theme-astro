@@ -145,10 +145,17 @@ const { content, section } = Astro.props;
           src={`/${section?.bgImg}`}
           alt={content?.title}
           class={cn(
-            "absolute inset-0 -z-10 h-full w-full object-cover hidden sm:block",
-            `${section?.sectionType === "video" ? "sm:hidden" : ""}`
+            "absolute inset-0 -z-10 h-full w-full object-cover",
+            `${section?.sectionType === "video" ? "sm:hidden" : ""}`,
+            `${section?.mobileBgImg ? " hidden sm:block" : ""}`
           )}
         />
+      ) : (
+        ""
+      )
+    }
+    {
+      section?.mobileBgImg ? (
         <img
           src={`/${section?.mobileBgImg}`}
           alt={content?.title}
@@ -161,6 +168,7 @@ const { content, section } = Astro.props;
         ""
       )
     }
+
     {
       section?.bgColor ? (
         <>

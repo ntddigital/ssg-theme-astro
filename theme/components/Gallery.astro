@@ -43,10 +43,16 @@ const initialVisibleDesktop = parseVisibleCount(
 </style>
 
 <script>
+  declare global {
+    interface Window {
+      __galleryExpandInit?: boolean;
+    }
+  }
+
   if (!window.__galleryExpandInit) {
     window.__galleryExpandInit = true;
 
-  const parseLimit = (value, fallback) => {
+  const parseLimit = (value: string | null, fallback: number): number => {
     const parsed = Number(value);
     if (!Number.isFinite(parsed) || parsed < 1) return fallback;
     return Math.floor(parsed);
@@ -60,7 +66,7 @@ const initialVisibleDesktop = parseVisibleCount(
       const targetId = grid.getAttribute("id");
       if (!targetId) return;
 
-      const button = document.querySelector(
+      const button = document.querySelector<HTMLElement>(
         `.gallery-expand-btn[data-gallery-target="${targetId}"]`
       );
       if (!button) return;

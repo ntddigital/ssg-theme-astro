@@ -80,9 +80,8 @@ const getInitial = (name: string) => {
         >
           <div class="reviews-slider-track flex gap-6 pb-4">
             {
-              section?.items?.map((review: GoogleReview, index: number) => (
+              section?.items?.map((review: GoogleReview) => (
                 <div
-                  key={index}
                   class="reviews-slider-item flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] "
                 >
                   <div class="h-full rounded-2xl bg-gray-50 p-6 sm:p-8 flex flex-col">
@@ -96,7 +95,6 @@ const getInitial = (name: string) => {
                         <div class="flex items-center gap-1">
                           {Array.from({ length: 5 }, (_, starIndex) => (
                             <svg
-                              key={starIndex}
                               class={cn(
                                 starIndex < review.rating
                                   ? "text-yellow-400"
@@ -204,7 +202,6 @@ const getInitial = (name: string) => {
         {
           section?.items?.map((_: GoogleReview, index: number) => (
             <button
-              key={index}
               class="reviews-slider-dot w-2 h-2 rounded-full bg-gray-300 transition-all hover:bg-gray-600 cursor-pointer"
               data-slide={index}
               aria-label={`Go to review ${index + 1}`}
@@ -251,7 +248,7 @@ const getInitial = (name: string) => {
 
       if (!track) return;
 
-      const itemWidth = track.querySelector(".reviews-slider-item")?.offsetWidth;
+      const itemWidth = track.querySelector<HTMLElement>(".reviews-slider-item")?.offsetWidth;
       const gap = 24; // 6 * 4 (from gap-6 which is 1.5rem = 24px)
       let currentIndex = 0;
 

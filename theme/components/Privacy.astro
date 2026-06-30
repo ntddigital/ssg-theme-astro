@@ -46,12 +46,14 @@ const { content } = Astro.props;
         </p>
        </>}
         <p class="mt-6">
-          In the event our site contains links to third-party sites and
-          services, please be aware that those sites and services have their own
-          privacy policies. After following a link to any third-party content,
-          you should read their posted privacy policy information about how they
-          collect and use personal information. This Privacy Policy does not
-          apply to any of your activities after you leave our site.
+          Our site may contain links to third-party sites and services, such as
+          online ordering platforms, mapping services, and social media. Please
+          be aware that those sites and services have their own privacy policies.
+          When you follow such a link — for example, when you place an order
+          through a third-party ordering platform — you should read their posted
+          privacy policy to understand how they collect and use your personal
+          information. This Privacy Policy does not apply to any of your
+          activities after you leave our site.
         </p>
         <!-- 6 -->
         <p class="mt-6">This policy is effective as of June 30, 2026.</p>
@@ -60,6 +62,8 @@ const { content } = Astro.props;
 
         <!-- Information We Collect -->
 
+        {content?.tag && (
+        <>
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Information We Collect
         </h2>
@@ -69,8 +73,12 @@ const { content } = Astro.props;
           and promotions, and any information automatically sent by your devices
           in the course of accessing our products and services.
         </p>
+        </>
+        )}
 
         <!-- log data -->
+        {content?.tag && (
+        <>
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Log Data
         </h2>
@@ -96,8 +104,12 @@ const { content } = Astro.props;
           identifying by itself, it may be possible to combine it with other
           data to personally identify individual persons.
         </p>
+        </>
+        )}
 
         <!-- device data -->
+        {content?.tag && (
+        <>
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Device Data
         </h2>
@@ -115,37 +127,25 @@ const { content } = Astro.props;
           manufacturer or software provider to learn what information they make
           available to us.
         </p>
+        </>
+        )}
         <!-- Personal Information -->
-        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
-          Personal Information
-        </h2>
-        {
-          content?.tag ? (
-            <>
-              <p class="mt-6">
-                We may ask for personal information which may include one or
-                more of the following:
-              </p>
-              <ul class="list-disc list-inside">
-                <li>Name</li>
-                <li>Email</li>
-                <li>Phone/mobile number</li>
-              </ul>
-            </>
-          ) : (
-            <>
-              <p class="mt-6">
-                We do not collect any personal information from our users. This
-                includes, but is not limited to:
-              </p>
-              <ul class="list-disc list-inside">
-                <li>Name</li>
-                <li>Email</li>
-                <li>Phone/mobile number</li>
-              </ul>
-            </>
-          )
-        }
+        {content?.tag && (
+          <>
+            <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+              Personal Information
+            </h2>
+            <p class="mt-6">
+              We may ask for personal information which may include one or
+              more of the following:
+            </p>
+            <ul class="list-disc list-inside">
+              <li>Name</li>
+              <li>Email</li>
+              <li>Phone/mobile number</li>
+            </ul>
+          </>
+        )}
 
         <!-- User-Generated Content
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
@@ -165,6 +165,8 @@ const { content } = Astro.props;
           parties not covered under this privacy policy.
         </p> -->
         <!-- Legitimate Reasons for Processing Your Personal Information -->
+        {content?.tag && (
+        <>
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Legitimate Reasons for Processing Your Personal Information
         </h2>
@@ -174,6 +176,8 @@ const { content } = Astro.props;
           personal information that is reasonably necessary to provide our
           services to you.
         </p>
+        </>
+        )}
         <!-- Legitimate Reasons for Processing Your Personal Information
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Collection and Use of Information
@@ -340,17 +344,14 @@ const { content } = Astro.props;
         </p>
         }
         <!-- Use of Cookies -->
+        {content?.tag && (
+        <>
         <h2
           class="mt-16 text-2xl font-bold tracking-tight text-gray-900"
           id="use-of-cookies"
         >
           Use of Cookies
         </h2>
-        <!-- 1 -->
-
-
-        {content?.tag ? 
-       ( <>
         <p class="mt-6">
           Like many websites, we use cookies and similar tracking technologies
           on our Site. We use cookies to power and improve our Site and our
@@ -383,9 +384,8 @@ const { content } = Astro.props;
           Cookies may not completely prevent how we share information with third
           parties such as our advertising partners.
         </p>
-      </>):
-      <p>
-        Our website does not use cookies to collect any user information. Therefore, we do not place any cookies on your device, nor do we track your activities through cookies.</p>}
+        </>
+        )}
         <!-- Limits of Our Policy -->
         <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
           Limits of Our Policy

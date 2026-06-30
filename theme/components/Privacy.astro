@@ -1,5 +1,6 @@
 ---
 const { content } = Astro.props;
+const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
 ---
 
 <div class="bg-white py-12">
@@ -13,9 +14,9 @@ const { content } = Astro.props;
         </h1>
         <!-- 1 -->
         <p class="mt-6">
-          At {content?.title}, we take privacy and security seriously. This
-          United States Privacy Policy outlines how {content?.title} and its affiliates
-          (collectively, the "Company," " {content?.title}," "We, "our," or
+          At {title}, we take privacy and security seriously. This
+          United States Privacy Policy outlines how {title} and its affiliates
+          (collectively, the "Company," " {title}," "We, "our," or
           "us") process the information we collect about you through our
           websites, mobile apps, and other online services (collectively, the
           "Services") and when you otherwise interact with us, such as through
@@ -32,7 +33,7 @@ const { content } = Astro.props;
         </p>
       
         <p class="mt-6">
-          Your privacy is important to us. It is {content?.title}'s policy to
+          Your privacy is important to us. It is {title}'s policy to
           respect your privacy and comply with any applicable law and regulation
           regarding any personal information we may collect about you, including
           across our websites and other online services we own and operate.
@@ -423,7 +424,7 @@ const { content } = Astro.props;
           us using the following details:
         </p>
         <div class="mt-6">
-          <p class="mt-2">{content?.title}</p>
+          <p class="mt-2">{title}</p>
           {content?.tel && <p class="mt-2">{"Tel: "+content.tel}</p>}
           {content?.email && <p class="mt-2">{"Email: "+content.email}</p>}
           {content?.address && <p class="mt-2">{"Address: "+content.address}</p>}

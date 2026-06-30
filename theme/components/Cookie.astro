@@ -1,5 +1,6 @@
 ---
 const { content } = Astro.props;
+const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
 ---
 
 <div class="bg-white py-12">
@@ -13,7 +14,7 @@ const { content } = Astro.props;
         </h1>
 
         <p class="mt-6">
-          This Cookie Policy explains how {content?.title} and its affiliates
+          This Cookie Policy explains how {title} and its affiliates
           (collectively, "we," "our," or "us") use cookies and similar tracking
           technologies on our website. It should be read together with our
           Privacy Policy.
@@ -180,7 +181,7 @@ const { content } = Astro.props;
           using the following details:
         </p>
         <div class="mt-6">
-          <p class="mt-2">{content?.title}</p>
+          <p class="mt-2">{title}</p>
           {content?.tel && <p class="mt-2">{"Tel: " + content.tel}</p>}
           {content?.email && <p class="mt-2">{"Email: " + content.email}</p>}
           {content?.address && (

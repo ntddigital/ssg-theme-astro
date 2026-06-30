@@ -1,5 +1,6 @@
 ---
 const { content } = Astro.props;
+const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
 ---
 
 <div class="bg-white py-12">
@@ -14,8 +15,8 @@ const { content } = Astro.props;
         <!-- 1 -->
         <p class="mt-6">
           These Terms of Service govern your use of this website and any related
-          services provided by {content?.title} and its affiliates (collectively,
-          the "Company," " {content?.title}," "We, "our," or "us").
+          services provided by {title} and its affiliates (collectively,
+          the "Company," " {title}," "We, "our," or "us").
         </p>
         <!-- 2 -->
         <p class="mt-6">
@@ -23,11 +24,11 @@ const { content } = Astro.props;
           Service and to comply with all applicable laws and regulations. If you
           do not agree with these Terms of Service, you are prohibited from
           using or accessing this website or using any other services provided
-          by {content?.title}.
+          by {title}.
         </p>
         <!-- 3 -->
         <p class="mt-6">
-          We, {content?.title}, reserve the right to review and amend any of
+          We, {title}, reserve the right to review and amend any of
           these Terms of Service at our sole discretion. Upon doing so, we will
           update this page. Any changes to these Terms of Service will take
           effect immediately from the date of publication.
@@ -61,7 +62,7 @@ const { content } = Astro.props;
           <li>
             knowingly or negligently use this website or any of its associated
             services in a way that abuses or disrupts our networks or any other
-            service {content?.title} provides;
+            service {title} provides;
           </li>
           <li>
             use this website or its associated services to transmit or publish
@@ -95,7 +96,7 @@ const { content } = Astro.props;
         </h2>
         <p class="mt-6">
           The intellectual property in the materials contained in this website
-          are owned by or licensed to {content?.title} and are protected by applicable
+          are owned by or licensed to {title} and are protected by applicable
           copyright and trademark law. We grant our users permission to download
           one copy of the materials for personal, non-commercial transitory use.
         </p>
@@ -103,7 +104,7 @@ const { content } = Astro.props;
           This constitutes the grant of a license, not a transfer of title. This
           license shall automatically terminate if you violate any of these
           restrictions or the Terms of Service, and may be terminated by {
-            content?.title
+            title
           } at any time.
         </p>
 
@@ -145,17 +146,17 @@ const { content } = Astro.props;
         </h2>
         <p class="mt-6">
           Our website and the materials on our website are provided on an 'as
-          is' basis. To the extent permitted by law, {content?.title} makes no warranties,
+          is' basis. To the extent permitted by law, {title} makes no warranties,
           expressed or implied, and hereby disclaims and negates all other warranties
           including, without limitation, implied warranties or conditions of merchantability,
           fitness for a particular purpose, or non-infringement of intellectual property,
           or other violation of rights.
         </p>
         <p class="mt-6">
-          In no event shall {content?.title} or its suppliers be liable for any consequential
+          In no event shall {title} or its suppliers be liable for any consequential
           loss suffered or incurred by you or any third party arising from the use
           or inability to use this website or the materials on this website, even
-          if {content?.title} or an authorized representative has been notified,
+          if {title} or an authorized representative has been notified,
           orally or in writing, of the possibility of such damage.
         </p>
         <p class="mt-6">
@@ -178,7 +179,7 @@ const { content } = Astro.props;
         </h2>
         <p class="mt-6">
           The materials appearing on our website are not comprehensive and are
-          for general information purposes only. {content?.title} does not warrant
+          for general information purposes only. {title} does not warrant
           or make any representations concerning the accuracy, likely results, or
           reliability of the use of the materials on this website, or otherwise relating
           to such materials or on any resources linked to this website.
@@ -189,10 +190,10 @@ const { content } = Astro.props;
           Links
         </h2>
         <p class="mt-6">
-          {content?.title} has not reviewed all of the sites linked to its website
+          {title} has not reviewed all of the sites linked to its website
           and is not responsible for the contents of any such linked site. The inclusion
           of any link does not imply endorsement, approval, or control by {
-            content?.title
+            title
           } of the site. Use of any such linked site is at your own risk and we strongly
           advise you make your own investigations with respect to the suitability
           of those sites.

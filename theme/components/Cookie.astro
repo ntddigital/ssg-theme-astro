@@ -1,0 +1,193 @@
+---
+const { content } = Astro.props;
+---
+
+<div class="bg-white py-12">
+  <div class="mx-auto max-w-6xl lg:px-8">
+    <div class="bg-white px-6 py-16 sm:py-32 lg:px-8">
+      <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+        <h1
+          class="mt-2 text-3xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl"
+        >
+          Cookie Policy
+        </h1>
+
+        <p class="mt-6">
+          This Cookie Policy explains how {content?.title} and its affiliates
+          (collectively, "we," "our," or "us") use cookies and similar tracking
+          technologies on our website. It should be read together with our
+          Privacy Policy.
+        </p>
+        <p class="mt-6">This policy is effective as of June 30, 2026.</p>
+        <p class="mt-2">Last updated: June 30, 2026</p>
+
+        <!-- What Are Cookies -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          What Are Cookies?
+        </h2>
+        <p class="mt-6">
+          Cookies are small text files that are placed on your device when you
+          visit a website. They are widely used to make websites work, to
+          improve their performance, and to provide information to the site
+          owners and third parties. "Similar technologies" include pixels, tags,
+          and software development kits (SDKs) that work in much the same way.
+        </p>
+
+        {content?.tag && (
+        <>
+        <!-- How We Use Cookies -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          How We Use Cookies
+        </h2>
+        <p class="mt-6">We use cookies and similar technologies for:</p>
+        <ul class="list-disc list-inside">
+          <li>
+            <strong>Essential cookies</strong> — required for the website to
+            function and to keep it secure.
+          </li>
+          <li>
+            <strong>Analytics cookies</strong> — to understand how visitors use
+            our website so we can improve it.
+          </li>
+          <li>
+            <strong>Advertising cookies</strong> — to deliver and measure
+            advertising, and to understand the effectiveness of our advertising
+            campaigns across other websites and platforms.
+          </li>
+        </ul>
+
+        <!-- Advertising and Analytics Partners -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Advertising and Analytics Partners
+        </h2>
+        <p class="mt-6">
+          To promote our restaurant and measure how our advertising performs, we
+          may allow the following third-party platforms to set cookies and
+          similar identifiers on our website. Depending on how this website is
+          configured, these partners may collect information about your visit
+          and use it to deliver and measure advertising on their own and other
+          websites:
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          Google (Google Ads, Google Analytics, Google Tag Manager)
+        </h3>
+        <p class="mt-4">
+          We may use Google services to manage tags, measure website traffic,
+          and run and measure Google Ads campaigns (including conversion
+          tracking and remarketing). You can control the ads Google shows you
+          and opt out of personalized advertising through
+          <a
+            href="https://adssettings.google.com"
+            target="_blank"
+            rel="noopener noreferrer">Google Ads Settings</a
+          >, and you can opt out of Google Analytics using the
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            target="_blank"
+            rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a
+          >.
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          Meta (Facebook and Instagram Ads)
+        </h3>
+        <p class="mt-4">
+          We may use the Meta Pixel to measure the effectiveness of our
+          advertising on Facebook and Instagram and to show ads to people who
+          have visited our website. You can manage your ad preferences in your
+          <a
+            href="https://www.facebook.com/settings?tab=ads"
+            target="_blank"
+            rel="noopener noreferrer">Facebook ad settings</a
+          > and your Instagram account settings.
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          TikTok Ads
+        </h3>
+        <p class="mt-4">
+          We may use the TikTok Pixel to measure and optimize our advertising
+          campaigns on TikTok and to reach people who have visited our website.
+          You can manage your ad preferences in your TikTok account settings
+          under "Privacy" and "Ads."
+        </p>
+
+        <p class="mt-6">
+          These partners act as independent controllers of the data they
+          collect through these technologies. We encourage you to review their
+          respective privacy and cookie policies to understand how they process
+          your information.
+        </p>
+
+        <!-- Managing Cookies -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          How to Manage or Disable Cookies
+        </h2>
+        <p class="mt-6">
+          Most browsers automatically accept cookies by default, but you can set
+          your browser to remove or reject cookies through its settings. Please
+          keep in mind that removing or blocking cookies may affect your
+          experience and cause some features of the website to work incorrectly
+          or become unavailable.
+        </p>
+        <p class="mt-6">
+          You can also opt out of interest-based advertising from many companies
+          through these industry tools:
+        </p>
+        <ul class="list-disc list-inside">
+          <li>
+            <a
+              href="https://optout.aboutads.info"
+              target="_blank"
+              rel="noopener noreferrer">Digital Advertising Alliance (DAA)</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://optout.networkadvertising.org"
+              target="_blank"
+              rel="noopener noreferrer">Network Advertising Initiative (NAI)</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.youronlinechoices.eu"
+              target="_blank"
+              rel="noopener noreferrer">Your Online Choices (EU)</a
+            >
+          </li>
+        </ul>
+        </>
+        )}
+
+        <!-- Changes -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Changes to This Cookie Policy
+        </h2>
+        <p class="mt-6">
+          We may update this Cookie Policy from time to time to reflect changes
+          in the technologies we use or for other operational, legal, or
+          regulatory reasons. Any changes will be posted on this page.
+        </p>
+
+        <!-- Contact -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Contact Us
+        </h2>
+        <p class="mt-6">
+          If you have any questions about our use of cookies, you may contact us
+          using the following details:
+        </p>
+        <div class="mt-6">
+          <p class="mt-2">{content?.title}</p>
+          {content?.tel && <p class="mt-2">{"Tel: " + content.tel}</p>}
+          {content?.email && <p class="mt-2">{"Email: " + content.email}</p>}
+          {content?.address && (
+            <p class="mt-2">{"Address: " + content.address}</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

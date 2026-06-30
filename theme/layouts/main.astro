@@ -12,6 +12,7 @@ import CodeInsert from "../components/CodeInsert.astro";
 import GoogleForm from "../components/GoogleForm.astro";
 import Privacy from "../components/Privacy.astro";
 import Terms from "../components/Terms.astro";
+import Cookie from "../components/Cookie.astro";
 import Accessibility from "../components/Accessibility.astro";
 import Reviews from "../components/Reviews.astro";
 import GoogleReviewsSlider from "../components/GoogleReviewsSlider.astro";
@@ -472,6 +473,8 @@ let fullscreenImg = null;
         }
         else if (section?.type === "terms") {
           return <Terms section={section} content={content} />;
+        }else if (section?.type === "cookie") {
+          return <Cookie section={section} content={content} />;
         }else if (section?.type === "accessibility") {
           return <Accessibility section={section} content={content} />;
         }

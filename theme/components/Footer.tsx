@@ -441,8 +441,10 @@ export default function Footer(props: { content: any; }){
         color: content?.footer?.textColor || '#ffffff',
       }}
     >
-      {/* <a  href="/privacy" role="button">Privacy</a> | <a href="/terms" role="button">Terms</a> |  */}
-      <a href="/accessibility" role="button">Accessibility Statement</a> 
+      {content?.footer?.privacy !== false && (<><a href="/privacy" role="button">Privacy</a> | </>)}
+      {content?.footer?.terms !== false && (<><a href="/terms" role="button">Terms</a> | </>)}
+      {content?.footer?.cookie && (<><a href="/cookie" role="button">Cookie Policy</a> | </>)}
+      <a href="/accessibility" role="button">Accessibility Statement</a>
       {/* | <button id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen} >Send Feedback</button> */}
     </p>
     <p

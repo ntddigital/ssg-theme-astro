@@ -1,6 +1,8 @@
 ---
 const { content } = Astro.props;
 const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
+const arbitrationLocation =
+  content?.arbitrationLocation || "the county and state in which the Company is located";
 ---
 
 <div class="bg-white py-12">
@@ -217,6 +219,41 @@ const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
           or unenforceable is severed to the extent that it is void or
           unenforceable. The validity of the remainder of these Terms of Service
           is not affected.
+        </p>
+
+        <!-- Dispute Resolution -->
+        <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">
+          Dispute Resolution
+        </h2>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          Informal Resolution
+        </h3>
+        <p class="mt-4">
+          We encourage customers to contact us directly to resolve any disputes
+          or concerns. Many issues — such as questions about an order,
+          reservation, or your experience with us — can be resolved quickly
+          through direct communication with our team using the contact details
+          on this website.
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          Arbitration
+        </h3>
+        <p class="mt-4">
+          Any dispute that cannot be resolved informally shall be settled
+          through binding arbitration in accordance with the rules of the
+          American Arbitration Association. The arbitration shall take place in
+          {arbitrationLocation}. Notwithstanding the foregoing, either party may
+          bring an individual claim in small claims court.
+        </p>
+
+        <h3 class="mt-8 text-xl font-semibold text-gray-900">
+          Class Action Waiver
+        </h3>
+        <p class="mt-4">
+          You agree to resolve disputes individually and waive any right to
+          participate in class action lawsuits or class-wide arbitration.
         </p>
 
         <!-- Governing Law -->

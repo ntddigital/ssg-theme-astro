@@ -58,7 +58,7 @@ function hexToRgb(hex:string) {
                     ? `/${section?.bgImg}`
                     : undefined
               }
-              class="local-bg-video absolute inset-0 -z-10 h-full w-full object-cover"
+              class="local-bg-video absolute inset-0 -z-[5] h-full w-full object-cover"
               autoplay
               muted
               loop
@@ -172,9 +172,10 @@ function hexToRgb(hex:string) {
       )
     }
     {
-      section?.bgImg ? (
+      section?.bgImg ||
+      (section?.sectionType === "video" && section?.bgVideoPoster) ? (
         <img
-          src={`/${section?.bgImg}`}
+          src={`/${section?.bgImg || section?.bgVideoPoster}`}
           alt={content?.title}
           class={cn(
             "absolute inset-0 -z-10 h-full w-full object-cover",
@@ -236,6 +237,9 @@ function hexToRgb(hex:string) {
         "m-auto max-w-2xl md:max-w-7xl flex flex-col justify-center items-center",
         `${section?.sectionType === "video" ? "sm:hidden" : ""}`
       )}
+      style={section?.sectionType === "video" && !section?.imgPosition
+        ? `min-height: ${section?.height || 60}vh;`
+        : ""}
     >
       {
         section?.sectionType === "imgBg" ||

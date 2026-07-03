@@ -47,24 +47,46 @@ function hexToRgb(hex:string) {
           class="hidden sm:block h-full overflow-hidden"
           style="padding:56.25% 0 0 0;position:relative;"
         >
-          <iframe
-            id="bg-video"
-            src={
-              section?.bgVideoType === "vimeo"
-                ? `https://player.vimeo.com/video/${section?.bgVideoId}?autoplay=1&loop=1&background=1`
-                : section?.bgVideoType === "gjw"
-                  ? `https://www.ganjingworld.com/zh-CN/embed/${section?.bgVideoId}?autoplay=1&loop=1&controls=0&mute=1`
-                  : section?.bgVideoType === "youtube"
-                    ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
-                    : ""
-            }
-            title={
-              content?.seo?.metaTitle ? content?.seo?.metaTitle : content?.title
-            }
-            class="absolute inset-0 -z-10 h-full w-full object-cover"
-            allow="accelerometer; autoplay;"
-            allowfullscreen
-          />
+          {section?.bgVideoType === "local" ? (
+            <video
+              data-bg-video
+              data-src={`/${section?.bgVideoId}`}
+              poster={
+                section?.bgVideoPoster
+                  ? `/${section?.bgVideoPoster}`
+                  : section?.bgImg
+                    ? `/${section?.bgImg}`
+                    : undefined
+              }
+              class="local-bg-video absolute inset-0 -z-10 h-full w-full object-cover"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="none"
+            />
+          ) : (
+            <iframe
+              id="bg-video"
+              src={
+                section?.bgVideoType === "vimeo"
+                  ? `https://player.vimeo.com/video/${section?.bgVideoId}?autoplay=1&loop=1&background=1`
+                  : section?.bgVideoType === "gjw"
+                    ? `https://www.ganjingworld.com/zh-CN/embed/${section?.bgVideoId}?autoplay=1&loop=1&controls=0&mute=1`
+                    : section?.bgVideoType === "youtube"
+                      ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
+                      : ""
+              }
+              title={
+                content?.seo?.metaTitle
+                  ? content?.seo?.metaTitle
+                  : content?.title
+              }
+              class="absolute inset-0 -z-10 h-full w-full object-cover"
+              allow="accelerometer; autoplay;"
+              allowfullscreen
+            />
+          )}
           <div class="absolute inset-0 w-full h-full flex justify-center items-center">
             <div class="text-center max-w-2xl sm:max-w-3xl">
               <h1
@@ -159,6 +181,9 @@ function hexToRgb(hex:string) {
             `${section?.sectionType === "video" ? "sm:hidden" : ""}`,
             `${section?.mobileBgImg ? " hidden sm:block" : ""}`
           )}
+          loading="eager"
+          decoding="async"
+          {...{ fetchpriority: "high" }}
         />
       ) : (
         ""
@@ -570,7 +595,29 @@ function hexToRgb(hex:string) {
   }
 
   // Call the function after the iframe has loaded
-  document.getElementById("gjw-video")!.onload = function () {
-    muteGJWVideo();
-  };
+  const gjwVideo = document.getElementById("gjw-video") as HTMLIFrameElement | null;
+  if (gjwVideo) {
+    gjwVideo.onload = function () {
+      muteGJWVideo();
+    };
+  }
+
+  // Defer local background video download until after the page has loaded so it
+  // never competes with the LCP element (the poster image / hero text).
+  function loadLocalBgVideos() {
+    document
+      .querySelectorAll<HTMLVideoElement>("video.local-bg-video[data-src]")
+      .forEach((video) => {
+        if (video.src) return;
+        video.src = video.dataset.src!;
+        const play = video.play();
+        if (play && typeof play.catch === "function") play.catch(() => {});
+      });
+  }
+
+  if (document.readyState === "complete") {
+    loadLocalBgVideos();
+  } else {
+    window.addEventListener("load", loadLocalBgVideos, { once: true });
+  }
 </script>

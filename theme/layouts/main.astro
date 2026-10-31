@@ -436,13 +436,13 @@ const structuredData = generateStructuredData({
     {content?.header && <Header content={content} />}
     <main id="maincontent">
     {
-      content?.sections?.map((section: { type: string }) => {
+      content?.sections?.map((section: { type: string }, sectionIndex: number) => {
         if (section?.type === "feature" || section?.type === "hero") {
           return <Feature content={content} section={section} />;
         } else if (section?.type === "video") {
           return <Video content={content} section={section} />;
         } else if (section?.type === "gallery") {
-          return <Gallery section={section} />;
+          return <Gallery section={section} index={sectionIndex} />;
         } else if (section?.type === "modal") {
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {
@@ -464,6 +464,8 @@ const structuredData = generateStructuredData({
           return <Cookie section={section} content={content} />;
         }else if (section?.type === "accessibility") {
           return <Accessibility section={section} content={content} />;
+        } else {
+          console.warn(`[theme] ${content?.title}: unsupported section type "${section?.type}", nothing is rendered`);
         }
       })
     }

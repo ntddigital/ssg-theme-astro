@@ -2,11 +2,15 @@
 import { getImagesFromFolders } from "../utils/readImages";
 import { cn } from "../utils/cn";
 
-const { section } = Astro.props;
+const { section, index: sectionIndex = 0 } = Astro.props;
 const images = getImagesFromFolders("/public/" + section?.folderPath);
-const galleryGridId = `gallery-grid-${String(
-  section?.id || section?.folderPath || "default"
-).replace(/[^a-zA-Z0-9_-]/g, "-")}`;
+const supportedModes = [1, 2, 3, 4];
+const mode = supportedModes.includes(Number(section?.mode)) ? Number(section?.mode) : 4;
+if (section?.mode !== undefined && mode !== Number(section?.mode)) {
+  console.warn(`[theme] gallery "${section?.folderPath}": unsupported mode ${section?.mode}, using mode 4`);
+}
+// Position in the page, so two galleries that share a folder or id never share a grid id.
+const galleryGridId = `gallery-grid-${sectionIndex}`;
 const parseVisibleCount = (value: unknown, fallback: number) => {
   const parsed = Number(value);
   if (!Number.isFinite(parsed) || parsed < 1) return fallback;
@@ -117,7 +121,7 @@ const initialVisibleDesktop = parseVisibleCount(
   class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
 >
   {
-    section?.mode === 1 && (
+    mode === 1 && (
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl">
@@ -184,7 +188,7 @@ const initialVisibleDesktop = parseVisibleCount(
   }
 
   {
-    section?.mode === 2 && (
+    mode === 2 && (
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl">
@@ -249,7 +253,7 @@ const initialVisibleDesktop = parseVisibleCount(
     )
   }
   {
-    section?.mode === 3 && (
+    mode === 3 && (
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="flex flex-col justify-center items-center mx-auto max-w-2xl">
@@ -312,7 +316,7 @@ const initialVisibleDesktop = parseVisibleCount(
   }
 
   {
-    section?.mode === 4 && (
+    mode === 4 && (
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="flex flex-col justify-center items-center mx-auto max-w-2xl">

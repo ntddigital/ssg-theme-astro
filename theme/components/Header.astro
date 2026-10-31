@@ -203,7 +203,7 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
         {
           content?.header?.addTelBtn ? (
             <a
-              class="flex items-center gap-2 cursor-pointer hover:scale-105"
+              class="flex items-center gap-2 py-1 cursor-pointer hover:scale-105"
               style={`color:${content?.header?.telTextColor}`}
               href={`tel:${content?.trackingNum ? content?.trackingNum : content?.tel}`}
               id="headerTelBtn"

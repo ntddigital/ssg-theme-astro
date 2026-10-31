@@ -96,7 +96,7 @@ const policyLang = zh ? "en" : undefined;
                   <a
                     target="_blank"
                     href={item?.url}
-                    
+                    class="inline-block py-1"
                   >
                     {item?.address}<span class="sr-only">{newTabHint(lang)}</span>
                   </a>
@@ -311,7 +311,7 @@ const policyLang = zh ? "en" : undefined;
     >
       &copy; <span data-footer-year>{currentYear}</span>{" "}
       {content?.title?.replace(" - Best Food Today", "")} {zh ? "版權所有。" : "All Rights Reserved."} 
-      {content?.footer?.hideBestFoodToday ? "": (<> {zh ? "網站製作：" : "Created by"}{" "}<a href="https://bestfood.today/">Best Food Today </a>.</>)}
+      {content?.footer?.hideBestFoodToday ? "": (<> {zh ? "網站製作：" : "Created by"}{" "}<a href="https://bestfood.today/" class="inline-block py-1.5">Best Food Today </a>.</>)}
     
     </p>
   </div>

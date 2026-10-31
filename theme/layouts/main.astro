@@ -431,7 +431,7 @@ const structuredData = generateStructuredData({
           <a href="#footer" data-acsb-skip-link="footer" class="skip-link">{zh ? "跳至頁尾" : "Skip to Footer"}<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div></div></div></access-widget-ui>
 
     {content?.header && <Header content={content} />}
-    <main id="maincontent">
+    <main id="maincontent" tabindex="-1">
     {
       content?.sections?.map((section: { type: string }, sectionIndex: number) => {
         if (section?.type === "feature" || section?.type === "hero") {

@@ -1,6 +1,9 @@
 ---
 import { cn } from "../utils/cn";
+import { heroScrimAlpha } from "../utils/contrast";
 const { content, section } = Astro.props;
+// Only when text sits on a photo
+const scrim = section?.bgImg ? heroScrimAlpha(section) : 0;
 ---
 
 <section
@@ -36,6 +39,17 @@ const { content, section } = Astro.props;
         <span
           class="absolute -z-10 w-full inset-0 top-0 left-0"
           style={`background-color:${section?.bgColor}; opacity: ${section?.bgOpacity}`}
+        />
+      ) : (
+        ""
+      )
+    }
+    {
+      scrim > 0 ? (
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 -z-[4]"
+          style={`background-color: rgba(0, 0, 0, ${scrim});`}
         />
       ) : (
         ""

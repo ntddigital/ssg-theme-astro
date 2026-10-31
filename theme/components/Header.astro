@@ -3,8 +3,10 @@ import PrimaryButton from "./ui/PrimaryButton.astro";
 import SecondaryButton from "./ui/SecondaryButton.astro";
 import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
 import { cn } from "../utils/cn";
+import { buttonTextColor } from "../utils/contrast";
 
 const { content } = Astro.props;
+const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorScheme, content?.forceButtonTextColor);
 ---
 
 <header id="header" class="relative shadow-lg z-50">
@@ -18,7 +20,7 @@ const { content } = Astro.props;
           style={`background-color: ${content?.primaryColor};`}
         >
           <div
-            style={`color:${content.primaryColorScheme === "dark" ? "#ffffff" : "#000000"}`}
+            style={`color:${bannerText}`}
           >
             {content?.banner?.text?.map(
               (item: { boldText: string; text: string; smText: string }) => {
@@ -43,9 +45,7 @@ const { content } = Astro.props;
               <svg
                 class="h-5 w-5 text-gray-900"
                 viewBox="0 0 20 20"
-                fill={
-                  content.primaryColorScheme === "dark" ? "#ffffff" : "#000000"
-                }
+                fill={bannerText}
                 aria-hidden="true"
               >
                 <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -60,7 +60,7 @@ const { content } = Astro.props;
     <!-- end of banner -->
     <span
       class="absolute -z-10 w-full inset-0 top-0 left-0"
-      style={`background-color: ${content?.header?.bgColor}; opacity:${content?.header?.bgOpacity};`}
+      style={`background-color: ${content?.header?.bgColor}; opacity:1;`}
     ></span>
     <nav
       class="mx-auto flex max-w-7xl items-center justify-between gap-x-2 sm:gap-x-6 px-6 py-3 lg:px-8"

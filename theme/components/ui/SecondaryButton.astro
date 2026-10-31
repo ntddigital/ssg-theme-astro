@@ -1,7 +1,10 @@
 ---
 import { cn } from "../../utils/cn";
+import { buttonTextColor } from "../../utils/contrast";
 
 const { content, text, href, backgroundColor } = Astro.props;
+const bg = backgroundColor ? backgroundColor : content?.secondaryColor;
+const fg = buttonTextColor(bg, content?.secondaryColorScheme, content?.forceButtonTextColor);
 ---
 
 {
@@ -9,9 +12,8 @@ const { content, text, href, backgroundColor } = Astro.props;
     <div
       class={cn(
         "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
-        `${content?.secondaryColorScheme === "dark" ? "text-white" : "text-black"}`
       )}
-      style={`background-color:${backgroundColor ? backgroundColor : content?.secondaryColor};`}
+      style={`background-color:${bg};color:${fg};`}
     >
       Tel:
       <a
@@ -27,9 +29,8 @@ const { content, text, href, backgroundColor } = Astro.props;
       href={href}
       class={cn(
         "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
-        `${content?.secondaryColorScheme === "dark" ? "text-white" : "text-black"}`
       )}
-      style={`background-color:${backgroundColor ? backgroundColor : content?.secondaryColor};`}
+      style={`background-color:${bg};color:${fg};`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={"Open the" + text + " in a new tab"}

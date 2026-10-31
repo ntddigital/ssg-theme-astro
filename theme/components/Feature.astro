@@ -4,8 +4,11 @@ import SecondaryButton from "./ui/SecondaryButton.astro";
 import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
 import Map from "./Map.astro";
 import { cn } from "../utils/cn";
+import { heroScrimAlpha } from "../utils/contrast";
 
 const { content, section } = Astro.props;
+// Darkening layer between the photo/video and the text of full-bleed heroes (see utils/contrast.ts)
+const scrim = section?.sectionType === "imgBg" || section?.sectionType === "video" ? heroScrimAlpha(section) : 0;
 function hexToRgb(hex:string) {
   const parsedHex = hex?.replace("#", "");
   
@@ -215,6 +218,17 @@ function hexToRgb(hex:string) {
             style={`background-color:${section?.bgColor}; opacity: ${section?.bgOpacity}`}
           />
         </>
+      ) : (
+        ""
+      )
+    }
+    {
+      scrim > 0 ? (
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 -z-[4]"
+          style={`background-color: rgba(0, 0, 0, ${scrim});`}
+        />
       ) : (
         ""
       )

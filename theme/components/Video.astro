@@ -1,5 +1,6 @@
 ---
 import { cn } from "../utils/cn";
+import MediaToggleButton from "./ui/MediaToggleButton.astro";
 
 const { content, section } = Astro.props;
 ---
@@ -57,9 +58,11 @@ const { content, section } = Astro.props;
       section?.videoType === "vimeo"
         ? section?.videoId?.map((id: string) => (
             <Fragment key={id}>
-              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+              <div data-media-wrap style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <div data-media-poster class="absolute inset-0 bg-gray-900" style="display:none"></div>
                 <iframe
-                  src={`https://player.vimeo.com/video/${id}?autoplay=1&muted=1&loop=1&controls=0&dnt=1&title=0&byline=0&portrait=0`}
+                  data-media
+                  data-src={`https://player.vimeo.com/video/${id}?autoplay=1&muted=1&loop=1&controls=0&dnt=1&title=0&byline=0&portrait=0`}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -75,6 +78,7 @@ const { content, section } = Astro.props;
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowfullscreen
                 />
+                <MediaToggleButton content={content} kind="video" center class="bottom-4 right-4" />
               </div>
               <script src="https://player.vimeo.com/api/player.js" />
             </Fragment>
@@ -86,9 +90,11 @@ const { content, section } = Astro.props;
       section?.videoType === "gjw"
         ? section?.videoId?.map((id: string) => (
             <Fragment key={id}>
-              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+              <div data-media-wrap style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <div data-media-poster class="absolute inset-0 bg-gray-900" style="display:none"></div>
                 <iframe
-                  src={`https://www.ganjingworld.com/embed/${id}`}
+                  data-media
+                  data-src={`https://www.ganjingworld.com/embed/${id}`}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -104,6 +110,7 @@ const { content, section } = Astro.props;
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowfullscreen
                 />
+                <MediaToggleButton content={content} kind="video" center class="bottom-4 right-4" />
               </div>
             </Fragment>
           ))
@@ -114,9 +121,11 @@ const { content, section } = Astro.props;
       section?.videoType === "youtube"
         ? section?.videoId?.map((id: string) => (
             <Fragment key={id}>
-              <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+              <div data-media-wrap style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+                <div data-media-poster class="absolute inset-0 bg-gray-900" style="display:none"></div>
                 <iframe
-                  src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&controls=0`}
+                  data-media
+                  data-src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&controls=0`}
                   style={{
                     position: "absolute",
                     top: 0,
@@ -132,6 +141,7 @@ const { content, section } = Astro.props;
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowfullscreen
                 />
+                <MediaToggleButton content={content} kind="video" center class="bottom-4 right-4" />
               </div>
             </Fragment>
           ))
@@ -139,3 +149,7 @@ const { content, section } = Astro.props;
     }
   </div>
 </section>
+<script>
+  // Pause/play button and prefers-reduced-motion for the embedded videos (see utils/media-toggle.ts)
+  import "../utils/media-toggle";
+</script>

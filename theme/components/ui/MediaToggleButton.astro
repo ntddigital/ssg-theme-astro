@@ -1,0 +1,44 @@
+---
+// Pause/play button for auto-playing background media (WCAG 2.2.2). Wired up by utils/media-toggle.ts, which is
+// imported by the scripts of Feature.astro and Video.astro. Put it inside the [data-media-wrap] element that holds
+// the media. `kind="bg"` is for hero backgrounds, anything else is for a video section.
+import { cn } from "../../utils/cn";
+import { pageLang, isChinese } from "../../utils/lang";
+
+const { content, kind = "bg", center = false, class: className = "" } = Astro.props;
+const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
+const simplified = lang.toLowerCase() === "zh-cn";
+const noun = isChinese(lang)
+  ? kind === "bg"
+    ? simplified ? "背景视频" : "背景影片"
+    : simplified ? "视频" : "影片"
+  : kind === "bg"
+    ? "background video"
+    : "video";
+const labelPause = isChinese(lang) ? (simplified ? "暂停" : "暫停") + noun : "Pause " + noun;
+const labelPlay = isChinese(lang) ? "播放" + noun : "Play " + noun;
+const bgAttr = kind === "bg" ? { "data-pause-bg-video": "" } : {};
+---
+
+<button
+  type="button"
+  data-media-toggle
+  {...bgAttr}
+  {...(center ? { "data-media-center": "" } : {})}
+  data-label-pause={labelPause}
+  data-label-play={labelPlay}
+  aria-label={labelPause}
+  title={labelPause}
+  class={cn(
+    "absolute z-10 flex h-11 w-11 items-center justify-center rounded-full border-2 border-white bg-black/80 text-white shadow-lg hover:bg-black focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-yellow-300",
+    className
+  )}
+>
+  <svg data-icon="pause" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+    <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+  </svg>
+  <svg data-icon="play" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display:none">
+    <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path>
+  </svg>
+</button>

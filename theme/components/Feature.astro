@@ -5,10 +5,21 @@ import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
 import Map from "./Map.astro";
 import { cn } from "../utils/cn";
 import { heroScrimAlpha } from "../utils/contrast";
+import MediaToggleButton from "./ui/MediaToggleButton.astro";
 
 const { content, section } = Astro.props;
 // Darkening layer between the photo/video and the text of full-bleed heroes (see utils/contrast.ts)
 const scrim = section?.sectionType === "imgBg" || section?.sectionType === "video" ? heroScrimAlpha(section) : 0;
+// Embedded background video: the src goes in data-src and utils/media-toggle.ts sets it unless the visitor prefers reduced motion
+const bgIframeSrc =
+  section?.bgVideoType === "vimeo"
+    ? `https://player.vimeo.com/video/${section?.bgVideoId}?autoplay=1&loop=1&background=1`
+    : section?.bgVideoType === "gjw"
+      ? `https://www.ganjingworld.com/zh-CN/embed/${section?.bgVideoId}?autoplay=1&loop=1&controls=0&mute=1`
+      : section?.bgVideoType === "youtube"
+        ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
+        : "";
+const bgPoster = section?.bgVideoPoster || section?.bgImg;
 function hexToRgb(hex:string) {
   const parsedHex = hex?.replace("#", "");
   
@@ -48,10 +59,12 @@ function hexToRgb(hex:string) {
         <div
           class="hidden sm:block h-full overflow-hidden"
           style="padding:56.25% 0 0 0;position:relative;"
+          data-media-wrap
         >
           {section?.bgVideoType === "local" ? (
             <video
               data-bg-video
+              data-media
               data-src={`/${section?.bgVideoId}`}
               poster={
                 section?.bgVideoPoster
@@ -68,17 +81,11 @@ function hexToRgb(hex:string) {
               preload="none"
             />
           ) : (
+            <>
             <iframe
               id="bg-video"
-              src={
-                section?.bgVideoType === "vimeo"
-                  ? `https://player.vimeo.com/video/${section?.bgVideoId}?autoplay=1&loop=1&background=1`
-                  : section?.bgVideoType === "gjw"
-                    ? `https://www.ganjingworld.com/zh-CN/embed/${section?.bgVideoId}?autoplay=1&loop=1&controls=0&mute=1`
-                    : section?.bgVideoType === "youtube"
-                      ? `https://www.youtube.com/embed/${section?.bgVideoId}?controls=0&autoplay=1&loop=1&mute=1`
-                      : ""
-              }
+              data-media
+              data-src={bgIframeSrc}
               title={
                 content?.seo?.metaTitle
                   ? content?.seo?.metaTitle
@@ -88,6 +95,18 @@ function hexToRgb(hex:string) {
               allow="accelerometer; autoplay;"
               allowfullscreen
             />
+            {bgPoster ? (
+              <img
+                data-media-poster
+                src={`/${bgPoster}`}
+                alt=""
+                aria-hidden="true"
+                class="absolute inset-0 -z-[5] h-full w-full object-cover"
+                style="display:none"
+                decoding="async"
+              />
+            ) : null}
+            </>
           )}
           <div class="absolute inset-0 w-full h-full flex justify-center items-center">
             <div class="text-center max-w-2xl sm:max-w-3xl">
@@ -172,6 +191,12 @@ function hexToRgb(hex:string) {
               </div>
             </div>
           </div>
+          {section?.bgVideoType === "local" || bgIframeSrc ? (
+            <MediaToggleButton
+              content={content}
+              class={section?.bottomInfo ? "bottom-20 right-4" : "bottom-4 right-4"}
+            />
+          ) : null}
           <script src="https://player.vimeo.com/api/player.js" />
         </div>
       ) : (
@@ -618,30 +643,7 @@ function hexToRgb(hex:string) {
   </div>
 </section>
 <script>
-  // Each block is self-contained and checks that its elements exist: all component scripts on a page are
-  // bundled into one module, so an uncaught error here would stop the gallery and slider scripts after it.
-  (() => {
-    // Gan Jing World embeds only honour mute=1 in the URL, so add it after load if it is missing.
-    const bg = document.getElementById("bg-video") as HTMLIFrameElement | null;
-    if (!bg || !bg.src.includes("ganjingworld.com")) return;
-    bg.addEventListener("load", () => {
-      if (!bg.src.includes("mute=1")) bg.src = bg.src + "&mute=1";
-    });
-  })();
-
-  (() => {
-    // Defer local background video download until after the page has loaded so it
-    // never competes with the LCP element (the poster image / hero text).
-    const videos = document.querySelectorAll<HTMLVideoElement>("video.local-bg-video[data-src]");
-    if (!videos.length) return;
-    const load = () =>
-      videos.forEach((video) => {
-        if (video.src) return;
-        video.src = video.dataset.src!;
-        const play = video.play();
-        if (play && typeof play.catch === "function") play.catch(() => {});
-      });
-    if (document.readyState === "complete") load();
-    else window.addEventListener("load", load, { once: true });
-  })();
+  // Background video start/pause (local video, YouTube, Vimeo, Gan Jing World), the pause button and
+  // prefers-reduced-motion are handled in utils/media-toggle.ts, which runs when imported.
+  import "../utils/media-toggle";
 </script>

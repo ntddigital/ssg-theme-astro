@@ -16,7 +16,7 @@ const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
       : "mt-16 sm:mt-24 md:mt-32",
     isChildComponent ? "" : "scroll-mt-50 sm:scroll-mt-100"
   )}
-  id={section?.id || undefined}
+  id={isChildComponent ? undefined : section?.id || undefined}
 >
   <div class="absolute top-4 right-4">
     <div class="flex flex-col gap-4">

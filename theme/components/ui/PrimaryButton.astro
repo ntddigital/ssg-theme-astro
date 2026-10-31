@@ -8,10 +8,11 @@ const bg = backgroundColor ? backgroundColor : content?.primaryColor;
 const fg = buttonTextColor(bg, content?.primaryColorScheme, content?.forceButtonTextColor);
 const hint = newTabHint(pageLang(Astro.url.pathname, content?.seo?.locale));
 const isTel = typeof href === "string" && href.startsWith("tel:"); // phone links open the dialer, not a new tab
+const linkHref = isTel ? href.replace(/\s/g, "") : href;
 ---
 
 <a
-  href={href}
+  href={linkHref}
   class={cn(
     "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
   )}

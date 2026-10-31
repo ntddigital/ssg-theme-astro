@@ -73,7 +73,6 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
     <nav
       class="mx-auto flex max-w-7xl items-center justify-between gap-x-2 sm:gap-x-6 px-6 py-3 lg:px-8"
       aria-label={zh ? "主選單" : "Global"}
-      id="menu"
     >
       <div class="cursor-pointer min-w-0">
         <a
@@ -205,7 +204,7 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
             <a
               class="flex items-center gap-2 py-1 cursor-pointer hover:scale-105"
               style={`color:${content?.header?.telTextColor}`}
-              href={`tel:${content?.trackingNum ? content?.trackingNum : content?.tel}`}
+              href={`tel:${String(content?.trackingNum ? content?.trackingNum : content?.tel ?? "").replace(/\s/g, "")}`}
               id="headerTelBtn"
             >
               <span class="sr-only">{zh ? "來電" : "Call Us"}</span>

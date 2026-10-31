@@ -510,3 +510,8 @@
   opacity: 1; /* Make the element visible when focused */
   pointer-events: auto; /* Enable interactions when focused */
 }
+
+/* Keep anchor targets and focused elements clear of the fixed header (height is set by Header.astro) */
+html {
+  scroll-padding-top: var(--header-h, 96px);
+}

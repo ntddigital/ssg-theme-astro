@@ -1,8 +1,10 @@
 ---
 import { getImagesFromFolders } from "../utils/readImages";
 import { cn } from "../utils/cn";
+import { pageLang, isChinese } from "../utils/lang";
 
 const { section, index: sectionIndex = 0 } = Astro.props;
+const enlargeLabel = isChinese(pageLang(Astro.url.pathname)) ? "放大檢視：" : "Enlarge: ";
 const images = getImagesFromFolders("/public/" + section?.folderPath);
 const supportedModes = [1, 2, 3, 4];
 const mode = supportedModes.includes(Number(section?.mode)) ? Number(section?.mode) : 4;
@@ -147,14 +149,19 @@ const initialVisibleDesktop = parseVisibleCount(
               <Fragment key={index}>
                 <div>
                   <div class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900">
-                    <img
-                      src={item?.src?.replace("/public", "")}
-                      alt={item?.name}
-                      class="w-full object-contain cursor-pointer"
-                      loading="lazy"
+                    <button
+                      type="button"
+                      class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
-                      tabindex="0"
-                    />
+                      aria-label={`${enlargeLabel}${item?.name}`}
+                    >
+                      <img
+                        src={item?.src?.replace("/public", "")}
+                        alt={item?.name}
+                        class="w-full object-contain"
+                        loading="lazy"
+                      />
+                    </button>
                   </div>
                   {section?.showImgName ? (
                     <div
@@ -213,14 +220,19 @@ const initialVisibleDesktop = parseVisibleCount(
               <Fragment key={index}>
                 <div>
                   <div class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900">
-                    <img
-                      src={item?.src?.replace("/public", "")}
-                      alt={item?.name}
-                      class="w-full object-contain cursor-pointer"
-                      loading="lazy"
+                    <button
+                      type="button"
+                      class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
-                      tabindex="0"
-                    />
+                      aria-label={`${enlargeLabel}${item?.name}`}
+                    >
+                      <img
+                        src={item?.src?.replace("/public", "")}
+                        alt={item?.name}
+                        class="w-full object-contain"
+                        loading="lazy"
+                      />
+                    </button>
                   </div>
                   {section?.showImgName ? (
                     <div
@@ -280,14 +292,19 @@ const initialVisibleDesktop = parseVisibleCount(
             {images?.map((item, index) => (
               <Fragment key={index}>
                 <li>
-                  <img
-                    src={item?.src?.replace("/public", "")}
-                    alt={item?.name}
-                    class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain cursor-pointer`}
-                    loading="lazy"
+                  <button
+                    type="button"
+                    class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
-                    tabindex="0"
-                  />
+                    aria-label={`${enlargeLabel}${item?.name}`}
+                  >
+                    <img
+                      src={item?.src?.replace("/public", "")}
+                      alt={item?.name}
+                      class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain`}
+                      loading="lazy"
+                    />
+                  </button>
                   {section?.showImgName ? (
                     <div
                       class="mt-6 text-lg leading-8  text-center"
@@ -354,14 +371,19 @@ const initialVisibleDesktop = parseVisibleCount(
                   )}
                   data-index={index}
                 >
-                  <img
-                    src={item?.src?.replace("/public", "")}
-                    alt={item?.name}
-                    class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain cursor-pointer`}
-                    loading="lazy"
+                  <button
+                    type="button"
+                    class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
-                    tabindex="0"
-                  />
+                    aria-label={`${enlargeLabel}${item?.name}`}
+                  >
+                    <img
+                      src={item?.src?.replace("/public", "")}
+                      alt={item?.name}
+                      class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain`}
+                      loading="lazy"
+                    />
+                  </button>
                   {section?.showImgName ? (
                     <div
                       class="mt-6 text-lg leading-8  text-center"

@@ -280,44 +280,37 @@ const structuredData = generateStructuredData({
      {isModal?
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // This script sits inside an expression, so Astro does not compile it: keep it plain JavaScript.
         const modal = document.getElementById("promoModal");
-        const overlay = document.getElementById("overlay");
         const closeModal = document.getElementById("closeModal");
         const promoButton = document.getElementById("promoButton");
+        if (!(modal instanceof HTMLDialogElement)) return;
 
-        // Check the modal status in localStorage
+        // Show the pop-up once per 30 minutes, 3 seconds after the page loads
         const modalStatus = localStorage.getItem("promoModalShown");
         const now = new Date().getTime();
-
         if (!modalStatus || now - parseInt(modalStatus) > 30 * 60 * 1000) {
-          // Show the modal and overlay after a 3-second delay
           setTimeout(() => {
-            modal?.classList.add("show");
-            overlay?.classList.add("show");
+            if (!modal.open) modal.showModal();
           }, 3000);
         }
 
-        function closeModalAndRecord() {
-          modal?.classList.remove("show");
-          overlay?.classList.remove("show");
-          localStorage.setItem(
-            "promoModalShown",
-            new Date().getTime().toString()
-          );
-        }
-
-        closeModal?.addEventListener("click", closeModalAndRecord);
-        overlay?.addEventListener("click", closeModalAndRecord);
-
-        // stop bounce
-        promoButton?.addEventListener("mouseover", () => {
-          promoButton?.classList.remove("bounce");
+        // Remember that it was shown, however it was closed (button, Esc or click outside)
+        modal.addEventListener("close", () => {
+          localStorage.setItem("promoModalShown", new Date().getTime().toString());
+        });
+        closeModal?.addEventListener("click", () => modal.close());
+        modal.addEventListener("click", (event) => {
+          const box = modal.getBoundingClientRect();
+          const inside =
+            event.clientX >= box.left && event.clientX <= box.right &&
+            event.clientY >= box.top && event.clientY <= box.bottom;
+          if (!inside) modal.close();
         });
 
-        // recover bounce
-        promoButton?.addEventListener("mouseout", () => {
-          promoButton?.classList.add("bounce");
-        });
+        // stop bounce while the pointer is over the button
+        promoButton?.addEventListener("mouseover", () => promoButton.classList.remove("bounce"));
+        promoButton?.addEventListener("mouseout", () => promoButton.classList.add("bounce"));
       });
     </script>:null}
     <!-- end of modal -->
@@ -482,47 +475,48 @@ const structuredData = generateStructuredData({
 
 
       <!-- gallery modal -->
-  <div
-  id="fullscreen-modal"
-  class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 items-center justify-center"
->
-  <button
-    id="close-button"
-    class="absolute top-4 right-4 text-white text-4xl font-bold z-60"
+  <dialog
+    id="fullscreen-modal"
+    aria-label={zh ? "放大檢視" : "Enlarged image"}
+    class="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-black/90"
   >
-    &times;
-  </button>
-  <img
-    alt="Fullscreen"
-    class="max-w-full max-h-full object-contain"
-  />
-</div>
+    <div class="flex h-full w-full items-center justify-center">
+      <img alt="" class="max-h-full max-w-full object-contain" />
+    </div>
+    <button
+      id="close-button"
+      type="button"
+      aria-label={zh ? "關閉" : "Close"}
+      class="absolute right-4 top-4 text-4xl font-bold text-white"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </dialog>
 <script>
-  const modal = document.getElementById("fullscreen-modal");
-  const closeButton = document.getElementById("close-button");
-  const images = document.querySelectorAll("[data-src]");
+  (() => {
+    const dialog = document.getElementById("fullscreen-modal") as HTMLDialogElement | null;
+    const image = dialog?.querySelector("img");
+    if (!dialog || !image) return;
+    let opener: HTMLElement | null = null;
 
-  // Open fullscreen
-  images.forEach((image) => {
-    image.addEventListener("click", () => {
-      const imgSrc = image.getAttribute("data-src");
-      if (!modal || !imgSrc) return;
-
-      modal.style.display = "flex";
-      const fullscreenImg = modal.querySelector("img");
-      if (fullscreenImg) fullscreenImg.src = imgSrc?.replace("/public", "");
+    document.querySelectorAll<HTMLElement>("[data-src]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const src = trigger.getAttribute("data-src");
+        if (!src) return;
+        opener = trigger;
+        image.src = src.replace("/public", "");
+        image.alt = trigger.querySelector("img")?.getAttribute("alt") ?? "";
+        dialog.showModal();
+      });
     });
-  });
 
-  // Close fullscreen
-  if (closeButton) {
-    closeButton.addEventListener("click", () => {
-      if (!modal) return;
-      modal.style.display = "none";
-      const fullscreenImg = modal.querySelector("img");
-      if (fullscreenImg) fullscreenImg.src = ""; // clear image
+    document.getElementById("close-button")?.addEventListener("click", () => dialog.close());
+    // Esc is handled by <dialog>. When it closes, clear the image and give focus back to the thumbnail.
+    dialog.addEventListener("close", () => {
+      image.removeAttribute("src");
+      opener?.focus();
     });
-  }
+  })();
 </script>
 <!-- end of modal -->
 

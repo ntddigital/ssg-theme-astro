@@ -1,38 +1,21 @@
 ---
 import PrimaryButton from "./ui/PrimaryButton.astro";
+import { pageLang, isChinese } from "../utils/lang";
 const { content, section } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname));
 ---
 
 <style>
   .promo-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 90%;
     max-width: 450px;
     padding: 20px;
+    border: 0;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    z-index: 1001;
-    display: none;
   }
-
-  .promo-modal.show {
-    display: block;
-  }
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  .promo-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    display: none;
-  }
-  .overlay.show {
-    display: block;
   }
 
   .bounce {
@@ -59,14 +42,13 @@ const { content, section } = Astro.props;
 </style>
 
 <section>
-  <div id="overlay" class="overlay"></div>
-  <div id="promoModal" class="promo-modal rounded-lg">
+  <dialog id="promoModal" class="promo-modal rounded-lg" aria-labelledby="promoTitle">
     <div class="flex justify-end">
       <button
         id="closeModal"
         class="text-right"
         style="color: #333; border: none; cursor: pointer; font-size: 13px;"
-        aria-label="close Modal"
+        aria-label={zh ? "關閉" : "Close"}
       >
         <svg
           class="h-6 w-6"
@@ -83,7 +65,7 @@ const { content, section } = Astro.props;
         </svg></button
       >
     </div>
-    <p style={`font-size:${section?.titleSize}px;color:${section?.titleColor}`}>
+    <p id="promoTitle" style={`font-size:${section?.titleSize}px;color:${section?.titleColor}`}>
       {
         section?.title?.map((line: string, index: number) => (
           <Fragment key={index}>
@@ -154,5 +136,5 @@ const { content, section } = Astro.props;
         <span style="font-size: 10px;">{content?.title}</span>
       </div>
     </div>
-  </div>
+  </dialog>
 </section>

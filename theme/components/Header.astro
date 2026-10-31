@@ -229,6 +229,8 @@ const { content } = Astro.props;
       <div id="openMainMenu" class="flex lg:hidden">
         <button
           type="button"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
           class=`cursor-pointer -m-2.5 inline-flex items-center justify-center rounded-md p-2.5`
           style={`color:${content?.header?.menuTextColor}`}
         >
@@ -375,29 +377,56 @@ const { content } = Astro.props;
 </header>
 
 <script>
-  document
-    ?.getElementById("openMainMenu")
-    ?.addEventListener("click", function () {
-      document?.getElementById("mobileMenu")?.classList?.remove("hidden");
+  // Mobile menu: announces its state, takes focus when opened, closes with Esc and
+  // keeps the page behind it out of the tab order while it is open.
+  (() => {
+    const openButton = document.querySelector<HTMLButtonElement>("#openMainMenu button");
+    const menu = document.getElementById("mobileMenu");
+    const closeButton = document.getElementById("closeMenu");
+    if (!openButton || !menu || !closeButton) return;
+
+    const behind = () =>
+      [document.querySelector("main"), document.querySelector("footer"), document.getElementById("menu")].filter(
+        Boolean
+      ) as HTMLElement[];
+
+    const open = () => {
+      menu.classList.remove("hidden");
+      openButton.setAttribute("aria-expanded", "true");
+      behind().forEach((el) => (el.inert = true));
+      closeButton.focus();
+    };
+    const close = (returnFocus = true) => {
+      menu.classList.add("hidden");
+      openButton.setAttribute("aria-expanded", "false");
+      behind().forEach((el) => (el.inert = false));
+      if (returnFocus) openButton.focus();
+    };
+
+    openButton.addEventListener("click", open);
+    closeButton.addEventListener("click", () => close());
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.classList.contains("hidden")) close();
     });
+    menu.querySelectorAll(".menuItem").forEach((item) =>
+      item.addEventListener("click", () => setTimeout(() => close(false), 300))
+    );
+  })();
 
-  document?.getElementById("closeMenu")?.addEventListener("click", function () {
-    document?.getElementById("mobileMenu")?.classList.add("hidden");
-  });
+  // Top banner close button
+  (() => {
+    const banner = document.getElementById("headBanner");
+    document.getElementById("bannerCloseIcon")?.addEventListener("click", () => banner?.classList.add("hidden"));
+  })();
 
-  const menuItems = document.querySelectorAll(".menuItem");
-
-  menuItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      setTimeout(() => {
-        document.getElementById("mobileMenu")?.classList.add("hidden");
-      }, 300); //delay
-    });
-  });
-
-  document
-    ?.getElementById("bannerCloseIcon")
-    ?.addEventListener("click", function () {
-      document?.getElementById("headBanner")?.classList.add("hidden");
-    });
+  // Publish the fixed header's height so anchors and focused elements are not hidden under it (see global.css)
+  (() => {
+    const bar = document.querySelector<HTMLElement>("#header > div");
+    if (!bar) return;
+    const publish = () =>
+      document.documentElement.style.setProperty("--header-h", `${Math.ceil(bar.getBoundingClientRect().height)}px`);
+    publish();
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(publish).observe(bar);
+    else window.addEventListener("resize", publish);
+  })();
 </script>

@@ -248,11 +248,9 @@ const structuredData = generateStructuredData({
   hasMenuSection: content?.seo?.hasMenuSection,
   offers: content?.seo?.offers 
 });
-let fullscreenImg = null;
 
 ---
 
-<!-- <html lang={content?.seo?.locale}> -->
   <html lang={content?.seo?.locale?.replace('_', '-')}>
   <head>
     <!-- Google Tag Manager -->
@@ -432,14 +430,6 @@ let fullscreenImg = null;
 
     <!-- End Google Tag Manager (noscript) -->
     <access-widget-ui data-acsb="skipLinks" class="notranslate"><div><div class="skip-links " role="region" aria-label="Skip Links" data-acsb="skipLinks"><div><a href="#maincontent" data-acsb-skip-link="content" class="skip-link">Skip to Content<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div>
-      <!-- <div>
-        <a href="#menu" data-acsb-skip-link="menu" class="skip-link">
-          Skip to Menu
-          <div class="content" aria-hidden="true">
-            <span class="icon">↵</span>
-            ENTER</div>
-          </a>
-        </div> -->
         <div>
           <a href="#footer" data-acsb-skip-link="footer" class="skip-link">Skip to Footer<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div></div></div></access-widget-ui>
 
@@ -484,12 +474,6 @@ let fullscreenImg = null;
     <slot />
 
 
-    <!-- GLF page with an embedded order iframe popup.
-    <script
-      is:inline
-      src="https://www.fbgcdn.com/embedder/js/ewm2.js"
-      defer
-      async></script> -->
 
       <!-- gallery modal -->
   <div
@@ -503,7 +487,6 @@ let fullscreenImg = null;
     &times;
   </button>
   <img
-    src={fullscreenImg}
     alt="Fullscreen"
     class="max-w-full max-h-full object-contain"
   />
@@ -538,31 +521,6 @@ let fullscreenImg = null;
 <!-- end of modal -->
 
 
-<!-- feedback modal -->
-<!-- <script>
-  
-  const modal = document.getElementById("feedbackModal");
-  const overlay = document.getElementById("feedback-overlay");
-  const closeButton = document.getElementById("closeFeedbackModal");
-  const sendFeedbackButton = document.getElementById("send-feedback-btn");
- 
-  function closeFeedbackModal(event: Event | undefined) {
-  event?.preventDefault();
-    modal?.classList.remove("show");
-    overlay?.classList.remove("show");
-  }
-  function openFeedbackModal() {
-    modal?.classList.add("show");
-    overlay?.classList.add("show");
-  }
-
-  closeButton?.addEventListener("click", closeFeedbackModal);
-  
-  overlay?.addEventListener("click", closeFeedbackModal);
-
-  sendFeedbackButton?.addEventListener("click", openFeedbackModal);
-</script>  -->
-<!-- end of feedback modal -->
 <script src="https://accessibility-app-sienna.pages.dev/dist/sienna.min.js" defer></script>
 
   </body>

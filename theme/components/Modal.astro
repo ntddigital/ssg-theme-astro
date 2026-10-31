@@ -92,11 +92,6 @@ const { content, section } = Astro.props;
         ))
       }
     </p>
-    <!-- <p
-      style={`font-size:${section?.descriptionSize}px;color:${section?.descriptionColor}`}
-    >
-      {section?.description}
-    </p> -->
 
     {
       section?.description.map((info: string, index: number) => (

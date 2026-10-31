@@ -315,7 +315,6 @@ export default function Footer(props: { content: any; }){
       {content?.footer?.terms !== false && (<><a href="/terms" role="button">Terms</a> | </>)}
       {content?.footer?.cookie && (<><a href="/cookie" role="button">Cookie Policy</a> | </>)}
       <a href="/accessibility" role="button">Accessibility Statement</a>
-      {/* | <button id="send-feedback-btn" className="cursor-pointer" onClick={handleOpen} >Send Feedback</button> */}
     </p>
     <p
       className="mt-2 text-center text-xs leading-5"

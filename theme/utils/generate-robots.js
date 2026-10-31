@@ -82,8 +82,6 @@ function generateRobots() {
         .join("\n");
       allowRules += `\n${galleryAllowRules}`;
     }
-
-    // const robotsTxtContent = `User-agent: *\nDisallow: /\n${allowRules}\nAllow: /robots.txt\nAllow: /sitemap.xml\nSitemap: ${getSitemapUrl()}`;
     const robotsTxtContent = `User-agent: *\nDisallow: \nSitemap: ${getSitemapUrl()}`;
 
     return robotsTxtContent.trim();

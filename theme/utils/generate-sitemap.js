@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-// import astroConfig from "../../../astro.config.mjs";
 import {sitemapConfig} from "../../../sitemap.config.js"
 
 function generateSiteMap() {

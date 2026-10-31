@@ -93,7 +93,7 @@ const zh = isChinese(pageLang(Astro.url.pathname));
           <a href={section?.imgHref}>
             <img
               src={`/${section?.imgName}`}
-              alt={`${section?.imgAlt}`}
+              alt={section?.imgAlt ? String(section.imgAlt) : ""}
               style="width: 100%; border-radius: 10px;"
               class="mt-4"
               loading="lazy"
@@ -102,7 +102,7 @@ const zh = isChinese(pageLang(Astro.url.pathname));
         ) : (
           <img
             src={`/${section?.imgName}`}
-            alt={`${section?.imgAlt}`}
+            alt={section?.imgAlt ? String(section.imgAlt) : ""}
             style="width: 100%; border-radius: 10px;"
             class="mt-4"
             loading="lazy"

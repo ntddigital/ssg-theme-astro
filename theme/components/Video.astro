@@ -38,7 +38,8 @@ const { content, section } = Astro.props;
       <>
         <img
           src={`/${section?.bgImg}`}
-          alt={content?.title + " Logo"}
+          alt=""
+          aria-hidden="true"
           class="absolute inset-0 -z-10 h-full w-full object-cover"
           loading="lazy"
         />

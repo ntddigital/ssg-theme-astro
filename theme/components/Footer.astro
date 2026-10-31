@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
     content?.footer?.bgImg ? (
       <img
         src={`/${content?.footer?.bgImg}`}
-        alt={"footer background image of " + content?.title}
+        alt=""
         class={`${content?.footer?.bgType === "video" ? "sm:hidden" : ""} absolute inset-0 -z-10 h-full w-full object-cover`}
         aria-hidden="true"
         loading="lazy"

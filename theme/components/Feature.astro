@@ -178,7 +178,8 @@ function hexToRgb(hex:string) {
       (section?.sectionType === "video" && section?.bgVideoPoster) ? (
         <img
           src={`/${section?.bgImg || section?.bgVideoPoster}`}
-          alt={content?.title}
+          alt=""
+          aria-hidden="true"
           class={cn(
             "absolute inset-0 h-full w-full object-cover",
             section?.sectionType === "video" ? "-z-[5]" : "-z-10",
@@ -197,7 +198,8 @@ function hexToRgb(hex:string) {
       section?.mobileBgImg ? (
         <img
           src={`/${section?.mobileBgImg}`}
-          alt={content?.title}
+          alt=""
+          aria-hidden="true"
           class={cn(
             "absolute inset-0 h-full w-full object-cover sm:hidden",
             section?.sectionType === "video" ? "-z-[5]" : "-z-10",
@@ -368,7 +370,7 @@ function hexToRgb(hex:string) {
                       ? "transform hover:rotate-45 transition duration-500 ease-in-out"
                       : ""
                   )}
-                  alt={content?.title}
+                  alt={section?.bannerImgAlt ? String(section.bannerImgAlt) : ""}
                 />
               </div>
             ) : (

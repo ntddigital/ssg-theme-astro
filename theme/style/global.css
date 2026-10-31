@@ -535,3 +535,11 @@ html {
   outline-offset: 2px !important;
   box-shadow: 0 0 0 6px #fff !important;
 }
+
+/* Tablet only: the fixed header covers the top of a first section that has no top padding (e.g. a video hero),
+   so push that section down by the header height. Desktop and phone keep their layout. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  main > section:first-child:is(.pt-0, :not([class*="pt-"])) {
+    padding-top: var(--header-h, 0px);
+  }
+}

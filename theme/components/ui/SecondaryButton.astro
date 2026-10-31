@@ -22,6 +22,7 @@ const isTel = typeof href === "string" && href.startsWith("tel:"); // phone link
     >
       Tel:
       <a
+        class="inline-block py-1"
         aria-label={`${isChinese(lang) ? "致電 " : "Call "}${phone}`}
         href={href}
       >

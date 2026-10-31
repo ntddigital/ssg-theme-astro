@@ -91,19 +91,23 @@ function hexToRgb(hex:string) {
           )}
           <div class="absolute inset-0 w-full h-full flex justify-center items-center">
             <div class="text-center max-w-2xl sm:max-w-3xl">
-              <h1
+              <div
                 class={cn(
-                  "text-4xl font-bold sm:text-6xl block mt-4 sm:p-4",
+                  "font-bold block mt-4 sm:p-4",
                   section?.isTextAlignCenter ? "text-center" : ""
                 )}
                 style={`
   color: ${section?.titleColor || "inherit"};
   background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
-`} >
+`}
+              >
+                <h1 class="text-4xl sm:text-6xl">
                 {section?.title.map((line: string, index: number) => (
                   <Fragment key={index}>{line}</Fragment><br/>
                 ))}
-                {section?.description.map((info: string, index: number) => (
+                
+                </h1>
+{section?.description.map((info: string, index: number) => (
                   <Fragment key={index}>
                     <p
                       class={cn(
@@ -116,7 +120,8 @@ function hexToRgb(hex:string) {
                     </p>
                   </Fragment>
                 ))}
-              </h1>
+              
+              </div>
 
               <div
                 class={cn(
@@ -262,20 +267,24 @@ function hexToRgb(hex:string) {
           <div class="absolute inset-0 w-full h-full flex justify-center items-center">
             <div class="text-center max-w-2xl sm:max-w-3xl px-6">
               <div>
-                <h1
+                <div
                   class={cn(
-                    "text-4xl font-bold  sm:text-6xl leading-12 block mt-4 sm:p-4",
+                    "font-bold block mt-4 sm:p-4",
                     section?.isTextAlignCenter ? "text-center" : ""
                   )}
                   style={`
   color: ${section?.titleColor || "inherit"};
   background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0});
 
-`}                >
+`}
+                >
+                  <h1 class="text-4xl sm:text-6xl leading-12">
                   {section?.title.map((line: string, index: number) => (
                     <Fragment key={index}>{line}</Fragment><br/>
                   ))}
-                  {section?.description.map((info: string, index: number) => (
+                  
+                  </h1>
+{section?.description.map((info: string, index: number) => (
                     <Fragment key={index}>
                       <p
                         class={cn(
@@ -288,7 +297,8 @@ function hexToRgb(hex:string) {
                       </p>
                     </Fragment>
                   ))}
-                </h1>
+                
+                </div>
 
                 <div class="mt-10 flex items-center justify-center gap-x-6 flex-col sm:flex-row gap-4">
                   {section?.addOrderOnlineBtn ? (
@@ -388,9 +398,9 @@ function hexToRgb(hex:string) {
             >
               {section?.type === "hero" ? (
                 <div>
-                  <h1
+                  <div
                     class={cn(
-                      "mt-10 max-w-lg text-4xl font-bold sm:text-6xl block sm:p-4",
+                      "mt-10 max-w-lg font-bold block sm:p-4",
                       section?.isTextAlignCenter
                         ? "text-center sm:text-left"
                         : ""
@@ -398,11 +408,15 @@ function hexToRgb(hex:string) {
                     style={`
   color: ${section?.titleColor || "inherit"};
   background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
-`}                  >
+`}
+                  >
+                    <h1 class="text-4xl sm:text-6xl">
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>{line}</Fragment><br/>
                     ))}
-                    {section?.description.map((info: string, index: number) => (
+                    
+                    </h1>
+{section?.description.map((info: string, index: number) => (
                       <Fragment key={index}>
                         <p
                           class={cn(
@@ -417,7 +431,8 @@ function hexToRgb(hex:string) {
                         </p>
                       </Fragment>
                     ))}
-                  </h1>
+                  
+                  </div>
 
                   <div class="flex gap-4 my-8 flex-col sm:flex-row">
                     {section?.addOrderOnlineBtn ? (
@@ -520,7 +535,7 @@ function hexToRgb(hex:string) {
                     ""
                   )}
                   {section?.description2 ? (
-                    <p
+                    <div
                       class="mt-6 text-lg "
                       style={`color:${section?.description2Color};`}
                     >
@@ -539,7 +554,7 @@ function hexToRgb(hex:string) {
                           </Fragment>
                         )
                       )}
-                    </p>
+                    </div>
                   ) : (
                     ""
                   )}

@@ -1,8 +1,12 @@
 ---
+import { pageLang, isChinese } from "../../utils/lang";
+
 const { content } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname));
 ---
 
 <!-- go top button -->
+<nav aria-label={zh ? "回到頂部" : "Back to top"}>
 <div
   class="cursor-pointer rounded-full"
   style={`background-color:${content?.primaryColor}`}
@@ -12,7 +16,6 @@ const { content } = Astro.props;
     class="rounded-full p-2 fixed bottom-5 right-5 sm:bottom-10 sm:right-7"
     style={`background-color:${content?.primaryColor} display: block; `}
     aria-label="Go to top"
-    role="button"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -25,3 +28,4 @@ const { content } = Astro.props;
     >
   </a>
 </div>
+</nav>

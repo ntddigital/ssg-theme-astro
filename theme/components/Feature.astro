@@ -587,42 +587,30 @@ function hexToRgb(hex:string) {
   </div>
 </section>
 <script>
-  // Function to mute the video
-  function muteGJWVideo() {
-    const iframe = document.getElementById("gjw-video") as HTMLIFrameElement;
-    if (iframe) {
-      const src = iframe.src;
-      // Add mute parameter if not already present
-      if (!src.includes("mute=1")) {
-        iframe.src = src + "&mute=1";
-      }
-    }
-  }
+  // Each block is self-contained and checks that its elements exist: all component scripts on a page are
+  // bundled into one module, so an uncaught error here would stop the gallery and slider scripts after it.
+  (() => {
+    // Gan Jing World embeds only honour mute=1 in the URL, so add it after load if it is missing.
+    const bg = document.getElementById("bg-video") as HTMLIFrameElement | null;
+    if (!bg || !bg.src.includes("ganjingworld.com")) return;
+    bg.addEventListener("load", () => {
+      if (!bg.src.includes("mute=1")) bg.src = bg.src + "&mute=1";
+    });
+  })();
 
-  // Call the function after the iframe has loaded
-  const gjwVideo = document.getElementById("gjw-video") as HTMLIFrameElement | null;
-  if (gjwVideo) {
-    gjwVideo.onload = function () {
-      muteGJWVideo();
-    };
-  }
-
-  // Defer local background video download until after the page has loaded so it
-  // never competes with the LCP element (the poster image / hero text).
-  function loadLocalBgVideos() {
-    document
-      .querySelectorAll<HTMLVideoElement>("video.local-bg-video[data-src]")
-      .forEach((video) => {
+  (() => {
+    // Defer local background video download until after the page has loaded so it
+    // never competes with the LCP element (the poster image / hero text).
+    const videos = document.querySelectorAll<HTMLVideoElement>("video.local-bg-video[data-src]");
+    if (!videos.length) return;
+    const load = () =>
+      videos.forEach((video) => {
         if (video.src) return;
         video.src = video.dataset.src!;
         const play = video.play();
         if (play && typeof play.catch === "function") play.catch(() => {});
       });
-  }
-
-  if (document.readyState === "complete") {
-    loadLocalBgVideos();
-  } else {
-    window.addEventListener("load", loadLocalBgVideos, { once: true });
-  }
+    if (document.readyState === "complete") load();
+    else window.addEventListener("load", load, { once: true });
+  })();
 </script>

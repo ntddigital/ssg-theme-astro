@@ -9,7 +9,6 @@ import GotoTopButton from "../components/ui/GotoTopButton.astro";
 import Modal from "../components/Modal.astro";
 import Map from "../components/Map.astro";
 import CodeInsert from "../components/CodeInsert.astro";
-import GoogleForm from "../components/GoogleForm.astro";
 import Privacy from "../components/Privacy.astro";
 import Terms from "../components/Terms.astro";
 import Cookie from "../components/Cookie.astro";
@@ -458,8 +457,6 @@ let fullscreenImg = null;
           return <Modal content={content} section={section} />;
         } else if (section?.type === "map") {
           return <Map content={content} section={section} />;
-        } else if (section?.type === "form") {
-          return <GoogleForm content={content} section={section} />;
         } else if (section?.type === "textBlock") {
           return <TextBlock content={content} section={section} />;
         } else if (section?.type === "reviews") {

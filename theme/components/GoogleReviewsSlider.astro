@@ -1,5 +1,6 @@
 ---
 import { cn } from "../utils/cn";
+import { pageLang, isChinese } from "../utils/lang";
 
 type GoogleReview = {
   author: { name: string; imageUrl?: string | null };
@@ -8,6 +9,13 @@ type GoogleReview = {
 };
 
 const { section } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, Astro.props.locale));
+const label = {
+  region: section?.ariaLabel ?? (zh ? "顧客評論" : "Customer reviews"),
+  prev: zh ? "上一則評論" : "Previous reviews",
+  next: zh ? "下一則評論" : "Next reviews",
+  go: (n: number) => (zh ? `前往第 ${n} 則評論` : `Go to review ${n}`),
+};
 
 const getRandomColor = () => {
   const colors = [
@@ -73,6 +81,9 @@ const getInitial = (name: string) => {
         <!-- Reviews Wrapper -->
         <div
           class="reviews-slider-wrapper overflow-x-auto"
+          tabindex="0"
+          role="region"
+          aria-label={label.region}
           style={{
             scrollBehavior: "smooth",
             WebkitOverflowScrolling: "touch",
@@ -157,57 +168,59 @@ const getInitial = (name: string) => {
           </div>
         </div>
 
-        <!-- Navigation Buttons -->
+        <!-- Navigation buttons beside the cards (large screens) -->
         <button
-          class="reviews-slider-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow hidden lg:flex items-center justify-center"
-          aria-label="Previous reviews"
+          type="button"
+          class="reviews-slider-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 z-10 hidden lg:flex bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow items-center justify-center disabled:opacity-40"
+          aria-label={label.prev}
         >
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"
-            />
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-
         <button
-          class="reviews-slider-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow hidden lg:flex items-center justify-center"
-          aria-label="Next reviews"
+          type="button"
+          class="reviews-slider-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 z-10 hidden lg:flex bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow items-center justify-center disabled:opacity-40"
+          aria-label={label.next}
         >
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            />
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
       </div>
 
-      <!-- Dots Indicator -->
-      <div class="flex justify-center gap-2 mt-8">
+      <!-- Controls below the cards: arrows (small screens) and one dot per stop -->
+      <div class="flex justify-center items-center gap-1 mt-8">
+        <button
+          type="button"
+          class="reviews-slider-prev flex lg:hidden mr-2 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow items-center justify-center disabled:opacity-40"
+          aria-label={label.prev}
+        >
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
         {
-          section?.items?.map((_: GoogleReview, index: number) => (
+          section?.items?.map((_: unknown, index: number) => (
             <button
-              class="reviews-slider-dot w-2 h-2 rounded-full bg-gray-300 transition-all hover:bg-gray-600 cursor-pointer"
+              type="button"
+              class="reviews-slider-dot group w-6 h-6 flex items-center justify-center"
               data-slide={index}
-              aria-label={`Go to review ${index + 1}`}
-            />
+              aria-label={label.go(index + 1)}
+            >
+              <span class="block w-2 h-2 rounded-full bg-gray-300 transition-all group-hover:bg-gray-600" />
+            </button>
           ))
         }
+        <button
+          type="button"
+          class="reviews-slider-next flex lg:hidden ml-2 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-shadow items-center justify-center disabled:opacity-40"
+          aria-label={label.next}
+        >
+          <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -230,73 +243,61 @@ const getInitial = (name: string) => {
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Find all slider instances
-    const sliders = document.querySelectorAll(".reviews-slider-wrapper");
+  function initReviewsSlider(wrapper: HTMLElement) {
+    const section = wrapper.closest("section");
+    const track = wrapper.querySelector<HTMLElement>(".reviews-slider-track");
+    const items = Array.from(wrapper.querySelectorAll<HTMLElement>(".reviews-slider-item"));
+    if (!section || !track || !items.length) return;
 
-    sliders.forEach((slider) => {
-      const prevBtn = slider
-        .closest(".relative")
-        ?.querySelector(".reviews-slider-prev");
-      const nextBtn = slider
-        .closest(".relative")
-        ?.querySelector(".reviews-slider-next");
-      const track = slider.querySelector(".reviews-slider-track");
-      const dots = slider
-        .closest("section")
-        ?.querySelectorAll(".reviews-slider-dot");
+    const prevs = Array.from(section.querySelectorAll<HTMLButtonElement>(".reviews-slider-prev"));
+    const nexts = Array.from(section.querySelectorAll<HTMLButtonElement>(".reviews-slider-next"));
+    const dots = Array.from(section.querySelectorAll<HTMLButtonElement>(".reviews-slider-dot"));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-      if (!track) return;
-
-      const itemWidth = track.querySelector<HTMLElement>(".reviews-slider-item")?.offsetWidth;
-      const gap = 24; // 6 * 4 (from gap-6 which is 1.5rem = 24px)
-      let currentIndex = 0;
-
-      const updateSlider = (index: number) => {
-        if (!itemWidth) return;
-        const scrollPosition = (itemWidth + gap) * index;
-        slider.scrollTo({
-          left: scrollPosition,
-          behavior: "smooth",
-        });
-
-        // Update dots
-        dots?.forEach((dot, idx) => {
-          if (idx === index) {
-            dot.classList.add("bg-gray-600");
-            dot.classList.remove("bg-gray-300");
-          } else {
-            dot.classList.remove("bg-gray-600");
-            dot.classList.add("bg-gray-300");
-          }
-        });
-
-        currentIndex = index;
-      };
-
-      // Previous button
-      prevBtn?.addEventListener("click", () => {
-        const newIndex = Math.max(0, currentIndex - 1);
-        updateSlider(newIndex);
+    // Measured every time, so rotating the phone or resizing the window never leaves stale numbers behind.
+    const step = () => items[0].offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
+    const perView = () => Math.max(1, Math.round(wrapper.clientWidth / step()));
+    const maxIndex = () => Math.max(0, items.length - perView());
+    const current = () => Math.min(maxIndex(), Math.max(0, Math.round(wrapper.scrollLeft / step())));
+    const goTo = (index: number) =>
+      wrapper.scrollTo({
+        left: Math.min(maxIndex(), Math.max(0, index)) * step(),
+        behavior: reduceMotion.matches ? "auto" : "smooth",
       });
 
-      // Next button
-      nextBtn?.addEventListener("click", () => {
-        const totalItems = track.querySelectorAll(".reviews-slider-item").length;
-        const maxIndex = Math.max(0, totalItems - 3); // Show 3 items on desktop
-        const newIndex = Math.min(maxIndex, currentIndex + 1);
-        updateSlider(newIndex);
+    const update = () => {
+      const now = current();
+      const last = maxIndex();
+      dots.forEach((dot, index) => {
+        dot.hidden = index > last;
+        const mark = dot.firstElementChild as HTMLElement | null;
+        const active = index === now;
+        mark?.classList.toggle("bg-gray-600", active);
+        mark?.classList.toggle("bg-gray-300", !active);
+        if (active) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
       });
+      prevs.forEach((b) => (b.disabled = now <= 0));
+      nexts.forEach((b) => (b.disabled = now >= last));
+    };
 
-      // Dots click
-      dots?.forEach((dot, idx) => {
-        dot.addEventListener("click", () => {
-          updateSlider(idx);
-        });
-      });
-
-      // Initialize first dot as active
-      updateSlider(0);
+    prevs.forEach((b) => b.addEventListener("click", () => goTo(current() - 1)));
+    nexts.forEach((b) => b.addEventListener("click", () => goTo(current() + 1)));
+    dots.forEach((dot, index) => dot.addEventListener("click", () => goTo(index)));
+    wrapper.addEventListener("keydown", (event) => {
+      if (event.target !== wrapper) return;
+      if (event.key === "ArrowRight") { event.preventDefault(); goTo(current() + 1); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); goTo(current() - 1); }
     });
-  });
+
+    let frame = 0;
+    wrapper.addEventListener("scroll", () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    }, { passive: true });
+    if ("ResizeObserver" in window) new ResizeObserver(update).observe(wrapper);
+    update();
+  }
+
+  document.querySelectorAll<HTMLElement>(".reviews-slider-wrapper").forEach(initReviewsSlider);
 </script>

@@ -3,7 +3,7 @@ import Header from "../components/Header.astro";
 import Feature from "../components/Feature.astro";
 import TextBlock from "../components/TextBlock.astro";
 import Video from "../components/Video.astro";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer.astro";
 import Gallery from "../components/Gallery.astro";
 import GotoTopButton from "../components/ui/GotoTopButton.astro";
 import Modal from "../components/Modal.astro";
@@ -470,7 +470,7 @@ const structuredData = generateStructuredData({
       })
     }
     </main>
-    {content?.footer && <Footer content={content} client:load/>}
+    {content?.footer && <Footer content={content} />}
 
     <GotoTopButton content={content} />
     <slot />

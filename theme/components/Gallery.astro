@@ -1,18 +1,22 @@
 ---
 import { getImagesFromFolders } from "../utils/readImages";
-import { galleryAlt } from "../utils/galleryAlt";
+import { galleryAlt, galleryCaption, captionRepeatsAlt } from "../utils/galleryAlt";
 import { cn } from "../utils/cn";
 import { pageLang, isChinese } from "../utils/lang";
 
 const { section, index: sectionIndex = 0 } = Astro.props;
 const enlargeLabel = isChinese(pageLang(Astro.url.pathname)) ? "放大檢視：" : "Enlarge: ";
 const images = getImagesFromFolders("/public/" + section?.folderPath).map((img) => {
-  const alt = galleryAlt(img.name, img.src, section?.altOverrides);
+  const fullAlt = galleryAlt(img.name, img.src, section?.altOverrides);
+  // A visible caption that repeats the alt would make screen readers say the name twice: the image is then
+  // decorative (alt="") and the lightbox keeps the description through data-alt. No caption -> alt stays.
+  const repeated = !!section?.showImgName && captionRepeatsAlt(fullAlt, galleryCaption(img.name));
   return {
     ...img,
-    alt,
+    alt: repeated ? "" : fullAlt,
+    lightboxAlt: repeated ? fullAlt : undefined,
     // Same text as the alt, so the button is named after the picture it opens.
-    label: alt ? `${enlargeLabel}${alt}` : enlargeLabel.replace(/[:：]\s*$/, ""),
+    label: fullAlt ? `${enlargeLabel}${fullAlt}` : enlargeLabel.replace(/[:：]\s*$/, ""),
   };
 });
 const supportedModes = [1, 2, 3, 4];
@@ -163,6 +167,7 @@ const initialVisibleDesktop = parseVisibleCount(
                       class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
                       aria-label={item?.label}
+                      data-alt={item?.lightboxAlt}
                     >
                       <img
                         src={item?.src?.replace("/public", "")}
@@ -234,6 +239,7 @@ const initialVisibleDesktop = parseVisibleCount(
                       class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
                       aria-label={item?.label}
+                      data-alt={item?.lightboxAlt}
                     >
                       <img
                         src={item?.src?.replace("/public", "")}
@@ -306,6 +312,7 @@ const initialVisibleDesktop = parseVisibleCount(
                     class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
                     aria-label={item?.label}
+                    data-alt={item?.lightboxAlt}
                   >
                     <img
                       src={item?.src?.replace("/public", "")}
@@ -385,6 +392,7 @@ const initialVisibleDesktop = parseVisibleCount(
                     class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
                     aria-label={item?.label}
+                    data-alt={item?.lightboxAlt}
                   >
                     <img
                       src={item?.src?.replace("/public", "")}

@@ -31,3 +31,32 @@ export function galleryAlt(
   if (!text || /^\d+$/.test(text)) return "";
   return text;
 }
+
+// The caption Gallery prints under an image when `showImgName` is on: the file name with "__" splitting
+// the parts and "_" shown as a space. Mirrors the markup in Gallery.astro.
+export function galleryCaption(name: string): string {
+  return String(name || "")
+    .split("__")
+    .map((part) => part.replace(/_/g, " ").replace(/w:o/g, "w/o").replace(/w:/g, "w/").trim())
+    .filter(Boolean)
+    .join(" ");
+}
+
+const squash = (text: string) =>
+  String(text || "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/^[\d\s_.\-]+/, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+
+// True when a visible caption says the same thing as the alt text (ignoring case, spacing, punctuation,
+// a leading number, and the "、" the alt uses between languages), or nearly so (one contains the other and
+// covers at least 80% of it). Then the image is decorative next to its caption and should get alt="".
+export function captionRepeatsAlt(alt: string, caption: string): boolean {
+  const a = squash(alt);
+  const c = squash(caption);
+  if (!a || !c) return false;
+  if (a === c) return true;
+  const [short, long] = a.length <= c.length ? [a, c] : [c, a];
+  return short.length >= 4 && long.includes(short) && short.length / long.length >= 0.8;
+}

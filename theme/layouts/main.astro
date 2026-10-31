@@ -533,7 +533,7 @@ const structuredData = generateStructuredData({
       const src = trigger.getAttribute("data-src");
       if (!src) return;
       image.src = src.replace("/public", "");
-      image.alt = trigger.querySelector("img")?.getAttribute("alt") ?? "";
+      image.alt = trigger.getAttribute("data-alt") ?? trigger.querySelector("img")?.getAttribute("alt") ?? "";
       if (position) position.textContent = `${activeIndex + 1} / ${galleryImages.length}`;
     };
 

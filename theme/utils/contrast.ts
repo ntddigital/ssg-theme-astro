@@ -47,7 +47,8 @@ export function buttonTextColor(background: unknown, scheme: unknown, force?: un
  * - Dark or unset text colours get none: a black layer would hurt them.
  * - Light text gets enough to reach `target` total darkness, counting the dark overlay the site already has.
  */
-export function heroScrimAlpha(section: any, target = 0.5): number {
+// overlayAboveMedia: false for video heroes, where the video sits above the bgColor layer, so an existing overlay does not darken it
+export function heroScrimAlpha(section: any, target = 0.5, overlayAboveMedia = true): number {
   const explicit = section?.heroScrim;
   if (explicit !== undefined && explicit !== null && explicit !== "") {
     const n = Number(explicit);
@@ -57,7 +58,7 @@ export function heroScrimAlpha(section: any, target = 0.5): number {
   if (textLum === null || textLum < 0.5) return 0;
   const overlayLum = luminance(section?.bgColor);
   const opacity = Number(section?.bgOpacity);
-  const existing = overlayLum !== null && overlayLum < 0.2 ? (Number.isFinite(opacity) ? opacity : 1) : 0;
+  const existing = overlayAboveMedia && overlayLum !== null && overlayLum < 0.2 ? (Number.isFinite(opacity) ? opacity : 1) : 0;
   if (existing >= target) return 0;
   return Math.round((1 - (1 - target) / (1 - existing)) * 1000) / 1000;
 }

@@ -9,7 +9,7 @@ import MediaToggleButton from "./ui/MediaToggleButton.astro";
 
 const { content, section } = Astro.props;
 // Darkening layer between the photo/video and the text of full-bleed heroes (see utils/contrast.ts)
-const scrim = section?.sectionType === "imgBg" || section?.sectionType === "video" ? heroScrimAlpha(section) : 0;
+const scrim = section?.sectionType === "imgBg" || section?.sectionType === "video" ? heroScrimAlpha(section, 0.5, section?.sectionType !== "video") : 0;
 // Embedded background video: the src goes in data-src and utils/media-toggle.ts sets it unless the visitor prefers reduced motion
 const bgIframeSrc =
   section?.bgVideoType === "vimeo"

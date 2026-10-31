@@ -44,7 +44,7 @@ function hexToRgb(hex:string) {
   style={section?.type === "feature"
     ? `${section?.bgColor ? `background-color: ${section?.bgColor};` : ""}  ${section?.bgOpacity ? `opacity: ${section?.bgOpacity};` : ""}`
     : ""}
-  id={`${section?.id || ""}`}
+  id={section?.id || undefined}
 >
   <div
     class={cn(

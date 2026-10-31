@@ -42,7 +42,7 @@ const getInitial = (name: string) => {
 ---
 
 <section
-  id={`${section?.id || ""}`}
+  id={section?.id || undefined}
   class={cn(section?.noMarginTop ? "pt-0" : "pt-16 sm:pt-24 md:pt-32")}
 >
   <div style={`background-color:${section?.bgColor}`}>

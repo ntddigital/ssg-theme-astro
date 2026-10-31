@@ -84,13 +84,13 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
           <img
             class={`hidden sm:block h-24 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={content?.title + " Logo"}
+            alt=""
             style={`height:${content?.header?.logoSize}px`}
           />
           <img
             class={`block sm:hidden mx-2`}
             src={`/${content?.logo}`}
-            alt={content?.title + " Logo"}
+            alt=""
             style={`height:${content?.header?.logoSizeOnMobile ? content?.header?.logoSizeOnMobile : "40"}px`}
           />
           {
@@ -258,6 +258,9 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
     <!-- Mobile menu  -->
     <div
       id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label={zh ? "主選單" : "Main menu"}
       class="hidden fixed inset-0 z-10 items-center justify-center bg-gray-900 bg-opacity-90"
     >
       <div
@@ -389,21 +392,37 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
     const closeButton = document.getElementById("closeMenu");
     if (!openButton || !menu || !closeButton) return;
 
-    const behind = () =>
-      [document.querySelector("main"), document.querySelector("footer"), document.getElementById("menu")].filter(
-        Boolean
-      ) as HTMLElement[];
+    // Everything except the open menu is made inert: the page content, the skip links, the go-to-top link,
+    // the accessibility widget, and the header's own bar and banner.
+    let inerted: HTMLElement[] = [];
+    const behind = () => {
+      const header = document.getElementById("header");
+      const bar = header?.firstElementChild;
+      const list: HTMLElement[] = [];
+      for (const el of Array.from(document.body.children) as HTMLElement[]) {
+        if (el === header || ["SCRIPT", "STYLE", "LINK", "TEMPLATE"].includes(el.tagName)) continue;
+        list.push(el);
+      }
+      if (bar) {
+        for (const el of Array.from(bar.children) as HTMLElement[]) {
+          if (el !== menu && el.tagName !== "SPAN") list.push(el);
+        }
+      }
+      return list;
+    };
 
     const open = () => {
       menu.classList.remove("hidden");
       openButton.setAttribute("aria-expanded", "true");
-      behind().forEach((el) => (el.inert = true));
+      inerted = behind().filter((el) => !el.inert);
+      inerted.forEach((el) => (el.inert = true));
       closeButton.focus();
     };
     const close = (returnFocus = true) => {
       menu.classList.add("hidden");
       openButton.setAttribute("aria-expanded", "false");
-      behind().forEach((el) => (el.inert = false));
+      inerted.forEach((el) => (el.inert = false));
+      inerted = [];
       if (returnFocus) openButton.focus();
     };
 

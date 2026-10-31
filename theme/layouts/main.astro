@@ -255,7 +255,7 @@ const structuredData = generateStructuredData({
 
 ---
 
-  <html lang={lang}>
+  <html lang={lang} data-cjk-lang={content?.seo?.cjkLang}>
   <head>
     <!-- Google Tag Manager -->
      {tag?
@@ -521,6 +521,38 @@ const structuredData = generateStructuredData({
 <!-- end of modal -->
 
 
+<script>
+  // WCAG 3.1.2: on pages that are not Chinese, wrap runs of Chinese characters in <span lang="zh"> so screen
+  // readers switch voice. Set seo.cjkLang (for example "zh-Hant") to use a more specific tag than "zh".
+  (() => {
+    const root = document.documentElement;
+    if (/^zh/i.test(root.lang)) return;
+    const lang = root.dataset.cjkLang || "zh";
+    const ideograph = "[\\u3400-\\u4dbf\\u4e00-\\u9fff\\uf900-\\ufaff]";
+    const runSource = `${ideograph}+(?:[\\u3000-\\u303f\\uff00-\\uffef ]*${ideograph}+)*`;
+    const has = new RegExp(ideograph);
+    const split = new RegExp(`(${runSource})`);
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes: Text[] = [];
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      const text = node as Text;
+      if (has.test(text.data) && !text.parentElement?.closest("script,style,noscript,textarea,[lang^='zh']")) nodes.push(text);
+    }
+    for (const text of nodes) {
+      const fragment = document.createDocumentFragment();
+      text.data.split(split).forEach((part, index) => {
+        if (!part) return;
+        if (index % 2 === 1) {
+          const span = document.createElement("span");
+          span.lang = lang;
+          span.textContent = part;
+          fragment.append(span);
+        } else fragment.append(part);
+      });
+      text.replaceWith(fragment);
+    }
+  })();
+</script>
 <script src="https://accessibility-app-sienna.pages.dev/dist/sienna.min.js" defer></script>
 
   </body>

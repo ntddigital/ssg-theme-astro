@@ -9,6 +9,7 @@ const fg = buttonTextColor(bg, content?.secondaryColorScheme, content?.forceButt
 const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
 const hint = newTabHint(lang);
 const phone = text?.replace("Tel:", "").trim();
+const isTel = typeof href === "string" && href.startsWith("tel:"); // phone links open the dialer, not a new tab
 ---
 
 {
@@ -21,7 +22,6 @@ const phone = text?.replace("Tel:", "").trim();
     >
       Tel:
       <a
-        target="_blank"
         aria-label={`${isChinese(lang) ? "致電 " : "Call "}${phone}`}
         href={href}
       >
@@ -35,10 +35,10 @@ const phone = text?.replace("Tel:", "").trim();
         "rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
       )}
       style={`background-color:${bg};color:${fg};`}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={isTel ? undefined : "_blank"}
+      rel={isTel ? undefined : "noopener noreferrer"}
     >
-      {text}<span class="sr-only">{hint}</span>
+      {text}{isTel ? "" : <span class="sr-only">{hint}</span>}
     </a>
   )
 }

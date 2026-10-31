@@ -2,6 +2,7 @@
 import PaymentMethod from "./PaymentMethod.astro";
 import { cn } from "../utils/cn";
 import { pageLang, isChinese, newTabHint } from "../utils/lang";
+import { siteName } from "../utils/text";
 
 const { content } = Astro.props;
 const currentYear = new Date().getFullYear();
@@ -43,12 +44,12 @@ const policyLang = zh ? "en" : undefined;
           <img
             class={`hidden sm:block h-24 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={content?.title + " Logo"}
+            alt={`${siteName(content?.title)}${zh ? " 標誌" : " logo"}`}
             style={`height:${content?.footer?.logoSize}px;`}          />
           <img
             class={`block sm:hidden mx-2`}
             src={`/${content?.logo}`}
-            alt={content?.title + " Logo"}
+            alt={`${siteName(content?.title)}${zh ? " 標誌" : " logo"}`}
             style={`height:${content?.footer?.logoSizeOnMobile ? content.footer.logoSizeOnMobile : 40}px;`}          />
         </div>
       ) : (
@@ -299,10 +300,10 @@ const policyLang = zh ? "en" : undefined;
       class="mt-10 text-center text-xs leading-5"
       style={`color:${content?.footer?.textColor || '#ffffff'};`}
     >
-      {content?.footer?.privacy !== false && (<><a href="/privacy" lang={policyLang}>Privacy</a> | </>)}
-      {content?.footer?.terms !== false && (<><a href="/terms" lang={policyLang}>Terms</a> | </>)}
-      {content?.footer?.cookie && (<><a href="/cookie" lang={policyLang}>Cookie Policy</a> | </>)}
-      <a href="/accessibility" lang={policyLang}>Accessibility Statement</a>
+      {content?.footer?.privacy !== false && (<><a href="/privacy" lang={policyLang} class="inline-block px-1 py-0.5">Privacy</a> | </>)}
+      {content?.footer?.terms !== false && (<><a href="/terms" lang={policyLang} class="inline-block px-1 py-0.5">Terms</a> | </>)}
+      {content?.footer?.cookie && (<><a href="/cookie" lang={policyLang} class="inline-block px-1 py-0.5">Cookie Policy</a> | </>)}
+      <a href="/accessibility" lang={policyLang} class="inline-block px-1 py-0.5">Accessibility Statement</a>
     </p>
     <p
       class="mt-2 text-center text-xs leading-5"

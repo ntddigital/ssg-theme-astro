@@ -528,3 +528,10 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* The accessibility widget switches its own focus outline off (outline: none !important): give its controls one back */
+[class*="asw-"]:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 6px #fff !important;
+}

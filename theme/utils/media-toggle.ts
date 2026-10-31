@@ -6,7 +6,9 @@
  *     <iframe|video data-media data-src="...">   src is only set here, and not at all under reduced motion
  *     [data-media-poster]        optional element shown while an iframe is not playing
  *     <button data-media-toggle data-label-pause="..." data-label-play="...">
- *       [data-icon="pause"] and [data-icon="play"]   one of them is shown
+ *       [data-icon="pause"] and [data-icon="play"]   one of them is shown: pause while the media plays (the default),
+ *                                                    play while it is paused. Local videos report their real state through
+ *                                                    the play/pause events; iframes cannot, so they follow the button.
  *     data-media-center on the button moves it to the middle of the container while paused
  *
  * Pausing an iframe replaces its src with about:blank (works for every provider, no player API needed);
@@ -102,6 +104,19 @@ function setup(btn: HTMLButtonElement, reduce: boolean): void {
     // Keep the poster until the embed has loaded so the box is never empty.
     media.addEventListener("load", () => {
       if (playing && poster) poster.style.display = "none";
+    });
+  }
+
+  if (media instanceof HTMLVideoElement) {
+    // The browser can start or pause a muted video on its own (background tab, battery saver, autoplay policy):
+    // keep the icon and label in step with what the video is really doing, not with what we last asked for.
+    media.addEventListener("playing", () => {
+      playing = true;
+      render();
+    });
+    media.addEventListener("pause", () => {
+      playing = false;
+      render();
     });
   }
 

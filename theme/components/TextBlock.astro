@@ -22,7 +22,7 @@ const scrim = section?.bgImg ? heroScrimAlpha(section) : 0;
         : "pt-16 sm:pt-24 md:pt-32",
     section?.bgImg || section?.bgColor ? "py-16 sm:py-20 lg:py-24" : ""
   )}
-  id={`${section?.id || ""}`}
+  id={section?.id || undefined}
 >
   <div class="mx-auto max-w-4xl text-center px-6">
     {

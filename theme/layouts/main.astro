@@ -16,6 +16,7 @@ import Accessibility from "../components/Accessibility.astro";
 import Reviews from "../components/Reviews.astro";
 import GoogleReviewsSlider from "../components/GoogleReviewsSlider.astro";
 import "../style/global.css";
+import { pageLang, isChinese } from "../utils/lang";
 
 // Define the input types
 type Address = {
@@ -94,6 +95,9 @@ type RestaurantStructuredDataInput = {
 
 const { content } = Astro.props;
 const tag = content?.tag;
+// Language of this page: the explicit seo.locale if set, otherwise guessed from the URL (/zh-tw, /zh-cn), otherwise English.
+const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
+const zh = isChinese(lang);
 const googleSiteVerification = content?.googleSiteVerification
 const isModal = content?.sections?.some(
   (item: { type: string | string[] }) =>
@@ -251,7 +255,7 @@ const structuredData = generateStructuredData({
 
 ---
 
-  <html lang={content?.seo?.locale?.replace('_', '-')}>
+  <html lang={lang}>
   <head>
     <!-- Google Tag Manager -->
      {tag?

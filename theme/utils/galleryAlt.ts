@@ -19,6 +19,8 @@ export function galleryAlt(
   }
   const text = String(name || "")
     .replace(/^[\d_\-\s]+/, "")
+    // a stray extension left in the file name, e.g. "Sweet and Sour Pork webp.webp"
+    .replace(/[\s.]+(webp|jpe?g|png|avif|gif)$/i, "")
     .replace(/__/g, "、")
     .replace(/_/g, " ")
     .replace(/w:o/g, "w/o")

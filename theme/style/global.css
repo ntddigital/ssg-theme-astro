@@ -515,3 +515,16 @@
 html {
   scroll-padding-top: var(--header-h, 96px);
 }
+
+/* Visitors who ask for less motion: no long animations or transitions (this also stops the promo button bounce
+   in Modal.astro) and no smooth scrolling. Background videos are handled in utils/media-toggle.ts. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

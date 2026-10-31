@@ -100,6 +100,14 @@ A section type that is not in this list renders nothing.
 | `codeInsert` | `CodeInsert.astro` | `code`: list of `{ type: externalScript / inlineScript / html, content }` |
 | `privacy`, `terms`, `cookie`, `accessibility` | `Privacy`, `Terms`, `Cookie`, `Accessibility` | Legal pages, generated from the site-wide fields |
 
+## Background video: pause button and reduced motion
+
+No new content fields. Every hero background video (`bgVideoType` + `bgVideoId` in `hero` / `feature` sections) and every `video` section gets a pause/play button (`ui/MediaToggleButton.astro`, behaviour in `utils/media-toggle.ts`). The hero button carries `data-pause-bg-video`. Labels follow the page language (for example "Pause background video" / "暫停背景影片").
+
+- Local videos are paused and resumed with `pause()` / `play()`. YouTube, Vimeo and Gan Jing World iframes are paused by replacing the iframe `src` with `about:blank` and resumed by restoring it, so no player API is needed.
+- The embed URL is rendered as `data-src` and only set by script at load time. Visitors with `prefers-reduced-motion: reduce` get nothing auto-loaded: a hero shows its poster (`bgVideoPoster`, else `bgImg`), a `video` section shows a dark box, and the button starts the video.
+- `style/global.css` also shortens animations and transitions and turns off smooth scrolling under `prefers-reduced-motion: reduce`.
+
 ## Working on the theme
 
 - Keep content fields backwards compatible: sites are upgraded one by one, and a missing field must fall back to a sensible default.

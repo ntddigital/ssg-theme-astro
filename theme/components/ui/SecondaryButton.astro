@@ -1,10 +1,14 @@
 ---
 import { cn } from "../../utils/cn";
 import { buttonTextColor } from "../../utils/contrast";
+import { pageLang, isChinese, newTabHint } from "../../utils/lang";
 
 const { content, text, href, backgroundColor } = Astro.props;
 const bg = backgroundColor ? backgroundColor : content?.secondaryColor;
 const fg = buttonTextColor(bg, content?.secondaryColorScheme, content?.forceButtonTextColor);
+const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
+const hint = newTabHint(lang);
+const phone = text?.replace("Tel:", "").trim();
 ---
 
 {
@@ -18,7 +22,7 @@ const fg = buttonTextColor(bg, content?.secondaryColorScheme, content?.forceButt
       Tel:
       <a
         target="_blank"
-        aria-label={`Call ${text?.replace("Tel:", "").trim()}`}
+        aria-label={`${isChinese(lang) ? "致電 " : "Call "}${phone}`}
         href={href}
       >
         {text?.replace("Tel:", "").trim()}
@@ -33,9 +37,8 @@ const fg = buttonTextColor(bg, content?.secondaryColorScheme, content?.forceButt
       style={`background-color:${bg};color:${fg};`}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={"Open the" + text + " in a new tab"}
     >
-      {text}
+      {text}<span class="sr-only">{hint}</span>
     </a>
   )
 }

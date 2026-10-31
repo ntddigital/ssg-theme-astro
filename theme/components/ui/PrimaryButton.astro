@@ -1,10 +1,12 @@
 ---
 import { cn } from "../../utils/cn";
 import { buttonTextColor } from "../../utils/contrast";
+import { pageLang, newTabHint } from "../../utils/lang";
 
 const { content, text, href, backgroundColor } = Astro.props;
 const bg = backgroundColor ? backgroundColor : content?.primaryColor;
 const fg = buttonTextColor(bg, content?.primaryColorScheme, content?.forceButtonTextColor);
+const hint = newTabHint(pageLang(Astro.url.pathname, content?.seo?.locale));
 ---
 
 <a
@@ -15,7 +17,6 @@ const fg = buttonTextColor(bg, content?.primaryColorScheme, content?.forceButton
   style={`background-color:${bg};color:${fg};`}
   target="_blank"
   rel="noopener noreferrer"
-  aria-label={`Open the ${text} in a new tab`}
 >
-  {text}
+  {text}<span class="sr-only">{hint}</span>
 </a>

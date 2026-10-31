@@ -1,6 +1,7 @@
 ---
 import { cn } from "../utils/cn";
 import PrimaryButton from "./ui/PrimaryButton.astro";
+import { pageLang, isChinese } from "../utils/lang";
 
 type TestimonialsData = {
   author: { handle: string; imageUrl: string | null | undefined; name: string };
@@ -8,6 +9,7 @@ type TestimonialsData = {
   body: string;
 };
 const { section } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, Astro.props.locale));
 const getRandomColor = () => {
   const colors = [
     "bg-red-700",
@@ -104,7 +106,7 @@ const getInitial = (name: string) => {
                       {testimonial?.rating?.rating && (
                         <div
                           role="img"
-                          aria-label={` ${testimonial.rating.rating} out of ${testimonial.rating.maxStars || 5} stars`}
+                          aria-label={zh ? `${testimonial.rating.maxStars || 5} 顆星中的 ${testimonial.rating.rating} 顆` : `${testimonial.rating.rating} out of ${testimonial.rating.maxStars || 5} stars`}
                         >
                           <div class="flex items-center mt-1">
                             {Array.from(

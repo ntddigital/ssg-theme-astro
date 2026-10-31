@@ -1,9 +1,14 @@
 ---
 import PaymentMethod from "./PaymentMethod.astro";
 import { cn } from "../utils/cn";
+import { pageLang, isChinese, newTabHint } from "../utils/lang";
 
 const { content } = Astro.props;
 const currentYear = new Date().getFullYear();
+const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
+const zh = isChinese(lang);
+// The policy pages are English documents, so on Chinese pages their link text is marked as English.
+const policyLang = zh ? "en" : undefined;
 ---
 
 <footer
@@ -60,7 +65,7 @@ const currentYear = new Date().getFullYear();
           <div class="font-semibold">
             {content?.footer?.openingHoursInsteadText
               ? content?.footer?.openingHoursInsteadText
-              : "Opening Hours"}
+              : zh ? "營業時間" : "Opening Hours"}
           </div>
           {content?.footer?.openingHours?.map((info: string, index: number) => (
             <div>
@@ -80,7 +85,7 @@ const currentYear = new Date().getFullYear();
             <span class="font-semibold">
               {content?.footer?.addressInsteadText
                 ? content?.footer?.addressInsteadText
-                : "Address:"}
+                : zh ? "地址：" : "Address:"}
             </span>
           </div>
           {content?.footer?.address?.map(
@@ -89,11 +94,10 @@ const currentYear = new Date().getFullYear();
               
                   <a
                     target="_blank"
-                    aria-label={`Open the ${item?.address} in a new tab`}
                     href={item?.url}
                     
                   >
-                    {item?.address}
+                    {item?.address}<span class="sr-only">{newTabHint(lang)}</span>
                   </a>
               
               </div>
@@ -104,7 +108,7 @@ const currentYear = new Date().getFullYear();
     }
     <nav
       class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
-      aria-label="Footer"
+      aria-label={zh ? "頁尾" : "Footer"}
     >
       {
         content?.footer?.menu &&
@@ -295,18 +299,18 @@ const currentYear = new Date().getFullYear();
       class="mt-10 text-center text-xs leading-5"
       style={`color:${content?.footer?.textColor || '#ffffff'};`}
     >
-      {content?.footer?.privacy !== false && (<><a href="/privacy">Privacy</a> | </>)}
-      {content?.footer?.terms !== false && (<><a href="/terms">Terms</a> | </>)}
-      {content?.footer?.cookie && (<><a href="/cookie">Cookie Policy</a> | </>)}
-      <a href="/accessibility">Accessibility Statement</a>
+      {content?.footer?.privacy !== false && (<><a href="/privacy" lang={policyLang}>Privacy</a> | </>)}
+      {content?.footer?.terms !== false && (<><a href="/terms" lang={policyLang}>Terms</a> | </>)}
+      {content?.footer?.cookie && (<><a href="/cookie" lang={policyLang}>Cookie Policy</a> | </>)}
+      <a href="/accessibility" lang={policyLang}>Accessibility Statement</a>
     </p>
     <p
       class="mt-2 text-center text-xs leading-5"
       style={`color:${content?.footer?.textColor || '#ffffff'};`}
     >
       &copy; <span data-footer-year>{currentYear}</span>{" "}
-      {content?.title?.replace(" - Best Food Today", "")} All Rights Reserved. 
-      {content?.footer?.hideBestFoodToday ? "": (<> Created by <a href="https://bestfood.today/">Best Food Today </a>.</>)}
+      {content?.title?.replace(" - Best Food Today", "")} {zh ? "版權所有。" : "All Rights Reserved."} 
+      {content?.footer?.hideBestFoodToday ? "": (<> {zh ? "網站製作：" : "Created by"}{" "}<a href="https://bestfood.today/">Best Food Today </a>.</>)}
     
     </p>
   </div>

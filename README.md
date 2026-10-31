@@ -82,6 +82,11 @@ becomes the `<html lang>`), and the restaurant structured data: `name`, `images`
 `servesCuisine`, `priceRange`, `openingHours`, `acceptsReservations`, `paymentAccepted`, `currenciesAccepted`, `review`,
 `starRating`, `hasMenuSection`, `offers`.
 
+No new content fields are needed for language support. Built-in labels (skip links, "Go to top", menu and banner buttons,
+star ratings, "(opens in a new tab)", footer headings and the like) are English by default and switch to Chinese when the
+page is Chinese: `seo.locale` if set, otherwise a `/zh...` folder in the URL (`utils/lang.ts`). Text you write in the
+content (button text, `...InsteadText`, titles) is always shown as written.
+
 ## Section types
 
 Every section has `type`. Most also accept `id` (anchor), `noMarginTop`, `title` (list of lines) and `description` (list of paragraphs).

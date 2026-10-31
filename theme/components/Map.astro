@@ -2,8 +2,10 @@
 import PrimaryButton from "./ui/PrimaryButton.astro";
 import SecondaryButton from "./ui/SecondaryButton.astro";
 import { cn } from "../utils/cn";
+import { pageLang, isChinese } from "../utils/lang";
 
 const { content, section, isChildComponent } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
 ---
 
 <section
@@ -22,7 +24,7 @@ const { content, section, isChildComponent } = Astro.props;
         content={content}
         text={section?.getDirectionBtnInsteadText
           ? section?.getDirectionBtnInsteadText
-          : `Get Direction`}
+          : zh ? "前往餐廳" : `Get Direction`}
         href={`${section?.url}`}
       />
       {
@@ -66,5 +68,5 @@ const { content, section, isChildComponent } = Astro.props;
     loading="lazy"
     height="500"
     referrerpolicy="no-referrer-when-downgrade"
-    title={`Google Map for ${content?.title}`}></iframe>
+    title={zh ? `${content?.title} 的 Google 地圖` : `Google Map for ${content?.title}`}></iframe>
 </section>

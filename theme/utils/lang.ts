@@ -8,3 +8,6 @@ export function pageLang(pathname: string, locale?: string): string {
 }
 
 export const isChinese = (lang: string) => lang.toLowerCase().startsWith("zh");
+
+/** Screen-reader-only hint appended to links that open a new tab (leading space on English so it reads as a separate phrase). */
+export const newTabHint = (lang: string) => (isChinese(lang) ? "（另開新視窗）" : " (opens in a new tab)");

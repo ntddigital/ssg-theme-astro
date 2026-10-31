@@ -100,7 +100,7 @@ const getInitial = (name: string) => {
                     {review?.rating && (
                       <div
                         role="img"
-                        aria-label={`${review.rating} out of 5 stars`}
+                        aria-label={zh ? `5 顆星中的 ${review.rating} 顆` : `${review.rating} out of 5 stars`}
                         class="mb-4"
                       >
                         <div class="flex items-center gap-1">

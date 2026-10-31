@@ -4,9 +4,17 @@ import SecondaryButton from "./ui/SecondaryButton.astro";
 import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
 import { cn } from "../utils/cn";
 import { buttonTextColor } from "../utils/contrast";
+import { pageLang, isChinese } from "../utils/lang";
 
 const { content } = Astro.props;
 const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorScheme, content?.forceButtonTextColor);
+const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
+// Name of the logo link: the site name plus where it goes. When text is shown next to the logo it must be part of the name (WCAG 2.5.3).
+const siteName = String(content?.title ?? "").replace(/\s*-?\s*Best Food Today/gi, "").trim();
+const logoText = typeof content?.header?.textAfterLogo?.text === "string" ? content.header.textAfterLogo.text.trim() : "";
+const logoName =
+  logoText && !siteName.toLowerCase().includes(logoText.toLowerCase()) ? `${siteName} ${logoText}` : siteName;
+const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
 ---
 
 <header id="header" class="relative shadow-lg z-50">
@@ -40,7 +48,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
             <button
               type="button"
               class="-m-3 p-3 focus-visible:outline-offset-[-4px]"
-              aria-label="Close banner"
+              aria-label={zh ? "關閉公告" : "Close banner"}
             >
               <svg
                 class="h-5 w-5 text-gray-900"
@@ -64,14 +72,14 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
     ></span>
     <nav
       class="mx-auto flex max-w-7xl items-center justify-between gap-x-2 sm:gap-x-6 px-6 py-3 lg:px-8"
-      aria-label="Global"
+      aria-label={zh ? "主選單" : "Global"}
       id="menu"
     >
-      <div class="cursor-pointer truncate">
+      <div class="cursor-pointer min-w-0">
         <a
           href="/"
           class="flex items-center justify-center -m-1.5 p-1.5"
-          aria-label={content?.title + " logo, click to go to home."}
+          aria-label={logoLabel}
         >
           <span class="sr-only">{content?.header?.title + "Logo"}</span>
           <img
@@ -90,7 +98,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
             content?.header?.textAfterLogo ? (
               <div
                 class={cn(
-                  "flex-1 truncate",
+                  "flex-1",
                   content?.header?.showTextAfterLogoOnMobile
                     ? ""
                     : "hidden sm:block"
@@ -120,9 +128,6 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
                   <a
                     href={item?.link}
                     class="cursor-pointer hover:scale-125 ease-in-out transition-transform duration-300 text-lg font-semibold leading-6"
-                    aria-label={
-                      typeof item?.text === "string" ? item?.text : ""
-                    }
                   >
                     {item?.text}
                   </a>
@@ -139,7 +144,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
             <OrderOnlineBtn
               content={content}
               text={
-                content?.header?.orderOnlineBtnInsteadText || "Order Online"
+                content?.header?.orderOnlineBtnInsteadText || (zh ? "線上訂餐" : "Order Online")
               }
               dataGlfCuid={content?.cuid}
               dataGlfRuid={content?.ruid}
@@ -154,7 +159,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
               content={content}
               text={
                 content?.header?.orderOnlineBtnInsteadText ||
-                "Table Reservation"
+                (zh ? "預訂座位" : "Table Reservation")
               }
               dataGlfCuid={content?.cuid}
               dataGlfRuid={content?.ruid}
@@ -204,7 +209,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
               href={`tel:${content?.trackingNum ? content?.trackingNum : content?.tel}`}
               id="headerTelBtn"
             >
-              <span class="sr-only">Call Us</span>
+              <span class="sr-only">{zh ? "來電" : "Call Us"}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -234,7 +239,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
           class=`cursor-pointer -m-2.5 inline-flex items-center justify-center rounded-md p-2.5`
           style={`color:${content?.header?.menuTextColor}`}
         >
-          <span class="sr-only">Open main menu</span>
+          <span class="sr-only">{zh ? "開啟主選單" : "Open main menu"}</span>
           <svg
             class="h-6 w-6"
             fill="none"
@@ -266,7 +271,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
                 <OrderOnlineBtn
                   content={content}
                   text={
-                    content?.header?.orderOnlineBtnInsteadText || "Order Online"
+                    content?.header?.orderOnlineBtnInsteadText || (zh ? "線上訂餐" : "Order Online")
                   }
                   dataGlfCuid={content?.cuid}
                   dataGlfRuid={content?.ruid}
@@ -281,7 +286,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
                   content={content}
                   text={
                     content?.header?.orderOnlineBtnInsteadText ||
-                    "Table Reservation"
+                    (zh ? "預訂座位" : "Table Reservation")
                   }
                   dataGlfCuid={content?.cuid}
                   dataGlfRuid={content?.ruid}
@@ -328,7 +333,7 @@ const bannerText = buttonTextColor(content?.primaryColor, content?.primaryColorS
               type="button"
               class="cursor-pointer rounded-md p-2.5 text-gray-700"
             >
-              <span class="sr-only">Close menu</span>
+              <span class="sr-only">{zh ? "關閉選單" : "Close menu"}</span>
               <svg
                 class="h-6 w-6"
                 fill="none"

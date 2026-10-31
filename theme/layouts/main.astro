@@ -426,9 +426,9 @@ const structuredData = generateStructuredData({
         :null}
 
     <!-- End Google Tag Manager (noscript) -->
-    <access-widget-ui data-acsb="skipLinks" class="notranslate"><div><div class="skip-links " role="region" aria-label="Skip Links" data-acsb="skipLinks"><div><a href="#maincontent" data-acsb-skip-link="content" class="skip-link">Skip to Content<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div>
+    <access-widget-ui data-acsb="skipLinks" class="notranslate"><div><div class="skip-links " role="region" aria-label={zh ? "快速跳轉連結" : "Skip Links"} data-acsb="skipLinks"><div><a href="#maincontent" data-acsb-skip-link="content" class="skip-link">{zh ? "跳至內容" : "Skip to Content"}<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div>
         <div>
-          <a href="#footer" data-acsb-skip-link="footer" class="skip-link">Skip to Footer<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div></div></div></access-widget-ui>
+          <a href="#footer" data-acsb-skip-link="footer" class="skip-link">{zh ? "跳至頁尾" : "Skip to Footer"}<div class="content" aria-hidden="true"><span class="icon">↵</span>ENTER</div></a></div></div></div></access-widget-ui>
 
     {content?.header && <Header content={content} />}
     <main id="maincontent">
@@ -447,9 +447,9 @@ const structuredData = generateStructuredData({
         } else if (section?.type === "textBlock") {
           return <TextBlock content={content} section={section} />;
         } else if (section?.type === "reviews") {
-          return <Reviews  section={section} />;
+          return <Reviews  section={section} locale={content?.seo?.locale} />;
         } else if (section?.type === "googleReviewsSlider") {
-          return <GoogleReviewsSlider section={section} />;
+          return <GoogleReviewsSlider section={section} locale={content?.seo?.locale} />;
         } else if (section?.type === "codeInsert") {
           return <CodeInsert section={section} />;
         }else if (section?.type === "privacy") {

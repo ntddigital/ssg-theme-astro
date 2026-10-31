@@ -1,5 +1,8 @@
 ---
+import { pageLang, isChinese } from "../../utils/lang";
+
 const { content } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
 ---
 
 <!-- go top button -->
@@ -11,7 +14,7 @@ const { content } = Astro.props;
     href="#"
     class="rounded-full p-2 fixed bottom-5 right-5 sm:bottom-10 sm:right-7"
     style={`background-color:${content?.primaryColor} display: block; `}
-    aria-label="Go to top"
+    aria-label={zh ? "回到頂端" : "Go to top"}
     role="button"
   >
     <svg

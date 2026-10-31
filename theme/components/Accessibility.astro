@@ -1,5 +1,8 @@
 ---
+import { pageLang, isChinese } from "../utils/lang";
+
 const { content } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
 const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
 ---
 
@@ -29,6 +32,13 @@ const title = content?.title?.replace(/\s*-?\s*Best Food Today/gi, "");
           A, Level AA, and Level AAA. Our Website is partially conformant with WCAG
           2.1 level AA. Partially conformant means that some parts of the content
           do not fully conform to the accessibility standard.
+        </p>
+        <p class="mt-6">
+          {
+            zh
+              ? "已知限制：圖片的替代文字正在逐步補充中，部分影片尚未提供字幕。"
+              : "Known limitations: image descriptions are being added gradually, and some videos do not yet have captions."
+          }
         </p>
         <!-- 3 -->
         <h2 class="mt-6 font-bold">Feedback</h2>

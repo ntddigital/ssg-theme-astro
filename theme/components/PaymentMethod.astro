@@ -1,5 +1,8 @@
 ---
+import { pageLang, isChinese } from "../utils/lang";
+
 const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
+const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
 ---
     
 <div class="pb-10 leading-8">
@@ -10,7 +13,7 @@ const { content, acceptedPaymentMethodsInsteadText } = Astro.props;
     {
       acceptedPaymentMethodsInsteadText
         ? acceptedPaymentMethodsInsteadText
-        : "Accepted Payment Methods"
+        : zh ? "接受的付款方式" : "Accepted Payment Methods"
     }
   </div>
   <div class="flex justify-center items-center gap-4">

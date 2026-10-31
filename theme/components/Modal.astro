@@ -90,7 +90,10 @@ const zh = isChinese(pageLang(Astro.url.pathname));
     {
       section?.imgName ? (
         section?.imgHref ? (
-          <a href={section?.imgHref}>
+          <a
+            href={section?.imgHref}
+            aria-label={section?.imgAlt ? undefined : (section?.buttonText || (Array.isArray(section?.title) ? section.title.join(" ") : section?.title) || (zh ? "優惠活動" : "Special offer"))}
+          >
             <img
               src={`/${section?.imgName}`}
               alt={section?.imgAlt ? String(section.imgAlt) : ""}

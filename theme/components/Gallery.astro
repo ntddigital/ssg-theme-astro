@@ -1,4 +1,5 @@
 ---
+import { hasText } from "../utils/text";
 import { getImagesFromFolders } from "../utils/readImages";
 import { galleryAlt, galleryCaption, captionRepeatsAlt } from "../utils/galleryAlt";
 import { cn } from "../utils/cn";
@@ -140,13 +141,15 @@ const initialVisibleDesktop = parseVisibleCount(
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl">
-            <h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
+            {hasText(section?.title) && (
+<h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
               {section?.title?.map((line: string, index: number) => (
                 <Fragment key={index}>
                   <span class="block leading-16">{line}</span>
                 </Fragment>
               ))}
             </h2>
+)}
 
             {section?.description?.map((info: string, index: number) => (
               <Fragment key={index}>
@@ -213,13 +216,15 @@ const initialVisibleDesktop = parseVisibleCount(
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl">
-            <h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
+            {hasText(section?.title) && (
+<h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
               {section?.title?.map((line: string, index: number) => (
                 <Fragment key={index}>
                   <span class="block leading-16">{line}</span>
                 </Fragment>
               ))}
             </h2>
+)}
 
             {section?.description?.map((info: string, index: number) => (
               <Fragment key={index}>
@@ -284,13 +289,15 @@ const initialVisibleDesktop = parseVisibleCount(
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="flex flex-col justify-center items-center mx-auto max-w-2xl">
-            <h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
+            {hasText(section?.title) && (
+<h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
               {section?.title?.map((line: string, index: number) => (
                 <Fragment key={index}>
                   <span class="block leading-16">{line}</span>
                 </Fragment>
               ))}
             </h2>
+)}
 
             {section?.description?.map((info: string, index: number) => (
               <Fragment key={index}>
@@ -353,13 +360,15 @@ const initialVisibleDesktop = parseVisibleCount(
       <div style={`background-color:${section?.bgColor}`}>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="flex flex-col justify-center items-center mx-auto max-w-2xl">
-            <h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
+            {hasText(section?.title) && (
+<h2 class="text-3xl font-bold  text-gray-900 sm:text-4xl text-center">
               {section?.title?.map((line: string, index: number) => (
                 <Fragment key={index}>
                   <span class="block leading-16">{line}</span>
                 </Fragment>
               ))}
             </h2>
+)}
 
             {section?.description?.map((info: string, index: number) => (
               <Fragment key={index}>

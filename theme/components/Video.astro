@@ -1,4 +1,5 @@
 ---
+import { hasText } from "../utils/text";
 import { cn } from "../utils/cn";
 import MediaToggleButton from "./ui/MediaToggleButton.astro";
 
@@ -16,7 +17,8 @@ const { content, section } = Astro.props;
   style="scroll-margin-top: 150px;"
 >
   <div class="mx-auto max-w-2xl pb-8">
-    <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
+    {hasText(section?.title) && (
+<h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
       {
         section?.title?.map((line: string, index: number) => (
           <Fragment key={index}>
@@ -25,6 +27,7 @@ const { content, section } = Astro.props;
         ))
       }
     </h2>
+)}
 
     {
       section?.description?.map((info: string, index: number) => (

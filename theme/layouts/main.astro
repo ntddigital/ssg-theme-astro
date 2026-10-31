@@ -1,4 +1,5 @@
 ---
+import { firstDescription } from "../utils/text";
 import Header from "../components/Header.astro";
 import Feature from "../components/Feature.astro";
 import TextBlock from "../components/TextBlock.astro";
@@ -94,6 +95,7 @@ type RestaurantStructuredDataInput = {
 
 
 const { content } = Astro.props;
+const metaDescription = content?.seo?.metaDescription || firstDescription(content?.sections);
 const tag = content?.tag;
 // Language of this page: the explicit seo.locale if set, otherwise guessed from the URL (/zh-tw, /zh-cn), otherwise English.
 const lang = pageLang(Astro.url.pathname, content?.seo?.locale);
@@ -325,8 +327,8 @@ const structuredData = generateStructuredData({
       )
     }
     {
-      content?.seo?.metaDescription ? (
-        <meta name="description" content={content?.seo?.metaDescription} />
+      metaDescription ? (
+        <meta name="description" content={metaDescription} />
       ) : (
         ""
       )
@@ -357,8 +359,8 @@ const structuredData = generateStructuredData({
       )
     }
     {
-      content?.seo?.metaDescription ? (
-        <meta property="og:description" content={content?.seo?.metaDescription} />
+      metaDescription ? (
+        <meta property="og:description" content={metaDescription} />
       ) : (
         ""
       )
@@ -391,10 +393,10 @@ const structuredData = generateStructuredData({
       )
     }
     {
-      content?.seo?.metaDescription ? (
+      metaDescription ? (
         <meta
           name="twitter:description"
-          content={content?.seo?.metaDescription}
+          content={metaDescription}
         />
       ) : (
         ""

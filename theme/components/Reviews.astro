@@ -1,4 +1,5 @@
 ---
+import { hasText } from "../utils/text";
 import { cn } from "../utils/cn";
 import PrimaryButton from "./ui/PrimaryButton.astro";
 import { pageLang, isChinese } from "../utils/lang";
@@ -48,7 +49,8 @@ const getInitial = (name: string) => {
   <div style={`background-color:${section?.bgColor}`}>
     <div class="mx-auto max-w-7xl px-2 lg:px-8">
       <div class="mx-auto max-w-2xl">
-        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
+        {hasText(section?.title) && (
+<h2 class="text-3xl font-bold text-gray-900 sm:text-4xl text-center">
           {
             section?.title?.map((line: string, index: number) => (
               <Fragment key={index}>
@@ -57,6 +59,7 @@ const getInitial = (name: string) => {
             ))
           }
         </h2>
+)}
 
         {
           section?.description?.map((info: string, index: number) => (

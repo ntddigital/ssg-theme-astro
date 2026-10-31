@@ -1,4 +1,5 @@
 ---
+import { hasText, siteName } from "../utils/text";
 import PrimaryButton from "./ui/PrimaryButton.astro";
 import SecondaryButton from "./ui/SecondaryButton.astro";
 import OrderOnlineBtn from "./ui/OrderOnlineBtn.astro";
@@ -120,12 +121,16 @@ function hexToRgb(hex:string) {
   background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
 `}
               >
-                <h1 class="text-4xl sm:text-6xl">
+                {hasText(section?.title) ? (
+<h1 class="text-4xl sm:text-6xl">
                 {section?.title.map((line: string, index: number) => (
                   <Fragment key={index}>{line}</Fragment><br/>
                 ))}
                 
                 </h1>
+) : (
+<h1 class="sr-only">{siteName(content?.title)}</h1>
+)}
 {section?.description.map((info: string, index: number) => (
                   <Fragment key={index}>
                     <p
@@ -305,12 +310,16 @@ function hexToRgb(hex:string) {
 
 `}
                 >
-                  <h1 class="text-4xl sm:text-6xl leading-12">
+                  {hasText(section?.title) ? (
+<h1 class="text-4xl sm:text-6xl leading-12">
                   {section?.title.map((line: string, index: number) => (
                     <Fragment key={index}>{line}</Fragment><br/>
                   ))}
                   
                   </h1>
+) : (
+<h1 class="sr-only">{siteName(content?.title)}</h1>
+)}
 {section?.description.map((info: string, index: number) => (
                     <Fragment key={index}>
                       <p
@@ -437,12 +446,16 @@ function hexToRgb(hex:string) {
   background-color:rgba(${hexToRgb(section?.titleBgColor)}, ${section?.titleBgOpacity || 0})
 `}
                   >
-                    <h1 class="text-4xl sm:text-6xl">
+                    {hasText(section?.title) ? (
+<h1 class="text-4xl sm:text-6xl">
                     {section?.title.map((line: string, index: number) => (
                       <Fragment key={index}>{line}</Fragment><br/>
                     ))}
                     
                     </h1>
+) : (
+<h1 class="sr-only">{siteName(content?.title)}</h1>
+)}
 {section?.description.map((info: string, index: number) => (
                       <Fragment key={index}>
                         <p
@@ -512,7 +525,8 @@ function hexToRgb(hex:string) {
 
               {section?.type === "feature" ? (
                 <div>
-                  <h2
+                  {hasText(section?.title) && (
+<h2
                     class={cn(
                       "mt-10 lg:mt-0 max-w-lg text-3xl font-bold  sm:text-4xl",
                       section?.isTextAlignCenter
@@ -527,6 +541,7 @@ function hexToRgb(hex:string) {
                       </Fragment>
                     ))}
                   </h2>
+)}
 
                   {section?.description.map((info: string, index: number) => (
                     <Fragment key={index}>

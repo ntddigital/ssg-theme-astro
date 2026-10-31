@@ -3,6 +3,12 @@ import { cn } from "../utils/cn";
 import { heroScrimAlpha } from "../utils/contrast";
 const { section } = Astro.props;
 // Only when text sits on a photo
+// Background paths without a leading "/" or "http" would resolve relative to the page
+const bgSrc = section?.bgImg
+  ? /^(\/|https?:)/i.test(String(section.bgImg))
+    ? String(section.bgImg)
+    : `/${section.bgImg}`
+  : "";
 const scrim = section?.bgImg ? heroScrimAlpha(section) : 0;
 ---
 
@@ -22,7 +28,7 @@ const scrim = section?.bgImg ? heroScrimAlpha(section) : 0;
     {
       section?.bgImg ? (
         <img
-          src={`${section?.bgImg}`}
+          src={bgSrc}
           alt=""
           aria-hidden="true"
           class={cn(

@@ -14,7 +14,8 @@ const bg = backgroundColor ? backgroundColor : content?.primaryColor;
 const fg = buttonTextColor(bg, content?.primaryColorScheme, content?.forceButtonTextColor);
 ---
 
-<span
+<button
+  type="button"
   class={cn(
     "cursor-pointer rounded-md px-3.5 py-2.5 text-lg font-semibold shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 whitespace-nowrap text-center",
   )}
@@ -24,4 +25,4 @@ const fg = buttonTextColor(bg, content?.primaryColorScheme, content?.forceButton
   {...isReservation ? { "data-glf-reservation": "true" } : {}}
 >
   {text}
-</span>
+</button>

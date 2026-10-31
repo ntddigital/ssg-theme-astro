@@ -84,12 +84,14 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
             class={`hidden sm:block h-24 w-auto mr-3`}
             src={`/${content?.logo}`}
             alt=""
+            aria-hidden="true"
             style={`height:${content?.header?.logoSize}px`}
           />
           <img
             class={`block sm:hidden mx-2`}
             src={`/${content?.logo}`}
             alt=""
+            aria-hidden="true"
             style={`height:${content?.header?.logoSizeOnMobile ? content?.header?.logoSizeOnMobile : "40"}px`}
           />
           {
@@ -210,6 +212,8 @@ const logoLabel = zh ? `${logoName}，回到首頁` : `${logoName}, home`;
               <span class="sr-only">{zh ? "來電" : "Call Us"}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                focusable="false"
                 width="1em"
                 height="1em"
                 viewBox="0 0 24 24"

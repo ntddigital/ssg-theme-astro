@@ -44,12 +44,12 @@ const policyLang = zh ? "en" : undefined;
           <img
             class={`hidden sm:block h-24 w-auto mr-3`}
             src={`/${content?.logo}`}
-            alt={`${siteName(content?.title)}${zh ? " 標誌" : " logo"}`}
+            alt={siteName(content?.title)}
             style={`height:${content?.footer?.logoSize}px;`}          />
           <img
             class={`block sm:hidden mx-2`}
             src={`/${content?.logo}`}
-            alt={`${siteName(content?.title)}${zh ? " 標誌" : " logo"}`}
+            alt={siteName(content?.title)}
             style={`height:${content?.footer?.logoSizeOnMobile ? content.footer.logoSizeOnMobile : 40}px;`}          />
         </div>
       ) : (
@@ -223,6 +223,8 @@ const policyLang = zh ? "en" : undefined;
             <span class="sr-only">Yelp</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
               width="1em"
               height="1em"
               viewBox="0 0 16 16"
@@ -245,6 +247,8 @@ const policyLang = zh ? "en" : undefined;
             <span class="sr-only">DoorDash</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
               width="1em"
               height="1em"
               viewBox="0 0 24 24"
@@ -267,6 +271,8 @@ const policyLang = zh ? "en" : undefined;
             <span class="sr-only">Uber Eats</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
               width="1em"
               height="1em"
               viewBox="0 0 24 24"

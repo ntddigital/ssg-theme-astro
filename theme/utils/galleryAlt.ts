@@ -17,7 +17,12 @@ export function galleryAlt(
       }
     }
   }
-  const text = String(name || "")
+  // File names written like "Braised-Prawns-Sweet-Sour-Sauce-0" (hyphens as spaces, a counter at the end) read badly
+  // aloud: treat a name with three or more such hyphens as words and drop the counter.
+  let raw = String(name || "");
+  const hyphens = (raw.match(/[A-Za-z]-(?=[A-Za-z])/g) || []).length + (/-\d{1,2}$/.test(raw) ? 1 : 0);
+  if (hyphens >= 3) raw = raw.replace(/-\d{1,2}$/, "").replace(/([A-Za-z])-(?=[A-Za-z])/g, "$1 ");
+  const text = raw
     .replace(/^[\d_\-\s]+/, "")
     // a stray extension left in the file name, e.g. "Sweet and Sour Pork webp.webp"
     .replace(/[\s.]+(webp|jpe?g|png|avif|gif)$/i, "")

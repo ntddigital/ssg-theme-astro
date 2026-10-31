@@ -499,7 +499,7 @@ const structuredData = generateStructuredData({
     if (!dialog || !image) return;
     let opener: HTMLElement | null = null;
 
-    document.querySelectorAll<HTMLElement>("[data-src]").forEach((trigger) => {
+    document.querySelectorAll<HTMLElement>("button[data-src]").forEach((trigger) => {
       trigger.addEventListener("click", () => {
         const src = trigger.getAttribute("data-src");
         if (!src) return;

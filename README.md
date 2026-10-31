@@ -105,6 +105,18 @@ A section type that is not in this list renders nothing.
 | `codeInsert` | `CodeInsert.astro` | `code`: list of `{ type: externalScript / inlineScript / html, content }` |
 | `privacy`, `terms`, `cookie`, `accessibility` | `Privacy`, `Terms`, `Cookie`, `Accessibility` | Legal pages, generated from the site-wide fields |
 
+### Alt text fields
+
+Background images (`bgImg`, `mobileBgImg`, `bgVideoPoster`, footer `bgImg`) are decorative and always render with an empty `alt` and `aria-hidden="true"`.
+
+| Section | Field | Default | Meaning |
+|---|---|---|---|
+| `hero`, `feature` (`imgWithText`) | `bannerImgAlt` | empty (decorative) | Alt text of `bannerImg` |
+| `modal` | `imgAlt` | empty (decorative) | Alt text of `imgName` |
+| `gallery` | `altOverrides` | none | Map of file name to alt text, for example `{ "012_Pork_Bao.jpg": "Steamed pork buns in a bamboo basket" }`. The key may be the file name with or without extension. An empty string marks the picture as decorative. Used for all modes, the thumbnail button label and the enlarged view |
+
+Without an override, a gallery alt text is made from the file name: leading digits, underscores, hyphens and spaces are removed, `__` becomes `、`, `_` becomes a space and `w:` becomes `w/`. If nothing but digits is left, the alt text is empty.
+
 ## Working on the theme
 
 - Keep content fields backwards compatible: sites are upgraded one by one, and a missing field must fall back to a sensible default.

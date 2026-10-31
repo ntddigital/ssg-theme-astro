@@ -1,11 +1,20 @@
 ---
 import { getImagesFromFolders } from "../utils/readImages";
+import { galleryAlt } from "../utils/galleryAlt";
 import { cn } from "../utils/cn";
 import { pageLang, isChinese } from "../utils/lang";
 
 const { section, index: sectionIndex = 0 } = Astro.props;
 const enlargeLabel = isChinese(pageLang(Astro.url.pathname)) ? "放大檢視：" : "Enlarge: ";
-const images = getImagesFromFolders("/public/" + section?.folderPath);
+const images = getImagesFromFolders("/public/" + section?.folderPath).map((img) => {
+  const alt = galleryAlt(img.name, img.src, section?.altOverrides);
+  return {
+    ...img,
+    alt,
+    // Same text as the alt, so the button is named after the picture it opens.
+    label: alt ? `${enlargeLabel}${alt}` : enlargeLabel.replace(/[:：]\s*$/, ""),
+  };
+});
 const supportedModes = [1, 2, 3, 4];
 const mode = supportedModes.includes(Number(section?.mode)) ? Number(section?.mode) : 4;
 if (section?.mode !== undefined && mode !== Number(section?.mode)) {
@@ -153,11 +162,11 @@ const initialVisibleDesktop = parseVisibleCount(
                       type="button"
                       class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
-                      aria-label={`${enlargeLabel}${item?.name}`}
+                      aria-label={item?.label}
                     >
                       <img
                         src={item?.src?.replace("/public", "")}
-                        alt={item?.name}
+                        alt={item?.alt}
                         class="w-full object-contain"
                         loading="lazy"
                       />
@@ -224,11 +233,11 @@ const initialVisibleDesktop = parseVisibleCount(
                       type="button"
                       class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                       data-src={item?.src}
-                      aria-label={`${enlargeLabel}${item?.name}`}
+                      aria-label={item?.label}
                     >
                       <img
                         src={item?.src?.replace("/public", "")}
-                        alt={item?.name}
+                        alt={item?.alt}
                         class="w-full object-contain"
                         loading="lazy"
                       />
@@ -296,11 +305,11 @@ const initialVisibleDesktop = parseVisibleCount(
                     type="button"
                     class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
-                    aria-label={`${enlargeLabel}${item?.name}`}
+                    aria-label={item?.label}
                   >
                     <img
                       src={item?.src?.replace("/public", "")}
-                      alt={item?.name}
+                      alt={item?.alt}
                       class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain`}
                       loading="lazy"
                     />
@@ -375,11 +384,11 @@ const initialVisibleDesktop = parseVisibleCount(
                     type="button"
                     class="block w-full cursor-pointer rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                     data-src={item?.src}
-                    aria-label={`${enlargeLabel}${item?.name}`}
+                    aria-label={item?.label}
                   >
                     <img
                       src={item?.src?.replace("/public", "")}
-                      alt={item?.name}
+                      alt={item?.alt}
                       class={`aspect-[14/13] w-full rounded-2xl object-cover rounded-${section?.menuItemImgRounded} hover:scale-105 duration-300 object-contain`}
                       loading="lazy"
                     />

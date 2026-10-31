@@ -14,7 +14,7 @@ const zh = isChinese(pageLang(Astro.url.pathname, content?.seo?.locale));
   <a
     href="#"
     class="rounded-full p-2 fixed bottom-5 right-5 sm:bottom-10 sm:right-7"
-    style={`background-color:${content?.primaryColor} display: block; `}
+    style={`background-color:${content?.primaryColor}; display: block; `}
     aria-label={zh ? "回到頂端" : "Go to top"}
   >
     <svg
